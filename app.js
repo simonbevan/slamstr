@@ -664,5 +664,8 @@ app.get('/getPlaylist', function (req, res) {
 
 //Begin listening
 
-app.listen(3000);
-console.log("Express server is listening on port %d in %s mode", app.address().port, app.settings.env);
+var port = process.env.PORT || 5000;
+app.listen(port, function() {
+  console.log("Listening on " + port);
+});
+//console.log("Express server is listening on port %d in %s mode", app.address().port, app.settings.env);
