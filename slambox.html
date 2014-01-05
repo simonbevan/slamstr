@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>slamstr</title>
+
+<link href="examples/content/shared/styles/examples-offline.css"
+	rel="stylesheet">
+<link href="styles/kendo.common.min.css" rel="stylesheet">
+<link href="styles/kendo.default.min.css" rel="stylesheet">
+<script src="js/kendo.all.min.js" type="text/javascript"></script>
+<link href="bbb.css" rel="stylesheet">
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/kendo.web.min.js" type="text/javascript"></script>
+<script src="examples/content/shared/js/console.js"
+	type="text/javascript"></script>
+<script src="bbb.js" type="text/javascript"></script>
+
+<script src="examples/content/shared/js/people.js"></script>
+
+
+
+
+<script type="text/javascript">
+	
+</script>
+
+
+</head>
+
+<body>
+
+
+    <div id="example" class="k-content">
+
+
+			<div align="right">
+				<centre> <img src="images/banner.jpg" alt="hamster"
+					width="50%" height="200px"> </centre>
+			</div>
+
+<br>
+
+    <div class="configuration-horizontal">
+        <div class="config-section">
+            <span class="configHead">Please Enter Your Birthday &nbsp
+                        <input data-role="datepicker"
+                   data-bind="visible: isVisible,
+                              enabled: isEnabled,
+                              value: selectedDate,
+                              events: { change: onChange }"
+                   style="width: 180px"></span>
+        </div>
+    
+    </div>
+    
+   
+        <div class="configuration-horizontal">
+        
+         <!--  <button id="open2" style="visibility:hidden" class="k-button"></button>--> 
+			
+            <br>
+            <center>
+          <span id=thats ></span><sup><button id="open3" style="visibility:visible" class="k-button" >(don't click here)</button></sup><span id=thats2 ></span>
+         
+            <span id=inThatTime ></span>
+        </center>
+        
+            <center>
+           
+            <span id=howmany ></span><br>
+            <span id=days ></span><br>
+            <span id=numberSigned ></span>
+            </center>
+            
+            <span id=numberOfMusics ></span><font size="6" color = "red"><span style="visibility:visible" id=timeForm> </span></font><span id=numberOfBand ></span>
+             <center>
+            <span id=numberOfBand2 ></span>
+            </center>
+            
+       
+            
+            
+            
+            <br>
+            <span id=numberNeverHeard></span>
+        <br>
+          
+            <span id=yet ></span>
+            
+         
+            
+            <span id=explain  ></span> 
+            <br>
+            <br>
+            <center>
+            
+            <span id=smf  ></span>
+            </center>
+            <br>
+            	<span id=visit  ></span> 
+            
+            </div>
+  			
+  		
+  			 
+    
+       <div id="window"></div>
+            
+
+
+
+<script>
+
+var test = 1;
+var firstTime = true;
+algoString = "";
+$(document).ready(function() {
+    
+	$("#open3").toggle();
+	$("#timeForm").toggle();
+	
+	
+	
+	var window = $("#window");
+    $("#open3").click( function (e) {
+    	
+        window.data("kendoWindow").open();
+    });
+    
+    window.kendoWindow({
+        width: "350px",
+        height: "300px",
+        title: "slamstr's not so super secret algorithm",
+        actions: ["Pin", "Refresh", "Maximize", "Close"],
+        visible:false,
+        //content: algoString
+    });
+    var dialog = $("#window").data("kendoWindow");
+    dialog.center();
+    
+
+    //$("#open3:visible");
+    
+});
+
+
+    var viewModel = kendo.observable({
+    	
+    	
+    	
+        selectedDate: null,
+        isEnabled: true,
+        isVisible: true,
+        onChange: function() {
+            //kendoConsole.log("event :: change (" + kendo.toString(this.get("selectedDate"), "D") + ")");
+            
+            
+            if(firstTime == true){
+            $("#open3").toggle();
+            $("#timeForm").toggle();
+            firstTime = false;
+            }
+           
+            test = 2;
+            var today = new Date()
+            var yearEnd = new Date(today.getFullYear()+1,0,1)
+            var yearStart = new Date(today.getFullYear(),0,1)
+            var allDays = Math.floor((yearEnd - yearStart)/(1000*60*60*24));
+            var now = Math.floor((today - yearStart)/(1000*60*60*24));
+            var fracNow = (today.getFullYear())+now/allDays
+            
+  
+            today = this.get("selectedDate");
+            yearEnd = new Date(today.getFullYear()+1,0,1)
+            yearStart = new Date(today.getFullYear(),0,1)
+            allDays = Math.floor((yearEnd - yearStart)/(1000*60*60*24));
+            var then = Math.floor((today - yearStart)/(1000*60*60*24));
+            var fracThen = today.getFullYear()+then/allDays
+            
+            numberOfPeopleThen = -2.57691110e+03 + 4.78630716e-06*Math.exp(fracThen/9.38383765e+01)
+            numberOfPeopleNow = -2.57691110e+03 + 4.78630716e-06*Math.exp(fracNow/9.38383765e+01)
+            peopleBorn = Math.floor((numberOfPeopleNow-numberOfPeopleThen)*1000000)
+            numBands = Math.floor(peopleBorn/1000/4)
+    		madeIt = Math.floor(numBands/1000)
+            
+            //$("#datePicked").html(kendo.toString(numBands-madeIt) )
+            //$("#inThatTime").html("<font size=\"8\"> " + kendo.toString(Math.round(peopleBorn/10000))/100 + "</font> <font size=\"2\"> million people have entered this world since that beautiful day.</font>")
+             
+            $("#window") .html("<div class=\"k-content\"><div class=\"demo-section\" > " +
+            "When you were born there were " + kendo.toString(Math.round(numberOfPeopleThen*100)/100)  + " million people alive in the world. " + 
+            "Today there are " + kendo.toString(Math.round(numberOfPeopleNow*100)/100)  + " million people. \n"+
+            "Now that's a lot of people. In fact that's an extra " + kendo.toString(Math.round((numberOfPeopleNow-numberOfPeopleThen)*100)/100) + " million people since you were born. " +
+            "(I'm afraid that you will have trust me on). " + 
+            "Let's assume 1 in every 1000 people have played in a band at some point in their life. " +
+            "That gives us " + Math.round(numBands*4) + " cool music types. " + 
+            "I reckon the average band size is 4, so that's " + Math.round(numBands) + " bands. " +
+            "Of these let's say 1 in 1000 make it. This gives us " + Math.round(madeIt) + " bands you've probably heard. " +
+            "A simple subtraction leaves us with " + Math.round((numBands-madeIt)*100)/100 +" you haven't heard. " +
+            "Got that? Good. Math rocks! </div></div>")
+           
+            //title=\""+algoString +"\"
+            $("#thats").html("<font size=\"8\">According to our super secret algorithm </font>");
+            $("#thats2").html(" <font size=\"8\"> that's</font><br><br>")
+            //$("#thats").html("<h3>According to our super secret algorithm that's</h3>")
+            $("#inThatTime").html("<br><font size=\"10\" color = \"red\"> " + kendo.toString(Math.round((numBands-madeIt)*100)/100) + "</font> <font size=\"6\"> <br><br> bands you've never listened to. <br><br></font>")
+            $("#howmany").html("<font size=\"8\" >  Yet you've heard of COLDPLAY <br></font><br><img src=\"\\images\\chrismartin.jpg\" alt=\"cms\" width=\"20%\" height=\"20%\">")
+            $("#days").html("<font size=\"6\" >  Aghhhhhh, make it stop. <br></font>")
+            $("#numberSigned").html("<font size=\"6\" ><br></font>")
+            $("#numberOfMusics").html("<font size=\"6\">In fact </font>" ) 
+           $("#numberOfBand").html("<font size=\"6\"> of a musician has been created since you've been on this page.<br></font>")
+           $("#numberOfBand2").html("<font size=\"6\"> </font>")
+            
+           $("#numberNeverHeard").html("<br><font size=\"8\">Something has to change. It's time for a music revolution.</font>")
+           $("#yet").html("<font size=\"6\"><p style = \"text-align:right\">Don't just listen to the 1 in 1000. Listen to the " + kendo.toString(Math.round((numBands-madeIt)*100))/100 + ".<p></font><center><font size=\"12\" color=\"red\" > Got your attention? Interetsed? Follow slamstr the hamstr to find out more.</center><br></font>  ")
+           $("#explain").html("<center><font size=\"6\"><img src=\"\\images\\HamsterRock.jpg\" alt=\"hr\" width=\"50%\" height=\"30%\"></font></center>")
+           $("#smf").html("<font size=\"6\">Go on, you know you want to.<font>");
+            $("#visit").html("")
+            //>1800 [ -2.57691110e+03   4.78630716e-06   9.38383765e+01]
+			//< 1800 [  5.29528718e+02   5.15538628e-06   9.86959569e+01]
+            
+        
+        }
+    
+    
+
+
+    
+    });
+    
+
+    
+    kendo.bind($("#example"), viewModel);
+    
+
+    
+</script>
+
+
+
+
+<!-- This part can go in the head of the html file -->
+
+<script language="JavaScript" type="text/javascript">
+<!-- Copyright 2003, Sandeep Gangadharan -->
+<!-- For more free scripts go to http://sivamdesign.com/scripts/ -->
+<!--
+
+
+var sec = 0;
+function sivamtime() {
+sec++;
+//document.timeForm.field.value = sec ;
+ $("#timeForm").html(Math.round(sec*0.0034*100) + "%")
+setTimeout("sivamtime()", 1000);
+}
+
+window.onload = sivamtime;
+
+// -->
+</script>
+
+
+
+
+
+ 
+
+
+</div>
+
+
+
+
+</body>
+
+
+</html>

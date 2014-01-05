@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>slamstr</title>
+
+<link href="examples/content/shared/styles/examples-offline.css"
+	rel="stylesheet">
+<link href="styles/kendo.common.min.css" rel="stylesheet">
+<link href="styles/kendo.default.min.css" rel="stylesheet">
+<script src="js/kendo.all.min.js" type="text/javascript"></script>
+<link href="bbb.css" rel="stylesheet">
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/kendo.web.min.js" type="text/javascript"></script>
+<script src="examples/content/shared/js/console.js"
+	type="text/javascript"></script>
+<script src="bbb.js" type="text/javascript"></script>
+
+<script src="examples/content/shared/js/people.js"></script>
+
+<script type="text/javascript">
+ $(document).ready(function() {
+
+/* 	     	 $.ajax({
+		    type: "GET",
+		    dataType: "json",
+		    url: "/createDB"				    
+		}).done(function(data){
+			alert(data['msg']);
+		    // $("#bandName").text(data);
+		});  */ 
+	 
+		
+	 
+		var tag = document.createElement('script');
+		tag.src = "https://www.youtube.com/player_api";
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		
+		// Replace the 'ytplayer' element with an <iframe> and
+		// YouTube player after the API code downloads.
+		var player;
+		var player2;
+		
+		//sessionStorage.firstOpen = '';
+	 $('#loginButton').click(function(){
+		    //e.PreventDefault();
+
+		 
+	 dataIn = $("#loginForm").serialize();
+	 
+	       $.ajax({ 
+               url: '/login',
+               type: 'POST',
+               //async: false,
+               cache: false, 
+               data: dataIn, 
+               success: function(data){
+  
+            	   //alert($("#loginForm").serialize())
+            	   //alert($(data));
+  				data1 = data['out1'];
+				data2 = data['out2'];
+				data3 = data['out3'];
+  
+   				sessionStorage.fileLink = data1['fileLink'];
+				sessionStorage.vidID = data1['vID'];
+				sessionStorage.bandName = data1['bandName'];
+				sessionStorage.songName = data1['songName'];
+				//sessionStorage.country = data1['country'];
+				sessionStorage.artistLink = data1['artistLink'];
+				sessionStorage.votes = data1['votes'];
+				
+   				sessionStorage.fileLink2 = data2['fileLink'];
+				sessionStorage.vidID2 = data2['vID'];
+				sessionStorage.bandName2 = data2['bandName'];
+				sessionStorage.songName2 = data2['songName'];
+				//sessionStorage.country = data1['country'];
+				sessionStorage.artistLink2 = data2['artistLink'];
+				sessionStorage.votes2 = data2['votes'];
+				
+				
+				sessionStorage.userName = data3['userName'];
+				sessionStorage.userID = data3['userID'];
+				sessionStorage.loggedIn = data3['loggedIn']; 
+
+				//alert(data3['userName']);
+				
+				location.reload(true);
+				
+  				
+               }
+               , error: function(jqXHR, textStatus, err){
+                   alert('text status '+textStatus+', err '+err)
+               }
+            });
+
+	       //setInterval(function(){
+		    //   location.reload(true);
+		     //  },500);
+	       
+            
+          
+             //location.reload(true); 
+         //return false;   
+		 
+         });
+	 
+	
+	 
+     $('#textButton').click(function(){  
+
+   /*       $.ajax({ 
+             url: '/ajax',
+             type: 'POST',
+             cache: false, 
+             data: { field1: 'test', field2: 'test2' }, 
+             success: function(data){
+                //alert('Success!');
+                //alert(data['id']);
+             }
+             , error: function(jqXHR, textStatus, err){
+                 alert('text status '+textStatus+', err '+err)
+             }
+          }); */
+    	 
+    	 if (  $(this).html() == 'Challenger'){
+			 $("#textButton").html('Legend');
+			 
+			
+			 
+	    	 
+				output = '<center><h3>'+sessionStorage.bandName2+'</h3>'+
+				'<h3> '+sessionStorage.songName2+'</h3>'+
+				'<p>Country: need to change db</p> '+
+				'<p>Visit at: '+sessionStorage.artistLink2+'</p> '+
+				'<p>Votes: '+sessionStorage.votes2+'</p></center> '+
+				'<br><br>'+
+				'<p>Maybe some nice visulisation</p> '+
+				'<p>to fill the rest of the pane?</p> '+
+				'<p>or advert?</p> ';
+			
+			
+				document.getElementById("vidInfo").innerHTML = output;
+				$("#ytplayer").toggle();
+				$("#ytplayer2").toggle();
+				
+				
+			/* 	$('#result').load('ajax/test.html', function() {
+					  alert('Load was performed.');
+					}); */
+				
+				
+			 }else{
+				 $("#textButton").html('Challenger'); 
+				 
+				 	
+					
+					output = '<center><h3>'+sessionStorage.bandName+'</h3>'+
+					'<h3> '+sessionStorage.songName+'</h3>'+
+					'<p>Country: need to change db</p> '+
+					'<p>Visit at: '+sessionStorage.artistLink+'</p> '+
+					'<p>Votes: '+sessionStorage.votes+'</p></center> '+
+					'<br><br>'+
+					'<p>Maybe some nice visulisation</p> '+
+					'<p>to fill the rest of the pane?</p> '+
+					'<p>or advert?</p> ';
+					
+					$("#ytplayer").toggle();
+					$("#ytplayer2").toggle();
+					
+					document.getElementById("vidInfo").innerHTML = output;
+
+				 
+			 }
+    	 
+    	 
+         $.ajax({ 
+               url: '/ajax',
+               type: 'POST',
+               cache: false, 
+               data: { field1: 'test', field2: 'test2' }, 
+               success: function(data){
+                  //alert('Success!');
+                  //alert(data['id']);
+               }
+               , error: function(jqXHR, textStatus, err){
+                   alert('text status '+textStatus+', err '+err)
+               }
+            })
+         }); 
+
+ 
+     
+     
+     $('#challengerbin').click(function(){  
+
+	
+            var vidID = sessionStorage.vidID2 ;
+            var userID = sessionStorage.userID; 
+			
+         $.ajax({ 
+               url: '/like',
+               type: 'POST',
+               cache: false, 
+
+               data: { uID: userID, vID:vidID, type:'challengerbin'  }, 
+               success: function(data){
+  
+            	   
+     				data1 = data['out1'];
+    				data2 = data['out2'];
+      
+    				
+       				sessionStorage.fileLink = data1['fileLink'];
+    				sessionStorage.vidID = data1['vID'];
+    				sessionStorage.bandName = data1['bandName'];
+    				sessionStorage.songName = data1['songName'];
+    				//sessionStorage.country = data1['country'];
+    				sessionStorage.artistLink = data1['artistLink'];
+    				sessionStorage.votes = data1['votes'];
+				
+       				sessionStorage.fileLink2 = data2['fileLink'];
+    				sessionStorage.vidID2 = data2['vID'];
+    				sessionStorage.bandName2 = data2['bandName'];
+    				sessionStorage.songName2 = data2['songName'];
+    				//sessionStorage.country = data1['country'];
+    				sessionStorage.artistLink2 = data2['artistLink'];
+    				sessionStorage.votes2 = data2['votes'];
+    				
+    				location.reload(true);
+    				
+				//alert(sessionStorage.bandName);
+               }
+               , error: function(jqXHR, textStatus, err){
+                   alert('text status '+textStatus+', err '+err)
+               }
+            })
+         }); 
+	 
+     
+     $('#challengerkeep').click(function(){  
+
+    		
+         var vidID = sessionStorage.vidID2 ;
+         var userID = sessionStorage.userID; 
+			
+      $.ajax({ 
+            url: '/like',
+            type: 'POST',
+            cache: false, 
+
+            data: { uID: userID, vID:vidID, type:'challengerkeep'  }, 
+            success: function(data){
+
+         	   
+  				data1 = data['out1'];
+				data2 = data['out2'];
+  
+   				sessionStorage.fileLink = data1['fileLink'];
+				sessionStorage.vidID = data1['vID'];
+				sessionStorage.bandName = data1['bandName'];
+				sessionStorage.songName = data1['songName'];
+				//sessionStorage.country = data1['country'];
+				sessionStorage.artistLink = data1['artistLink'];
+				sessionStorage.votes = data1['votes'];
+
+   				sessionStorage.fileLink2 = data2['fileLink'];
+				sessionStorage.vidID2 = data2['vID'];
+				sessionStorage.bandName2 = data2['bandName'];
+				sessionStorage.songName2 = data2['songName'];
+				//sessionStorage.country = data1['country'];
+				sessionStorage.artistLink2 = data2['artistLink'];
+				sessionStorage.votes2 = data2['votes'];
+				
+				location.reload(true);
+				
+				//alert(sessionStorage.bandName);
+            }
+            , error: function(jqXHR, textStatus, err){
+                alert('text status '+textStatus+', err '+err)
+            }
+         })
+      }); 
+     
+     $('#legendbin').click(function(){  
+
+         var vidID = sessionStorage.vidID ;
+         var userID = sessionStorage.userID;
+    	 
+         $.ajax({ 
+               url: '/like',
+               type: 'POST',
+               cache: false, 
+ 
+               data: { uID: userID, vID:vidID, type:'legendbin'  }, 
+               success: function(data){
+
+  				data1 = data['out1'];
+				data2 = data['out2'];
+  
+				
+   				sessionStorage.fileLink = data1['fileLink'];
+				sessionStorage.vidID = data1['vID'];
+				sessionStorage.bandName = data1['bandName'];
+				sessionStorage.songName = data1['songName'];
+				//sessionStorage.country = data1['country'];
+				sessionStorage.artistLink = data1['artistLink'];
+				sessionStorage.votes = data1['votes'];
+				
+   				sessionStorage.fileLink2 = data2['fileLink'];
+				sessionStorage.vidID2 = data2['vID'];
+				sessionStorage.bandName2 = data2['bandName'];
+				sessionStorage.songName2 = data2['songName'];
+				//sessionStorage.country = data1['country'];
+				sessionStorage.artistLink2 = data2['artistLink'];
+				sessionStorage.votes2 = data2['votes'];
+				
+				location.reload(true);
+				
+				//alert(sessionStorage.bandName);
+            	   
+               }
+               , error: function(jqXHR, textStatus, err){
+                   alert('text status '+textStatus+', err '+err)
+               }
+            })
+         }); 
+     
+     $('#legendkeep').click(function(){  
+
+         var vidID = sessionStorage.vidID ;
+         var userID = sessionStorage.userID;
+    	 
+         $.ajax({ 
+               url: '/like',
+               type: 'POST',
+               cache: false, 
+ 
+               data: { uID: userID, vID:vidID, type:'legendbin'  }, 
+               success: function(data){
+
+
+  				data1 = data['out1'];
+				data2 = data['out2'];
+  
+				
+   				sessionStorage.fileLink = data1['fileLink'];
+				sessionStorage.vidID = data1['vID'];
+				sessionStorage.bandName = data1['bandName'];
+				sessionStorage.songName = data1['songName'];
+				//sessionStorage.country = data1['country'];
+				sessionStorage.artistLink = data1['artistLink'];
+				sessionStorage.votes = data1['votes'];
+				
+   				sessionStorage.fileLink2 = data2['fileLink'];
+				sessionStorage.vidID2 = data2['vID'];
+				sessionStorage.bandName2 = data2['bandName'];
+				sessionStorage.songName2 = data2['songName'];
+				//sessionStorage.country = data1['country'];
+				sessionStorage.artistLink2 = data2['artistLink'];
+				sessionStorage.votes2 = data2['votes'];
+				
+				location.reload(true);
+				
+				//alert(sessionStorage.bandName);
+            	   
+               }
+               , error: function(jqXHR, textStatus, err){
+                   alert('text status '+textStatus+', err '+err)
+               }
+            })
+         });
+     
+	 
+	 $( "#textButton2" ).click(function() {
+		 
+		 if (  $(this).html() == 'Challenger'){
+			 $("#textButton").html('Legend');
+			 }else{
+				 $("#textButton").html('Challenger'); 
+				 
+			 }
+		 });
+
+	
+	
+	 
+/* 	 $( "#like" ).click(function() {
+	
+	 $.ajax({
+								    type: "GET",
+								    dataType: "json",
+								    url: "/like"				    
+								}).done(function(data){
+									alert(data['msg']);
+								    // $("#bandName").text(data);
+								});
+	 });
+	 
+	 $( "#dontlike" ).click(function() {
+	 $.ajax({
+		    type: "GET",
+		    dataType: "json",
+		    url: "/dontlike"				    
+		}).done(function(data){
+			alert(data['msg']);
+		    // $("#bandName").text(data);
+		});
+	 }); */
+	 
+ 
+	  
+		
+	 
+	 
+});
+ </script>
+
+
+
+</head>
+<body>
+
+
+
+
+
+	<script>
+//alert('here2');
+//sessionStorage.firstOpen ='';
+
+
+
+
+
+//sessionStorage.firstOpen = '';
+if(sessionStorage.firstOpen == 'opened'){
+		
+
+	var str = sessionStorage.fileLink
+	var n = str.indexOf("=");
+	var vidID = str.substring(n+1);
+	sessionStorage.ytvidID = vidID
+
+	var str2 = sessionStorage.fileLink2
+	var n2 = str2.indexOf("=");
+	var vidID2 = str2.substring(n2+1);
+	sessionStorage.ytvidID2 = vidID2
+
+	
+	 function onYouTubePlayerAPIReady() {
+		    player = new YT.Player('ytplayer', {
+		      height: '298px',
+		      width: '99%',
+		      playerVars: { 'autoplay': 0, 'controls': 1,'autohide':1,'wmode':'opaque' },
+		      videoId: sessionStorage.ytvidID,
+		      
+		    });
+		    
+		    
+		    	player2 = new YT.Player('ytplayer2', {
+			      height: '298px',
+			      width: '99%',
+			      playerVars: { 'autoplay': 0, 'controls': 1,'autohide':1,'wmode':'opaque' },
+			      videoId: sessionStorage.ytvidID2,
+			      
+			    });
+		    
+		    
+		  }
+
+	
+	
+}else{
+	
+	
+	 $.ajax({
+		    type: "GET",
+		    dataType: "json",
+		    url: "/initialOpen"				    
+		}).done(function(data){
+			
+			data1 = data['out2'];
+			data2 = data['out1'];
+			
+			sessionStorage.fileLink = data1['fileLink'];
+			sessionStorage.vidID = data1['id'];
+			sessionStorage.userID = data1['userID'];
+			sessionStorage.bandName = data1['bandName'];
+			sessionStorage.songName = data1['songName'];
+			//sessionStorage.country = data['country'];
+			sessionStorage.artistLink = data1['artistLink'];
+			sessionStorage.votes = data1['votes'];
+			
+			
+			
+			sessionStorage.fileLink2 = data2['fileLink'];
+			sessionStorage.vidID2 = data2['id'];
+			sessionStorage.userID2 = data2['userID'];
+			sessionStorage.bandName2 = data2['bandName'];
+			sessionStorage.songName2 = data2['songName'];
+			//sessionStorage.country = data['country'];
+			sessionStorage.artistLink2 = data2['artistLink'];
+			sessionStorage.votes2 = data2['votes'];
+			
+
+			
+			location.reload(true);
+			
+			//sessionStorage. = data['country'];
+
+		    // $("#bandName").text(data);
+		});
+	
+	
+	sessionStorage.firstOpen = 'opened'
+	
+}
+
+
+</script>
+
+
+	<div id="body" class="k-content">
+
+		<script type="text/javascript">
+															
+
+											
+											
+															 
+															</script>
+
+		<div id="forecast">
+
+
+			<div align="right">
+				<centre> <img src="images/banner.jpg" alt="hamster"
+					width="50%" height="200px"> </centre>
+			</div>
+
+
+
+			<div>
+
+				<ul id="menu">
+
+					<li>Filter
+						<ul>
+							<li>Genre
+
+								<ul>
+
+									<li>Alternative & Indie</li>
+									<li>Blues</li>
+									<li>Classical</li>
+									<li>Country</li>
+									<li>Dance & Electronic</li>
+									<li>Easy Listening</li>
+									<li>Folk & Songwriter</li>
+									<li>Hard Rock & Metal</li>
+									<li>Jazz</li>
+									<li>Miscellaneous</li>
+									<li>Pop</li>
+									<li>R&B & Soul</li>
+									<li>Rap & Hip-Hop</li>
+									<li>Reggae</li>
+									<li>Rock</li>
+									<li>Soundtracks & Musicals</li>
+									<li>World Music</li>
+								</ul>
+							</li>
+
+
+							<li>Signed
+
+								<ul>
+
+									<li>Yes</li>
+									<li>No</li>
+									<li>All</li>
+
+								</ul>
+							</li>
+
+							<li>Video
+
+								<ul>
+
+									<li>Yes</li>
+									<li>No</li>
+									<li>All</li>
+
+								</ul>
+							</li>
+
+
+						</ul>
+
+					</li>
+
+
+					<li>charts</li>
+
+					<li>mySlamBox
+						<ul>
+							<li>playLists</li>
+							<li>account</li>
+						</ul>
+
+					</li>
+
+					<li>about</li>
+					<li>contact</li>
+
+
+
+
+				</ul>
+			</div>
+
+			<div class="demo-section">
+
+
+
+				<div id="register" class="k-content">
+					<div id="window" style="visibility: visible">
+
+
+						<div id="registration" class="k-content">
+
+							<div class="registration">
+								<center>
+									<form action="/register" method="post">
+										<ul>
+											<input placeholder="email..." id="email" name=email
+												data-bind="value: email" style="width: 181px" />
+											<br>
+											<input placeholder="password..." id="password" name=password
+												data-bind="value: password" style="width: 181px" />
+											<br>
+											<input placeholder="First Name..." id="firstname"
+												name=firstname data-bind="value: firstName"
+												style="width: 181px" />
+											<br>
+											<input placeholder="Last Name ..." id="lastname"
+												name=lastname data-bind="value: lastName"
+												style="width: 181px" />
+											<br>
+											<input placeholder="Country..." id="country" name=country
+												data-bind="value: country" style="width: 181px" />
+											<br>
+											<input placeholder="City..." id="city" name=city
+												data-bind="value: city" style="width: 181px" />
+											<br>
+											<input placeholder="Link..." id="link" name=link
+												data-bind="value: link" style="width: 181px" />
+											<br>
+											<select placeholder="Age..." id="age" name=age
+												data-bind="value: age" style="width: 181px">
+
+												<option value='' disabled selected style='display: none;'>Age</option>
+												<option>0-13</option>
+												<option>13-20</option>
+												<option>20-30</option>
+												<option>30-40</option>
+												<option>40-50</option>
+												<option>>50</option>
+												<option>Female</option>
+											</select>
+											<br>
+											<select placeholder="Gender..." id="gender" name=gender
+												data-bind="value: gender" style="width: 181px">
+
+												<option value='' disabled selected style='display: none;'>Sex</option>
+												<option>Male</option>
+												<option>Female</option>
+											</select>
+
+
+											<br>
+
+											<select id="prefs" multiple="multiple" name=prefs
+												data-placeholder="Select preferences..."
+												data-bind="value: Preference" style="width: 181px">
+
+												<option>Rock</option>
+												<option>Dub Step</option>
+												<option>Blue Grass</option>
+												<option>Swing</option>
+												<option>Hip Hop</option>
+												<option>Classical</option>
+
+											</select>
+
+
+											<br>
+
+											<input type="checkbox" id="agree" data-bind="checked: agreed" />
+											<label for="agree">I have read the licence agreement</label>
+											<br>
+											<br>
+											<button data-bind="enabled: agreed" style="display: block">Register</button>
+
+
+										</ul>
+									</form>
+								</center>
+							</div>
+
+							<!-- 
+						<div class="confirmation" data-bind="visible: confirmed">
+							Thank you for your registration, <span
+								data-bind="text: firstName"></span> <span
+								data-bind="text: lastName"></span>
+
+						</div> -->
+
+							<script type="text/javascript">
+							$(document).ready(
+									function() {
+										var viewModel = kendo.observable({
+											firstName : "",
+											lastName : "",
+											country : "",
+											city : "",
+											age : "",
+											gender : "",
+											agreed : false,
+											confirmed : false,
+											register : function(e) {
+												e.preventDefault();
+
+												this.set("confirmed", true);
+											},
+
+										});
+										var required = $("#prefs")
+												.kendoMultiSelect().data(
+														"kendoMultiSelect");
+										kendo.bind($("#registration"),
+												viewModel, required);
+
+									});
+						</script>
+
+						</div>
+
+
+					</div>
+				</div>
+				<script>
+          
+          
+          
+                $(document).ready(function() {
+                	
+                	
+                	
+                    var window = $("#window"),
+                        undo = $("#undo")
+                                .bind("click", function() {
+                                    window.data("kendoWindow").open();
+                                    undo.hide();
+                                });
+
+                  
+
+                    if (!window.data("kendoWindow")) {
+                        window.kendoWindow({
+                            width: "300px",
+                            title: "Become part of the revolution",
+                            actions: [
+                                "Pin",
+                                "Minimize",
+                                "Maximize",
+                                "Close"
+                            ],
+                            visible: false,
+                           
+                        });
+                    }
+                    
+                    var dialog = $("#window").data("kendoWindow");
+                    dialog.center();
+                    //dialog.open();
+                });
+            </script>
+				<div id="splitter class="k-content">
+
+
+					<br>
+
+					<div id="vertical">
+
+						<div id="bottom-pane">
+							<div id="horizontal" style="height: 100%; width: 100%;">
+								<div id="left-pane">
+									<div class="pane-content">
+
+
+
+							<center>
+
+								<br>
+									<button class="bin" type="button" name="legendbin" id="legendbin">only vote</button>
+									<button class="keep" type="button" name="legendkeep" id="legendkeep">vote and add to playlist</button>
+								
+							</center>
+
+							<br>
+							
+										<div id="ytplayerwrapper">
+											<div id="ytplayer" style="display: visible;"></div>
+											
+										</div>
+										
+									
+											<div id="info1"></div>
+										
+											<script>
+											
+											
+ 											output = '<center><h3>'+sessionStorage.bandName+' '+sessionStorage.songName+'</h3>'+
+											'<p>Visit at: '+sessionStorage.artistLink+'</p> '+
+											'<p>Votes: '+sessionStorage.votes+'</p></center> ' 
+
+											
+											
+											document.getElementById("info1").innerHTML = output;		
+						
+											
+												</script>
+
+									</div>
+								</div>
+						
+						<div id="center-pane">
+						
+						<div class="pane-content">
+						<center>
+
+								<br>
+								
+									<button class="bin" type="button" name="challengerbin" id="challengerbin">only vote</button>
+									<button class="keep" type="button" name="challengerkeep" id="challengerkeep">vote and add to playlist</button>
+							</center>
+						
+						<br>
+						<div id="ytplayer2" style="display: visible;"></div>
+					
+							<div id="info2"></div>
+									
+											<script>
+											
+						output2 = '<center><h3>'+sessionStorage.bandName2+' '+sessionStorage.songName2+'</h3>'+
+											'<p>Visit at: '+sessionStorage.artistLink2 +'</p> '+
+											'<p>Votes: '+sessionStorage.votes2 +'</p></center> '
+
+											document.getElementById("info2").innerHTML = output2; 
+											
+												</script>
+						
+						</div>
+						
+						</div>
+
+								<div id="right-pane">
+
+									<div id="vertical2">
+										<div id="top-pane2">
+
+											<div id=login class="pane-content"></div>
+
+											<div id=login2></div>
+											<script type="text/javascript">
+						
+														if(sessionStorage.userID != 'noid'){
+														//	if(false){
+															formHTML = 
+																
+																'<center><h1>Hello ' + sessionStorage.userName + '</h1>'+
+																'<h4>You have cast ' + '0' + ' votes</h4>' +
+																'<h4>Making you a slamstr ' + '</h4>'+
+																'<h3>pup ' + '</h3></center>';
+															
+														}else{
+														
+															formHTML = 
+																'<center><h3>Login</h3></center>'+
+																'<div id=\"loginform\" class=\"k-content\"> '+
+	
+															'	<div class=\"login\"> '+
+															'		<form action=\"/#\" id = \"loginForm\" method=\"post\"> '+
+															'			<center> '+
+															'				<input placeholder=\"user name\" name= \"username\" id=\"uname\" '+
+															'					data-bind=\"value: userName\" /> <br> <input '+
+															'					placeholder=\"password\" id=\"password\" name= \"password\"'+
+															'					data-bind=\"value: pWord\" /> <br> <br/> '+
+															
+	
+															'			</center> '+
+															'		</form> '+
+															
+													
+															
+															'	</div> '+
+															'</div> '
+															
+															
+														formHTML2 = '<center><a href="#" onclick=\"return notRegistered(); return false;\">Not registered?</a>' +
+															'<button id=\"loginButton\" style=\"display: float\">Login</button></center> ';
+							
+															
+														}
+														
+														
+														document.getElementById("login").innerHTML = formHTML;
+														document.getElementById("login2").innerHTML = formHTML2;
+															
+												
+														 function notRegistered() {
+															 var dialog = $("#window").data("kendoWindow");
+											                    dialog.center();
+											                    dialog.open();
+														        // return true or false, depending on whether you want to allow the `href` property to follow through or not
+														    }
+														
+														</script>
+
+
+										</div>
+
+
+
+										<div id="bottom-pane2">
+
+
+
+											<div class="pane-content" id="vidInfo">
+
+												some nice visulisation
+
+					
+
+											</div>
+										</div>
+
+
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+
+
+
+
+				<script type="text/javascript">
+
+						 $(document).ready(function() {
+							 
+							
+							 
+							 var tes = 1;
+							 
+				                function onOpen(e) {
+				                    kendoConsole.log("Opened: " + $(e.item).children(".k-link").text());
+				                
+				                    
+				                }
+
+				                function onClose(e) {
+				                    kendoConsole.log("Closed: " + $(e.item).children(".k-link").text());
+				                }
+
+				                function onSelect(e) {
+				                    kendoConsole.log("Selected: " + $(e.item).children(".k-link").text());
+				                    
+				                    if($(e.item).children(".k-link").text()=='charts'){
+				                    	window.location.assign("/charts.html");
+				                    	
+				                    }else if($(e.item).children(".k-link").text()=='playlists'){
+				                    	window.location.assign("/playlist.html");
+				                    }else if($(e.item).children(".k-link").text()=='account'){
+				                    	window.location.assign("/account.html");
+				                    }else if($(e.item).children(".k-link").text()=='about'){
+				                    	window.location.assign("/about.html");
+				                    }else if($(e.item).children(".k-link").text()=='contact'){
+				                    	window.location.assign("/contact.html");
+				                    }
+				                    
+				                    
+				                }
+
+				                function onActivate(e) {
+				                    kendoConsole.log("Activated: " + $(e.item).children(".k-link").text());
+				                    
+				                }
+
+				                function onDeactivate(e) {
+				                    kendoConsole.log("Deactivated: " + $(e.item).children(".k-link").text());
+				                }
+
+				                $("#menu").kendoMenu({
+				                    select: onSelect,
+				                    open: onOpen,
+				                    close: onClose,
+				                    activate: onActivate,
+				                    deactivate: onDeactivate,
+				                    
+				                });
+				            });
+						
+						
+							$(document).ready(function() {
+				
+								
+								
+								 
+								
+							
+								
+								
+								
+								$("#vertical").kendoSplitter({
+									orientation : "vertical",
+									panes : [ {
+										collapsible : true,
+										//size : "43%"
+									}
+
+									]
+								});
+
+						
+								
+								$("#horizontal").kendoSplitter({
+									panes : [ {
+										collapsible : false,
+										resizable: false,
+										size : "40%"
+									}, {
+										collapsible : false,
+										resizable: false,
+										size : "40%"
+									},
+									{
+										collapsible :false,
+										resizable: false,
+										size : "20%"
+									},
+
+									]
+								});
+								
+		
+								
+
+								$("#vertical2").kendoSplitter({
+									orientation : "vertical",
+									panes : [ {
+										collapsible : false,
+										resizable: false,
+										size : "31%"
+									},
+									{
+										collapsible : false,
+										size : "10%"
+									},{
+										collapsible : false
+									},
+
+									]
+								});
+
+							});
+						</script>
+
+
+
+
+				<style scoped type="text/css">
+#vertical {
+	height: 501px;
+	width: 90%;
+	margin: 0 auto;
+}
+
+#menu {
+	font-size: 2em;
+	text-transform: lowercase;
+	padding: 0px 0px;
+}
+
+#menu h2 {
+	font-size: 1em;
+	text-transform: lowercase;
+	padding: 0px 0px;
+}
+
+#menu li {
+	font-size: smaller; //
+	text-transform: uppercase;
+	padding: 0px 0px;
+}
+
+#vertical2 {
+	height: 501px;
+	width: 100%;
+	margin: 0 auto;
+}
+
+#middle-pane {
+	background-color: rgba(60, 70, 80, 0.10);
+}
+
+#bottom-pane {
+	background-color: rgba(60, 70, 80, 0.15);
+}
+
+#left-pane,#center-pane,#right-pane {
+	background-color: rgba(60, 70, 80, 0.05);
+}
+
+.pane-content {
+	padding: 0 10px;
+}
+</style>
+
+
+
+
+
+			</div>
+
+
+			
+				
+				<!-- <center>
+							<input class="bin" id="dontlike" name="notlike" type="button"
+								value="Bin It" /> <input class="keep" id="like" name="like"
+								type="button" value="Slam It" />
+						</center> -->
+
+			
+
+
+			<div class="demo-section">Footer here...</div>
+
+
+			<div></div>
+
+			<div>
+
+
+				<br>
+
+
+				<style scoped type="text/css">
+button.keep,submit:visited {
+	background: #222 repeat-x;
+	display: inline-block;
+	padding: 5px 10px 6px;
+	color: #fff;
+	text-decoration: none;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 8px;
+	text-shadow: 0 -0px 0px rgba(0, 0, 0, 0.25);
+	border: 0px solid rgba(0, 0, 0, 0);
+	position: relative;
+	cursor: pointer;
+	background-color: #009612;
+	font-size: 10pt;
+	width: 190px;
+}
+
+button.bin,submit:visited {
+	background: #222 repeat-x;
+	display: inline-block;
+	padding: 5px 10px 6px;
+	color: #fff;
+	text-decoration: none;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 8px;
+	-moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+	-webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0);
+	border: 0px solid rgba(0, 0, 0, 0);
+	position: relative;
+	cursor: pointer;
+	background-color: #730000;
+	font-size: 10pt;
+	width: 190px;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+	color: #000;
+}
+</style>
+			</div>
+</body>
+</html>
