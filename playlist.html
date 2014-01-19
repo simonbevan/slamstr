@@ -6,7 +6,7 @@
 <link href="examples/content/shared/styles/examples-offline.css"
 	rel="stylesheet">
 <link href="styles/kendo.common.min.css" rel="stylesheet">
-
+<link href="styles/kendo.default.min.css" rel="stylesheet">
 <script src="js/kendo.all.min.js" type="text/javascript"></script>
 <link href="bbb.css" rel="stylesheet">
 
@@ -18,10 +18,7 @@
 
 <script src="examples/content/shared/js/people.js"></script>
 
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-      google.load('visualization', '1', {packages: ['corechart']});
-    </script>
+
 
 
 
@@ -47,56 +44,9 @@
 
 				<ul id="menu">
 
-					<li>Filter
+					<li>PlayList
 						<ul>
-							<li>Genre
-
-								<ul>
-
-									<li>Alternative & Indie</li>
-									<li>Blues</li>
-									<li>Classical</li>
-									<li>Country</li>
-									<li>Dance & Electronic</li>
-									<li>Easy Listening</li>
-									<li>Folk & Songwriter</li>
-									<li>Hard Rock & Metal</li>
-									<li>Jazz</li>
-									<li>Miscellaneous</li>
-									<li>Pop</li>
-									<li>R&B & Soul</li>
-									<li>Rap & Hip-Hop</li>
-									<li>Reggae</li>
-									<li>Rock</li>
-									<li>Soundtracks & Musicals</li>
-									<li>World Music</li>
-								</ul>
-							</li>
-
-
-							<li>signed
-
-								<ul>
-
-									<li>Yes</li>
-									<li>No</li>
-									<li>All</li>
-
-								</ul>
-							</li>
-
-							<li>video
-
-								<ul>
-
-									<li>Yes</li>
-									<li>No</li>
-									<li>All</li>
-
-								</ul>
-							</li>
-
-
+							<li>Your Playlist</li>
 						</ul>
 
 					</li>
@@ -132,16 +82,21 @@
             
                 $(document).ready(function() {
                 	
+//var userID = "swbevan@googlemail.com" 
+var userID = localStorage.userID;
+
         $.ajax({
-		    type: "GET",
-		    dataType: "json",
-		    url: "/createTable"				    
+		    type: "POST",
+		    //dataType: "json",
+               cache: false, 
+		    url: "/getPlayList"	,
+		    data: { uID: userID }, 			    
 		}).done(function(data){
 			
 			data1 = data;
 		
 
-			var data = createRandomData(5);
+			//var data = createRandomData(5);
 					
 					
                     $("#grid").kendoGrid({
@@ -181,13 +136,26 @@
                             } , {
                                 width: 100,
                                 field: "genre",
-                                filterable: {
-                                    ui: cityFilter
-                                }
+                                //filterable: {
+                                 //   ui: cityFilter
+                                //}
+                                 filterable: false
                             }  , {
                                 width: 50,
-                                field: "votes",
-                                title: "Vote",
+                                field: "plays",
+                                title: "Plays",
+                                filterable: false
+                            },
+                            {
+                                width: 50,
+                                field: "date_added",
+                                title: "Date Added",
+                                filterable: false
+                            },
+                            {
+                                width: 50,
+                                field: "play",
+                                title: "Plays",
                                 filterable: false
                             }
                         ]
@@ -255,15 +223,6 @@
 											<div id=login class="pane-content">
 
 
-								can't get it to load in pain for some reason so
-								<a href="/maps.html">click here </a>
-								to see an example of what I want in here. At the moment it is just random data, but
-								when we have content I will populate the heat map of where the
-								most voted bands are coming from. Maybe we just put a static image in and when
-								clicked it takes you to a ful screen map? We can generate different maps for
-								users, genres, votes, bands, bands with most votes, our slamstr index all sorts really
-													  
-
 
 
 											</div>
@@ -277,7 +236,7 @@
 
 											<div class="pane-content" id="vidInfo">
 
-												streaming votes?
+									
 
 											</div>
 										</div>
@@ -500,7 +459,8 @@
 			</div>
 
 <br>
-			<div class="demo-section2">
+
+						<div class="demo-section2">
 
 				<div align="center">
 
@@ -592,7 +552,6 @@ input.bin,submit:visited {
 	background-color: white;
 	font-size: 10pt;
 }
-
 
 ::-webkit-input-placeholder { /* WebKit browsers */
 	color: #000;
