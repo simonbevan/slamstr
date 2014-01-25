@@ -40,9 +40,8 @@
 
 				<ul id="menu">
 
+					<li>upload</li>
 					<li>battle</li>
-
-
 					<li>charts</li>
 
 					<li>myslamstr
@@ -91,20 +90,22 @@
 									<div class="pane-content">
 <br>
 
+<h2>About:</h2>
+
 <h2>Artists:</h2>
  
-<li> Create an account. </li>
-<li> Upload your music video. But what’s that, you don’t have a video – not a problem, MP3’s will have a video assigned to them. </li>
-<li> This will be entered into our challenger database. ‘So what’, I hear you cry? ‘Just make me famous’. OK, don’t worry; we have the databases and algorithms covered. All you need to know is that your baby will be randomly selected to battle against previous winners. </li>
+<li> <a href="/signup.html">Create an account.</a> Be sure to upload photos...These will come in handy later. </li>
+<li> Upload your music video to the “Challenger” Database. But what’s that, you don’t have a video? Not a problem, we'll create a video for your MP3’s.</li>
+<li> We have the databases and algorithms covered. We will make sure the world gets to see your music.  </li>
 <li> Users will vote what track they think is better (obviously yours), and whether they like the track enough (of course they will) to add to their playlist and share on social media. /li>
-<li> Gain enough votes and your track will enter a chart for the world to see and listen to. You will then enter the legend database and the poor new comers will have the impossible task of beating you. You have nothing to lose and everything to gain. </li>
+<li> Gain enough votes and your track will enter a chart for the world to see and listen to. You will then enter the legend database and the poor newcomers will have the impossible task of beating you. You have nothing to lose and everything to gain. </li>
  
 <h2>Users</h2>
  
 <li> Create an account.</li>
 <li> Watch the legend and challenger videos and decide who you think deserves your vote.</li>
 <li> Discover new music, support up and coming artists, have fun, be the first to find the next big thing, get the girls/boys, find untold riches, have the life you know you deserve (err, maybe some of those may be true than others).</li>
-<li> Create personlised playlists, and have a library you can get nowhere else. We’re not here to compete or replace just enhance.</li>
+<li> Create multiple personlised playlists, and have a library you can get nowhere else. We’re not here to compete or replace just enhance.</li>
 
 
 
@@ -179,17 +180,20 @@
 				                function onSelect(e) {
 				                    kendoConsole.log("Selected: " + $(e.item).children(".k-link").text());
 				                    
-				                    if($(e.item).children(".k-link").text()=='battle'){
-				                    	window.location.assign("/");
-				                    	
-				                    }else if($(e.item).children(".k-link").text()=='playlists'){
+				                    if($(e.item).children(".k-link").text()=='charts'){
+				                    	window.location.assign("/charts.html");
+				                    }else if($(e.item).children(".k-link").text()=='playLists'){
 				                    	window.location.assign("/playlist.html");
 				                    }else if($(e.item).children(".k-link").text()=='account'){
 				                    	window.location.assign("/account.html");
-				                    }else if($(e.item).children(".k-link").text()=='charts'){
-				                    	window.location.assign("/charts.html");
+				                    }else if($(e.item).children(".k-link").text()=='about'){
+				                    	window.location.assign("/about.html");
 				                    }else if($(e.item).children(".k-link").text()=='contact'){
 				                    	window.location.assign("/contact.html");
+				                    }else if($(e.item).children(".k-link").text()=='upload'){
+				                    	window.location.assign("/upload.html");
+				                    }else if($(e.item).children(".k-link").text()=='battle'){
+				                    	window.location.assign("/");
 				                    }
 				                    
 				                    

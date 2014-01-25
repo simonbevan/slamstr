@@ -51,8 +51,9 @@
 
 					</li>
 
-
+					<li>upload</li>
 					<li>battle</li>
+					<li>charts</li>
 
 					<li>myslamstr
 						<ul>
@@ -275,10 +276,9 @@ var userID = localStorage.userID;
 				                function onSelect(e) {
 				                    kendoConsole.log("Selected: " + $(e.item).children(".k-link").text());
 				                    
-				                    if($(e.item).children(".k-link").text()=='battle'){
-				                    	window.location.assign("/");
-				                    	
-				                    }else if($(e.item).children(".k-link").text()=='playlists'){
+				                    if($(e.item).children(".k-link").text()=='charts'){
+				                    	window.location.assign("/charts.html");
+				                    }else if($(e.item).children(".k-link").text()=='playLists'){
 				                    	window.location.assign("/playlist.html");
 				                    }else if($(e.item).children(".k-link").text()=='account'){
 				                    	window.location.assign("/account.html");
@@ -286,6 +286,10 @@ var userID = localStorage.userID;
 				                    	window.location.assign("/about.html");
 				                    }else if($(e.item).children(".k-link").text()=='contact'){
 				                    	window.location.assign("/contact.html");
+				                    }else if($(e.item).children(".k-link").text()=='upload'){
+				                    	window.location.assign("/upload.html");
+				                    }else if($(e.item).children(".k-link").text()=='battle'){
+				                    	window.location.assign("/");
 				                    }
 				                    
 				                    

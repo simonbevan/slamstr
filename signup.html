@@ -52,60 +52,8 @@ sessionStorage.signuptype="fan";
 
 						<ul id="menu">
 
-							<li>Filter
-								<ul>
-									<li>Genre
-
-										<ul>
-
-											<li>Alternative & Indie</li>
-											<li>Blues</li>
-											<li>Classical</li>
-											<li>Country</li>
-											<li>Dance & Electronic</li>
-											<li>Easy Listening</li>
-											<li>Folk & Songwriter</li>
-											<li>Hard Rock & Metal</li>
-											<li>Jazz</li>
-											<li>Miscellaneous</li>
-											<li>Pop</li>
-											<li>R&B & Soul</li>
-											<li>Rap & Hip-Hop</li>
-											<li>Reggae</li>
-											<li>Rock</li>
-											<li>Soundtracks & Musicals</li>
-											<li>World Music</li>
-										</ul>
-									</li>
-
-
-									<li>Signed
-
-										<ul>
-
-											<li>Yes</li>
-											<li>No</li>
-											<li>All</li>
-
-										</ul>
-									</li>
-
-									<li>Video
-
-										<ul>
-
-											<li>Yes</li>
-											<li>No</li>
-											<li>All</li>
-
-										</ul>
-									</li>
-
-
-								</ul>
-
-							</li>
-
+							<li>upload</li>
+							<li>battle</li>
 
 							<li>charts</li>
 
@@ -154,48 +102,63 @@ sessionStorage.signuptype="fan";
 </center>
 
 
-														<form action="/register" method="post">
+														<form action="/register" method="post" id ="registerArt">
 															<ul>
+															
+																<input type="hidden" name="type" value="artist">
+															
 																<label for="email" class="required">email:</label>
-																<input id="email" name=email data-bind="value: email"
-																	style="width: 181px" class="k-textbox" />
+																<input type="email" id="email" name=email data-bind="value: email"
+																	 required style="width: 181px" class="k-textbox" />
+																	 
+																
+																<label for="uname" class="required">user name:</label>
+																<input type="text" id="uname" name=uname data-bind="value: uname"
+																	 data-bind="value: uname" style="width: 181px"
+																	class="k-textbox" type="text" pattern="[A-Za-z0-9]+"
+																	required validationMessage="Sorry only letters and numbers" />
+																
 																<br>
 																<label for="password" class="required">password:</label>
 																<input id="password" name=password
 																	data-bind="value: password" type="password"
-																	style="width: 181px" class="k-textbox" />
-																
+																	required validationMessage="Please enter a password" style="width: 181px" class="k-textbox" style="width: 181px" class="k-textbox" />
+																<span class="k-invalid-msg" data-for="password"></span>
 																<label for="cpassword" class="required">confirm:</label>
 																<input id="cpassword" name=cpassword
-																	data-bind="value: cpassword" type="cpassword"
-																	style="width: 181px" class="k-textbox" />
+																	data-bind="value: cpassword" type="password"
+																	required validationMessage="Please enter a password" style="width: 181px" class="k-textbox" style="width: 181px" class="k-textbox" />
 																<br>
 																<label for="firstname" class="required">firstname:</label>
 																<input id="firstname" name=firstname
 																	data-bind="value: firstName" style="width: 181px"
-																	class="k-textbox" />
+																	class="k-textbox" type="text" pattern="[A-Za-z]+"
+																	required validationMessage="Sorry only charaters" />
 																
 																<label for="lastname" class="required">lastname:</label>
 																<input id="lastname" name=lastname
 																	data-bind="value: lastName" style="width: 181px"
-																	class="k-textbox" />
+																	class="k-textbox" type="text" pattern="[A-Za-z]+"
+																	required validationMessage="Sorry only charaters" />
 																<br>
 																<label for="country" class="required">country:</label>
 																<input id="country" name=country
 																	data-bind="value: country" style="width: 181px"
-																	class="k-textbox" />
+																	class="k-textbox" type="text" pattern="[A-Za-z]+"
+																	required validationMessage="please enter a valid country" />
 																
 																<label for="city" class="required">city:</label>
 																<input id="city" name=city data-bind="value: city"
-																	style="width: 181px" class="k-textbox" />
+																	style="width: 181px" class="k-textbox" 
+																	class="k-textbox" type="text" pattern="[A-Za-z]+"
+																	required validationMessage="Please enter a valid city" />
 																<br>
 																
 																<label for="age" class="required">age:</label>
-																<select id="age" name=age2 data-bind="value: age2"
+																<select id="age" name=age data-bind="value: age2" required validationMessage="Please Select Your Age"
 																	style="width: 181px">
 
-																	<option value='' disabled selected
-																		style='display: none;'>Age</option>
+																	<option></option>
 																	<option>under 12</option>
 																	<option>12–17</option>
 																	<option>18–24</option>
@@ -208,11 +171,10 @@ sessionStorage.signuptype="fan";
 																</select>
 																
 																<label for="gender" class="required">gender:</label>
-																<select id="gender" name=gender2
+																<select id="gender" name=gender required validationMessage="Please Select Your Sex"
 																	data-bind="value: gender" style="width: 181px">
 
-																	<option value='' disabled selected
-																		style='display: none;'>Sex</option>
+																	<option></option>
 																	<option>Male</option>
 																	<option>Female</option>
 																</select>
@@ -221,15 +183,26 @@ sessionStorage.signuptype="fan";
 																<br>
 
 																<label for="prefs2" class="required">i prefer:</label>
-																<select id="prefs2" multiple="multiple" name=prefs3
+																<select id="prefs2" multiple="multiple" name=prefs2 required validationMessage="Please Select Your preferences"
 																	data-bind="value: Preference" style="width: 181px">
 
-																	<option>Rock</option>
-																	<option>Dub Step</option>
-																	<option>Blue Grass</option>
-																	<option>Swing</option>
-																	<option>Hip Hop</option>
-																	<option>Classical</option>
+															<option>Alternative & Indie</option>
+															<option>Blues</option>
+															<option>Classical</option>
+															<option>Country</option>
+															<option>Dance & Electronic</option>
+															<option>Easy optionstening</option>
+															<option>Folk & Songwriter</option>
+															<option>Hard Rock & Metal</option>
+															<option>Jazz</option>
+															<option>Miscellaneous</option>
+															<option>Pop</option>
+															<option>R&B & Soul</option>
+															<option>Rap & Hip-Hop</option>
+															<option>Reggae</option>
+															<option>Rock</option>
+															<option>Soundtracks & Musicals</option>
+															<option>World Music</option>
 
 																</select>
 
@@ -273,48 +246,63 @@ sessionStorage.signuptype="fan";
 																<div id ="name"><h2>Fan<h2></div>
 </center>
 
-														<form action="/register" method="post">
+														<form action="/register" method="post"  id ="registerFan">
 															<ul>
+															
+															<input type="hidden" name="type" value="fan">
+															
 																<label for="email" class="required">email:</label>
-																<input id="email" name=email data-bind="value: email"
-																	style="width: 181px" class="k-textbox" />
+																<input type="email" id="email" name=email data-bind="value: email"
+																	 required  style="width: 181px"class="k-textbox" />
+															
+																
+																<label for="uname" class="required">user name:</label>
+																<input type="text" id="uname" name=uname data-bind="value: uname"
+																	 data-bind="value: uname" style="width: 181px"
+																	class="k-textbox" type="text" pattern="[A-Za-z0-9]+"
+																	required validationMessage="Sorry only letters and numbers" />
+																	
 																<br>
 																<label for="password" class="required">password:</label>
 																<input id="password" name=password
 																	data-bind="value: password" type="password"
-																	style="width: 181px" class="k-textbox" />
-																
+																	required validationMessage="Please enter a password" style="width: 181px" class="k-textbox" style="width: 181px" class="k-textbox" />
+																<span class="k-invalid-msg" data-for="password"></span>
 																<label for="cpassword" class="required">confirm:</label>
 																<input id="cpassword" name=cpassword
-																	data-bind="value: cpassword" type="cpassword"
-																	style="width: 181px" class="k-textbox" />
+																	data-bind="value: cpassword" type="password"
+																	required validationMessage="Please enter a password" style="width: 181px" class="k-textbox" style="width: 181px" class="k-textbox" />
 																<br>
 																<label for="firstname" class="required">firstname:</label>
 																<input id="firstname" name=firstname
 																	data-bind="value: firstName" style="width: 181px"
-																	class="k-textbox" />
+																	class="k-textbox" type="text" pattern="[A-Za-z]+"
+																	required validationMessage="Sorry only charaters" />
 																
 																<label for="lastname" class="required">lastname:</label>
 																<input id="lastname" name=lastname
 																	data-bind="value: lastName" style="width: 181px"
-																	class="k-textbox" />
+																	class="k-textbox" type="text" pattern="[A-Za-z]+"
+																	required validationMessage="Sorry only charaters" />
 																<br>
 																<label for="country" class="required">country:</label>
 																<input id="country" name=country
 																	data-bind="value: country" style="width: 181px"
-																	class="k-textbox" />
+																	class="k-textbox" type="text" pattern="[A-Za-z]+"
+																	required validationMessage="please enter a valid country" />
 																
 																<label for="city" class="required">city:</label>
 																<input id="city" name=city data-bind="value: city"
-																	style="width: 181px" class="k-textbox" />
+																	style="width: 181px" class="k-textbox" 
+																	class="k-textbox" type="text" pattern="[A-Za-z]+"
+																	required validationMessage="Please enter a valid city" />
 																<br>
 																
 																<label for="age2" class="required">age:</label>
-																<select id="age2" name=age2 data-bind="value: age2"
+																<select id="age2" name=age2 data-bind="value: age2" required validationMessage="Please Select Your Age"
 																	style="width: 181px">
 
-																	<option value='' disabled selected
-																		style='display: none;'>Age</option>
+																	<option></option>
 																	<option>under 12</option>
 																	<option>12–17</option>
 																	<option>18–24</option>
@@ -327,11 +315,10 @@ sessionStorage.signuptype="fan";
 																</select>
 																
 																<label for="gender2" class="required">gender:</label>
-																<select id="gender2" name=gender2
+																<select id="gender2" name=gender2 required validationMessage="Please Select Your Sex"
 																	data-bind="value: gender" style="width: 181px">
 
-																	<option value='' disabled selected
-																		style='display: none;'>Sex</option>
+																	<option></option>
 																	<option>Male</option>
 																	<option>Female</option>
 																</select>
@@ -340,15 +327,26 @@ sessionStorage.signuptype="fan";
 																<br>
 
 																<label for="prefs3" class="required">i prefer:</label>
-																<select id="prefs3" multiple="multiple" name=prefs3
+																<select id="prefs3" multiple="multiple" name=prefs3 required validationMessage="Please Select Your Sex"
 																	data-bind="value: Preference" style="width: 181px">
 
-																	<option>Rock</option>
-																	<option>Dub Step</option>
-																	<option>Blue Grass</option>
-																	<option>Swing</option>
-																	<option>Hip Hop</option>
-																	<option>Classical</option>
+									<option>Alternative & Indie</option>
+									<option>Blues</option>
+									<option>Classical</option>
+									<option>Country</option>
+									<option>Dance & Electronic</option>
+									<option>Easy optionstening</option>
+									<option>Folk & Songwriter</option>
+									<option>Hard Rock & Metal</option>
+									<option>Jazz</option>
+									<option>Miscellaneous</option>
+									<option>Pop</option>
+									<option>R&B & Soul</option>
+									<option>Rap & Hip-Hop</option>
+									<option>Reggae</option>
+									<option>Rock</option>
+									<option>Soundtracks & Musicals</option>
+									<option>World Music</option>
 
 																</select>
 
@@ -456,6 +454,7 @@ sessionStorage.signuptype="fan";
 										});
 
 										$("#gender").kendoDropDownList({
+											
 											dataTextField : "text",
 											dataValueField : "value",
 											index : 0,
@@ -474,6 +473,9 @@ sessionStorage.signuptype="fan";
 										kendo.bind($("#registration"),
 												viewModel, required);
 										
+
+										kendo.bind($("#registration2"),
+												viewModel, required);
 										
 										
 										$("#gender2").kendoDropDownList({
@@ -492,8 +494,16 @@ sessionStorage.signuptype="fan";
 												.kendoMultiSelect().data(
 														"kendoMultiSelect");
 
-										kendo.bind($("#registration2"),
-												viewModel, required);
+//										kendo.bind($("#registration2"),
+//												viewModel, required);
+										
+									       var validator = $("#registerArt").kendoValidator().data("kendoValidator"),
+						                    status = $(".status");
+									       
+									       var validator = $("#registerFan").kendoValidator().data("kendoValidator"),
+						                    status = $(".status");
+
+						   
 										
 
 									});
@@ -535,32 +545,21 @@ sessionStorage.signuptype="fan";
 																					".k-link")
 																			.text());
 
-													if ($(e.item).children(
-															".k-link").text() == 'battle') {
-														window.location
-																.assign("/");
-
-													} else if ($(e.item)
-															.children(".k-link")
-															.text() == 'playlists') {
-														window.location
-																.assign("/playlist.html");
-													} else if ($(e.item)
-															.children(".k-link")
-															.text() == 'account') {
-														window.location
-																.assign("/account.html");
-													} else if ($(e.item)
-															.children(".k-link")
-															.text() == 'about') {
-														window.location
-																.assign("/about.html");
-													} else if ($(e.item)
-															.children(".k-link")
-															.text() == 'contact') {
-														window.location
-																.assign("/contact.html");
-													}
+				                    if($(e.item).children(".k-link").text()=='charts'){
+				                    	window.location.assign("/charts.html");
+				                    }else if($(e.item).children(".k-link").text()=='playLists'){
+				                    	window.location.assign("/playlist.html");
+				                    }else if($(e.item).children(".k-link").text()=='account'){
+				                    	window.location.assign("/account.html");
+				                    }else if($(e.item).children(".k-link").text()=='about'){
+				                    	window.location.assign("/about.html");
+				                    }else if($(e.item).children(".k-link").text()=='contact'){
+				                    	window.location.assign("/contact.html");
+				                    }else if($(e.item).children(".k-link").text()=='upload'){
+				                    	window.location.assign("/upload.html");
+				                    }else if($(e.item).children(".k-link").text()=='battle'){
+				                    	window.location.assign("/");
+				                    }
 
 												}
 
@@ -682,6 +681,14 @@ sessionStorage.signuptype="fan";
 
 
 <style scoped type="text/css">
+
+span.k-tooltip
+{
+    position: static;
+    display: inline-block;
+    border-width: 1px;
+   padding: 6px 5px 1px 6px;
+}
 
 .k-widget.k-multiselect {
 	width: 400px;

@@ -40,6 +40,7 @@
 
 				<ul id="menu">
 
+					<li>upload</li>
 					<li>battle</li>
 
 
@@ -92,11 +93,11 @@
 <br>
 
 <h2>Conatct us:</h2>
-<h2>Feedback:</h2>
+<h2>Feature Feedback:</h2>
  Here at slamstr we're constantly trying to improve your experience, so please let us know what you like, dislike, or would like. We'd love to hear from you. Please email us at <br><br>
  feedback@slamstr.com
  <h2>Bug Report:</h2>
- We're aware of some, but i'm sure weve missed something. Please help by emailing <br><br>
+ We're aware of some bugs and we're sure we've missed something. Please help by emailing <br><br>
  bugreport@slamstr.com
 
 
@@ -170,17 +171,20 @@
 				                function onSelect(e) {
 				                    kendoConsole.log("Selected: " + $(e.item).children(".k-link").text());
 				                    
-				                    if($(e.item).children(".k-link").text()=='battle'){
-				                    	window.location.assign("/");
-				                    	
-				                    }else if($(e.item).children(".k-link").text()=='playlists'){
+				                    if($(e.item).children(".k-link").text()=='charts'){
+				                    	window.location.assign("/charts.html");
+				                    }else if($(e.item).children(".k-link").text()=='playLists'){
 				                    	window.location.assign("/playlist.html");
 				                    }else if($(e.item).children(".k-link").text()=='account'){
 				                    	window.location.assign("/account.html");
-				                    }else if($(e.item).children(".k-link").text()=='charts'){
-				                    	window.location.assign("/charts.html");
+				                    }else if($(e.item).children(".k-link").text()=='about'){
+				                    	window.location.assign("/about.html");
 				                    }else if($(e.item).children(".k-link").text()=='contact'){
 				                    	window.location.assign("/contact.html");
+				                    }else if($(e.item).children(".k-link").text()=='upload'){
+				                    	window.location.assign("/upload.html");
+				                    }else if($(e.item).children(".k-link").text()=='battle'){
+				                    	window.location.assign("/");
 				                    }
 				                    
 				                    

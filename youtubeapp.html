@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>slamstr</title>
+
+<script type="text/javascript"
+  src="http://ajax.googleapis.com/ajax/libs/swfobject/2.1/swfobject.js"></script>
+<script type="text/javascript"></script>
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/kendo.web.min.js" type="text/javascript"></script>
+
+<link href="styles/kendo.common.min.css" rel="stylesheet" />
+<link href="styles/kendo.default.min.css" rel="stylesheet" />
+
+
+
+
+<script type="text/javascript">
+<!--
+/* Source: http://yvoschaap.com */
+/* so we have bind available in our vanilla javascript */
+Function.prototype.bind = function(obj, args) {
+    var method = this, 
+    temp = function() {
+        return method.call(obj, args);
+    };
+
+    return temp;
+}
+
+function s4() {
+  return Math.floor((1 + Math.random()) * 0x10000)
+  .toString(16)
+  .substring(1);
+};
+
+function guid() {
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+  s4() + '-' + s4() + s4() + s4();
+}
+
+
+
+var myData = []
+var ytEmbed = {
+
+    ytQuery : 0,
+    cl : 0,
+    callback : {},
+    cfg : {},
+    player : false,
+
+    /**
+        * Main Init Method
+        */
+    init : function(cfg) {
+
+      
+        this.cfg = cfg || {};
+    
+            
+                //this.message('Loading YouTube videos. Please wait...');
+
+              //create a javascript element that returns our JSONp data.
+              var script = document.createElement('script');
+              script.setAttribute('id', 'jsonScript');
+              script.setAttribute('type', 'text/javascript');
+              //a counter
+              this.ytQuery++;
+              this.cfg.start = 1;
+              
+
+              this.cfg.orderby = 'relevance';
+              this.cfg.sortorder = 'descending';
+               
+              
+
+              script.setAttribute('src', 'http://gdata.youtube.com/feeds/api/videos?q=' + this.cfg.q + '&v=2&format=5&start-index=' + this.cfg.start + '&max-results=' + this.cfg.results + '&alt=jsonc&callback=ytEmbed.callback[' + this.ytQuery + ']&orderby=' + this.cfg.orderby + '&sortorder=' + this.cfg.sortorder);
+                  
+                
+              cfg.mC = this.ytQuery;
+
+              this.callback[this.ytQuery] = function(json) {
+          
+                for (var i = 0; i < json.data.items.length; i++) {
+                    var entry = json.data.items[i];
+                    
+                    dateNow = new Date()
+                    split = (entry.title.replace(/"/g, "")).split("-")
+                    var uuid = guid();
+                    myData.push({"id": uuid,
+                                "user":"slamstradmin@slamstr.com",
+                            "vidlink": "http://www.youtube.com/watch?v="+entry.id,
+                            "vidtype": "yt",
+                            "category": "pop",
+                            "title": split[1],
+                            "artist": split[0],
+                            "date": dateNow,
+                            "city": "london",
+                            "country": "uk",
+                            "link": "www.slamstr.com",
+                    })
+               
+                }
+
+
+                data={"data":myData};
+        
+                $("#grid").kendoGrid({
+                    dataSource: {
+                        transport: {// custom transport to serialize the value in hidden input elements
+                            read: function(options) { // this is only for the sample you should be able to use original read
+                                options.success(data);
+                            },
+                            create: function(options) {
+                                $("input#created").val(kendo.stringify(options.data.models));
+                            },
+                            update: function(options) {
+                                $("input#updated").val(kendo.stringify(options.data.models));
+                            },
+                            destroy: function(options) {
+                                $("input#destroyed").val(kendo.stringify(options.data.models));
+                            }
+                        },
+                        batch: true,
+                        pageSize: 50,
+                        schema: {
+                            model: {
+                                id: "id",
+                                fields: {
+                                    id: {
+                                        editable: true,
+                                        nullable: true,
+                                        
+                                        validation: {
+                                          type:"number",
+                                            required: true
+                                        }
+                                    },
+                                    user: {
+                                        editable: true,
+                                        nullable: true,
+                                        
+                                        validation: {
+                                            type:"string",
+                                              required: true
+                                          }
+                                    },
+                                    
+                                    vidlink: {
+                                        editable: false,
+                                        nullable: true,
+                                        
+                                    
+                                    },
+                                    
+                                    vidtype: {
+                                        editable: true,
+                                        nullable: true,
+                                        
+                                        validation: {
+                                            type:"string",
+                                              required: true
+                                          }
+                                    },
+                                    
+                                    category: {
+                                        editable: true,
+                                        nullable: true,
+                                        
+                                        validation: {
+                                            type:"string",
+                                              required: true
+                                          }
+                                    },
+                                    
+                                    
+                                    title: {
+                                        editable: true,
+                                        nullable: true,
+                                        
+                                        validation: {
+                                            type:"string",
+                                              required: true
+                                          }
+                                    },
+                                    
+                                    artist: {
+                                        editable: true,
+                                        nullable: true,
+                                        
+                                        validation: {
+                                            type:"string",
+                                              required: true
+                                          }
+                                    },
+                                    
+                                    date: {
+                                        editable: true,
+                                        nullable: true,
+                                        
+                                        validation: {
+                                            type:"string",
+                                              required: true
+                                          }
+                                    },
+                                    
+                                    city: {
+                                        editable: true,
+                                        nullable: true,
+                                        
+                                        validation: {
+                                            type:"string",
+                                              required: true
+                                          }
+                                    },
+                                    country: {
+                                        editable: true,
+                                        nullable: true,
+                                        
+                                        validation: {
+                                            type:"string",
+                                              required: true
+                                          }
+                                    },
+                                    
+                                    link: {
+                                        editable: true,
+                                        nullable: true,
+                                        
+                                        validation: {
+                                            type:"string",
+                                              required: true
+                                          }
+                                    },
+                                    
+                                    
+                                    
+                                }
+                            },
+                            data: "data",
+                            total: function(result) {
+                                result = result.data || result;
+                                return result.length || 0;
+                            }
+                        }
+                    },
+                    editable: true,
+                  
+                    height: 750,
+                    scrollable: true,
+                    sortable: true,
+                    filterable: false,
+                    pageable: true,
+                    columns: [
+                             
+             
+                        {
+                        field: "id",
+                        title: "id",
+                        width: 60},
+                        {
+                            field: "user",
+                            title: "user",
+                            width: 140},
+                        {
+                              field: "vidlink",
+                              
+                            template:"<a href='www.youtube.com/watch?v=${vidlink}' target=\"_blank\">${vidlink}</a>",
+                            
+                            title: "vid link",
+                            width: 140},
+                         {
+                             field: "vidtype",
+                             title: "vid type",
+                              width: 50},
+                        {
+                            field: "category",
+                            title: "category",
+                            width: 80},
+                        {
+                            field: "title",
+                            title: "title",
+                            width: 140},
+                         {
+                          field: "artist",
+                          title: "artist",
+                            width: 140},
+                         {
+                            field: "date",
+                            title: "date",
+                            width: 100},
+                          {
+                             field: "city",
+                             title: "city",
+                              width: 100},
+                          {
+                            field: "country",
+                            title: "country",
+                            width: 100},
+                            {
+                             field: "link",
+                             title: "link",
+                              width: 100},  
+                           
+                    {
+                        command: "destroy"}
+                    ]
+                });
+
+                $("#sync").click(function() {
+                    // sync the dataSource 
+                    $("#grid").data("kendoGrid").dataSource.sync();
+                     
+                });
+    
+
+            
+            
+                    
+               }
+                
+
+                //attach script to page, this will load the data into our page and call the funtion ytInit[ytQuery]
+                document.getElementsByTagName('head')[0].appendChild(script);
+
+          
+    
+    
+    }
+
+};
+
+
+
+</script>
+
+
+
+<script language="javascript" type="text/javascript"> 
+<!--
+ 
+function updateField(){
+  var nada = '';
+ 
+  var code = '<sc'+ nada +'ript src="http://www.yvoschaap.com/ytpage/ytembed.js" type="text/javascript"></sc'+ nada +'ript>';
+  code += "\n";
+  //code += '<di'+ nada +'v id="ytPlayer"></div>\n';
+  code += '<di'+ nada +'v id="ytThumbs"></div>';
+  code += "\n";
+    
+  var string = '\'block\':\'ytThumbs\',';
+ 
+  var codeQ = document.getElementById('codeQ').value;
+  string += '\'q\':\''+codeQ+'\','; 
+  var codeType = 'search'
+  string += '\'type\':\''+codeType+'\',';
+  var codeResults = 50;
+  string += '\'results\':'+codeResults+',';
+  var codeOrder = 'most_relevance'
+  string += '\'order\':\''+codeOrder+'\',';
+  var codePlayer = 'link'
+  string += '\'player\':\''+codePlayer+'\',';
+  var codeLayout = 'full'
+  string += '\'layout\':\''+codeLayout+'\'';
+
+  
+  var execute = {'q':codeQ,'type':codeType,'results':codeResults,'block':'youtubeDivResults','order':codeOrder,'player':codePlayer,'layout':codeLayout};
+  ytEmbed.init(execute);
+}
+//-->
+</script>
+
+
+
+</head>
+<body>
+  <div id="blog">
+    <h1>The Slamstr Youtube App</h1>
+
+    <p>Please enter a search and carefully check the results before
+      submitting to the database</p>
+    <form onsubmit="updateField(); return false;" action="">
+
+      Query: <input id="codeQ" type="text" value=""> <input
+        type="submit" value="YouTube Me" class="k-button">
+
+      <button class="k-button" id="reset" type="button">Reset</button>
+      <button class="k-button" id="submitdb" type="button">Submit
+        To DB</button>
+
+
+      <br>
+
+    </form>
+    <div id="youtubeDivResults" name="youtubeDivResults"></div>
+    <div id="youtubeDivResults2" name="youtubeDivResults2"></div>
+
+
+    <div id="example" class="k-content">
+      <div id="grid"></div>
+    </div>
+
+
+    <script type="text/javascript">
+                $(document).ready(function() {
+                    
+        
+                      //var displayedData = $("#grid").data().kendoGrid.dataSource.view()
+                      //var displayedDataAsJSON = JSON.stringify(displayedData);
+                        // sessionStorage.dataOut = displayedDataAsJSON;
+                             
+                  $("#reset").click(function(){
+                    window.location.reload();
+                    });
+                  
+                  
+                  $("#submitdb").click(function(){
+                    var displayedData = $("#grid").data().kendoGrid.dataSource.view()
+                                      
+            var i = 0;
+            function myLoop () {           //  create a loop function
+               setTimeout(function () {    //  call a 3s setTimeout when the loop is called
+              
+              var line= (displayedData[i]);
+                        
+               
+                //fileID = line.split(",");
+                          numID = JSON.stringify(line["id"]);
+                          status = 0;
+                          if (i%2 == 0){
+                              status = 0;
+                          }else{
+                              status = 1;
+                          }
+                          
+         
+  
+                        sqlStr1 = JSON.stringify(line["id"])
+                          + "," + JSON.stringify(line["user"])
+                          + "," + JSON.stringify(line["vidlink"])
+                          + "," + JSON.stringify(line["vidtype"])
+                          + "," + JSON.stringify(line["category"])
+                          + "," + JSON.stringify(line["title"])
+                          + "," + JSON.stringify(line["artist"])
+                          + "," + JSON.stringify(line["date"])
+                          + "," + JSON.stringify(line["city"])
+                          + "," + JSON.stringify(line["country"])
+                          + "," + JSON.stringify(line["link"]);
+                          
+                        sqlStr2 = ""+numID+",0,"+status+",0";
+                        
+                        //fileDisplayArea.innerText = sqlStr1 + " " +sqlStr2;
+  
+                       $.ajax({ 
+                             url: '/addToDB',
+                             type: 'POST',
+                             cache: false, 
+                             data: { 'sqlString1':sqlStr1, 'sqlString2':sqlStr2 }, 
+                             success: function(data){
+  
+                                fileDisplayArea.innerText = sqlStr1 + " " +sqlStr2;
+                                  
+                                  
+                             }
+                             , error: function(jqXHR, textStatus, err){
+                                 //alert('text status '+textStatus+', err '+err)
+                             }
+                          });
+  
+                
+                  i++;                     //  increment the counter
+                  if (i < displayedData.length) {            //  if the counter < 10, call the loop function
+                     myLoop();             //  ..  again which will trigger another 
+                  }                        //  ..  setTimeout()
+                                
+                                  
+            
+               }, 500)
+            }
+            
+            myLoop(); 
+                    
+                    
+                    
+                    
+                    
+                    //var displayedDataAsJSON = JSON.stringify(displayedData);
+                        //sessionStorage.dataOut = displayedDataAsJSON;
+                             
+                    //alert(displayedDataAsJSON)
+                    });
+                  
+                  
+                   
+                });
+            </script>
+
+
+
+
+
+    <hr>
+  </div>
+</body>
+</html>

@@ -695,37 +695,16 @@ if(sessionStorage.firstOpen == 'opened'){
 							</li>
 
 
-							<li>Signed
-
-								<ul>
-
-									<li>Yes</li>
-									<li>No</li>
-									<li>All</li>
-
-								</ul>
-							</li>
-
-							<li>Video
-
-								<ul>
-
-									<li>Yes</li>
-									<li>No</li>
-									<li>All</li>
-
-								</ul>
-							</li>
 
 
 						</ul>
 
 					</li>
 
-
+					<li>upload</li>
 					<li>charts</li>
 
-					<li>mySlamBox
+					<li>myslamstr
 						<ul>
 							<li>playLists</li>
 							<li>account</li>
@@ -996,11 +975,8 @@ if(sessionStorage.firstOpen == 'opened'){
 				                function onSelect(e) {
 				                    kendoConsole.log("Selected: " + $(e.item).children(".k-link").text());
 				                    
-
-
 				                    if($(e.item).children(".k-link").text()=='charts'){
 				                    	window.location.assign("/charts.html");
-				                    	
 				                    }else if($(e.item).children(".k-link").text()=='playLists'){
 				                    	window.location.assign("/playlist.html");
 				                    }else if($(e.item).children(".k-link").text()=='account'){
@@ -1009,6 +985,10 @@ if(sessionStorage.firstOpen == 'opened'){
 				                    	window.location.assign("/about.html");
 				                    }else if($(e.item).children(".k-link").text()=='contact'){
 				                    	window.location.assign("/contact.html");
+				                    }else if($(e.item).children(".k-link").text()=='upload'){
+				                    	window.location.assign("/upload.html");
+				                    }else if($(e.item).children(".k-link").text()=='battle'){
+				                    	window.location.assign("/");
 				                    }
 				                    
 				                    

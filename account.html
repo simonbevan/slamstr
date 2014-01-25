@@ -6,7 +6,7 @@
 <link href="examples/content/shared/styles/examples-offline.css"
 	rel="stylesheet">
 <link href="styles/kendo.common.min.css" rel="stylesheet">
-
+<link href="styles/kendo.default.min.css" rel="stylesheet">
 <script src="js/kendo.all.min.js" type="text/javascript"></script>
 <link href="bbb.css" rel="stylesheet">
 
@@ -18,10 +18,7 @@
 
 <script src="examples/content/shared/js/people.js"></script>
 
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-      google.load('visualization', '1', {packages: ['corechart']});
-    </script>
+
 
 
 
@@ -47,38 +44,6 @@
 
 				<ul id="menu">
 
-					<li>Filter
-						<ul>
-							<li>Genre
-
-								<ul>
-
-									<li>Alternative & Indie</li>
-									<li>Blues</li>
-									<li>Classical</li>
-									<li>Country</li>
-									<li>Dance & Electronic</li>
-									<li>Easy Listening</li>
-									<li>Folk & Songwriter</li>
-									<li>Hard Rock & Metal</li>
-									<li>Jazz</li>
-									<li>Miscellaneous</li>
-									<li>Pop</li>
-									<li>R&B & Soul</li>
-									<li>Rap & Hip-Hop</li>
-									<li>Reggae</li>
-									<li>Rock</li>
-									<li>Soundtracks & Musicals</li>
-									<li>World Music</li>
-								</ul>
-							</li>
-
-
-
-
-						</ul>
-
-					</li>
 
 					<li>upload</li>
 					<li>battle</li>
@@ -109,86 +74,131 @@
 				<script>
       
             
-                $(document).ready(function() {
+     $(document).ready(function() {
                 	
-        $.ajax({
-		    type: "GET",
-		    dataType: "json",
-		    url: "/createTable"				    
-		}).done(function(data){
+//        $.ajax({
+//		    type: "GET",
+//		    dataType: "json",
+//		    url: "/createTable"				    
+//		}).done(function(data){
 			
-			data1 = data;
 		
+			data = []
+		      data.push({
+		    	  "field": "email",
+                  "value":"slamstradmin@slamstr.com",
+      		})
+      		
+      		data.push({
+		    	  "field": "user name",
+                  "value":"swbevan",
+      		})
+			
+			data = {"data":data};
+			
+			
+			 $("#grid").kendoGrid({
+                 dataSource: {
+                     transport: {// custom transport to serialize the value in hidden input elements
+                         read: function(options) { // this is only for the sample you should be able to use original read
+                             options.success(data);
+                         },
+                         create: function(options) {
+                             $("input#created").val(kendo.stringify(options.data.models));
+                         },
+                         update: function(options) {
+                             $("input#updated").val(kendo.stringify(options.data.models));
+                         },
+                         destroy: function(options) {
+                             $("input#destroyed").val(kendo.stringify(options.data.models));
+                         }
+                     },
+                     batch: true,
+                     pageSize: 50,
+                     schema: {
+                         model: {
+                             id: "id",
+                             fields: {
+                                 field: {
+                                     editable: false,
+                                   
+                                     
+                                     validation: {
+                                       type:"string",
+                                         required: true
+                                     }
+                                 },
+                                 value: {
+                                     editable: true,
+                                     
+                                     
+                                     validation: {
+                                         type:"string",
+                                           required: true
+                                       }
+                                 },
+                                 
+                      
+                                 
+                                 
+                                 
+                             }
+                         },
+                         data: "data",
+                         total: function(result) {
+                             result = result.data || result;
+                             return result.length || 0;
+                         }
+                     }
+                 },
+                 editable: true,
+                 
+      
+                 height: 350,
+                 scrollable: true,
+                 sortable: false,
+                 filterable: false,
+          
+                 columns: [
+                          
+         
+                     {
+                         field: "field",
+                         title: "&nbsp",
+                        	width: 140},
+                  
+                      {
+                          field: "value",
+                          title: "&nbsp",
+                         	width: 140},
+               
+                        
+                 //{
+                 //    command: "edit"}
+                         	
+                 ],
+                 //editable: "inline"
+             });
 
-			var data = createRandomData(5);
-					
-					
-                    $("#grid").kendoGrid({
-                        dataSource: {
-                            data: data1,
-                            schema: {
-                                model: {
-                                    fields: {
-                                        City: { type: "string" },
-                                    }
-                                }
-                            },
-                            pageSize: 100
-                        },
-                        
-                        sortable: true,
-                        scrollable: false,
-                        filterable: {
-                            extra: false,
-                            operators: {
-                            	string: {
-                                	eq: "Choose genre"
-                                }
-                            }
-                        },
-                        
-                        columns: [ {
-                                field: "artist",
-                                width: 90,
-                                title: "Band Name",
-                                filterable: false
-                            } , {
-                                field: "title",
-                                width: 90,
-                                title: "Track Name",
-                                filterable: false
-                            } , {
-                                width: 100,
-                                field: "genre",
-                                filterable: {
-                                    ui: cityFilter
-                                }
-                            }  , {
-                                width: 50,
-                                field: "votes",
-                                title: "Vote",
-                                filterable: false
-                            }
-                        ]
-                    });
-                });
+             $("#sync").click(function() {
+                 // sync the dataSource 
+                 $("#grid").data("kendoGrid").dataSource.sync();
+                  
+             });
+                    
+                    
+                    
+           
+                  
+                    
+                    
+  //              });
 
 
 		});
 
 
 
-
-                
-                
-                
-                
-                function cityFilter(element) {
-                    element.kendoDropDownList({
-                        dataSource: cities,
-                        optionLabel: "--Select Value--"
-                    });
-                }
 
 
 
@@ -221,7 +231,10 @@
 <br>
 <div id="grid"></div>
 <br>
-
+<center>
+  	<button class="k-button" id="reset" type="button">Submit</button> 
+             <button class="k-button" id="submitdb" type="button">Cancel</button>
+</center>
 
 
 									</div>
@@ -233,16 +246,8 @@
 										<div id="top-pane2">
 											<div id=login class="pane-content">
 
-
-								can't get it to load in pain for some reason so
-								<a href="/maps.html">click here </a>
-								to see an example of what I want in here. At the moment it is just random data, but
-								when we have content I will populate the heat map of where the
-								most voted bands are coming from. Maybe we just put a static image in and when
-								clicked it takes you to a ful screen map? We can generate different maps for
-								users, genres, votes, bands, bands with most votes, our slamstr index all sorts really
-													  
-
+some facts about the user
+							
 
 
 											</div>
@@ -250,16 +255,7 @@
 
 
 
-										<div id="bottom-pane2">
-
-
-
-											<div class="pane-content" id="vidInfo">
-
-												streaming votes?
-
-											</div>
-										</div>
+						
 
 
 									</div>
@@ -276,9 +272,9 @@
 
 				<script type="text/javascript">
 
-						 $(document).ready(function() {
+			 $(document).ready(function() {
 							 
-							
+						    
 							 
 							 var tes = 1;
 							 
@@ -482,7 +478,8 @@
 			</div>
 
 <br>
-			<div class="demo-section2">
+
+					<div class="demo-section2">
 
 				<div align="center">
 
@@ -503,6 +500,7 @@
 				</div>
 				<br>
 			</div>
+
 
 
 			<div></div>
@@ -556,25 +554,6 @@ input.bin,submit:visited {
 	font-size: 20pt;
 	width: 240px;
 }
-
-.k-button2,submit:visited {
-	background: #222 repeat-x;
-	display: inline-block;
-	padding: 5px 10px 6px;
-	color: black;
-	text-decoration: none;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 8px;
-	-moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
-	-webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
-	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0);
-	border: 0px solid rgba(0, 0, 0, 0);
-	position: relative;
-	cursor: pointer;
-	background-color: white;
-	font-size: 10pt;
-}
-
 
 ::-webkit-input-placeholder { /* WebKit browsers */
 	color: #000;
