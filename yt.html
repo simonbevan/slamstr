@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>slamstr</title>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.1/swfobject.js"></script>
+<script type="text/javascript"></script>
+<script src="kendoui/js/jquery.min.js" type="text/javascript"></script>
+<script src="kendoui/js/kendo.web.min.js" type="text/javascript"></script>
+
+<link href="kendoui/styles/kendo.common.min.css" rel="stylesheet" />
+<link href="kendoui/styles/kendo.default.min.css" rel="stylesheet" />
+
+<script>
+<!--
+/* Source: http://yvoschaap.com */
+/* so we have bind available in our vanilla javascript */
+Function.prototype.bind = function(obj, args) {
+    var method = this, 
+    temp = function() {
+        return method.call(obj, args);
+    };
+
+    return temp;
+}
+
+
+myData = []
+var ytEmbed = {
+
+    ytQuery : 0,
+    cl : 0,
+    callback : {},
+    cfg : {},
+    player : false,
+
+    /**
+        * Main Init Method
+        */
+    init : function(cfg) {
+
+      
+        this.cfg = cfg || {};
+    
+            
+                //this.message('Loading YouTube videos. Please wait...');
+
+              //create a javascript element that returns our JSONp data.
+              var script = document.createElement('script');
+              script.setAttribute('id', 'jsonScript');
+              script.setAttribute('type', 'text/javascript');
+              //a counter
+              this.ytQuery++;
+              this.cfg.start = 1;
+              
+
+              this.cfg.orderby = 'relevance';
+              this.cfg.sortorder = 'descending';
+               
+              
+
+              script.setAttribute('src', 'http://gdata.youtube.com/feeds/api/videos?q=' + this.cfg.q + '&v=2&format=5&start-index=' + this.cfg.start + '&max-results=' + this.cfg.results + '&alt=jsonc&callback=ytEmbed.callback[' + this.ytQuery + ']&orderby=' + this.cfg.orderby + '&sortorder=' + this.cfg.sortorder);
+                  
+                
+              cfg.mC = this.ytQuery;
+
+              this.callback[this.ytQuery] = function(json) {
+  
+                for (var i = 0; i < json.data.items.length; i++) {
+                    var entry = json.data.items[i];
+                    //myData.push({"ID":entry.id ,
+                    //              "LookupSetID":entry.title}  )
+                     myData.push({"ID":3 ,
+                                  "LookupSetID":2}  )
+                }
+     
+              
+          
+                //div.appendChild(ul);
+                sessionStorage.myData = myData
+                
+                document.getElementById("youtubeDivResults2").innerHTML=sessionStorage.myData;
+                myData = []
+            
+            
+            
+            
+                    
+               }
+                
+               data={"data":sessionStorage.myData};
+
+var datat = []
+datat.push( {
+                        "ID": 3,
+                        "LookupSetID": 2,
+                        "Value": "ADI",
+                        "Description": "ASDASD"});
+ datat.push( {
+                        "ID": 3,
+                        "LookupSetID": 2,
+                        "Value": "ADI",
+                        "Description": "ASDASD"});
+
+data={"data":datat}
+
+              // var data = {
+              //       "data": [{
+              //           "ID": 3,
+              //           "LookupSetID": 2,
+              //           "Value": "ADI",
+              //           "Description": "ASDASD"},
+              //       {
+              //           "ID": 4,
+              //           "LookupSetID": 2,
+              //           "Value": "CHO",
+              //           "Description": ""},
+              //       {
+              //           "ID": 5,
+              //           "LookupSetID": 2,
+              //           "Value": "EMP",
+              //           "Description": ""},
+              //       {
+              //           "ID": 6,
+              //           "LookupSetID": 2,
+              //           "Value": "GUS",
+              //           "Description": ""},
+              //       {
+              //           "ID": 7,
+              //           "LookupSetID": 2,
+              //           "Value": "KAY",
+              //           "Description": ""},
+              //       {
+              //           "ID": 8,
+              //           "LookupSetID": 2,
+              //           "Value": "LEM",
+              //           "Description": ""},
+              //       {
+              //           "ID": 9,
+              //           "LookupSetID": 2,
+              //           "Value": "LXD",
+              //           "Description": ""},
+              //       {
+              //           "ID": 10,
+              //           "LookupSetID": 2,
+              //           "Value": "MAR",
+              //           "Description": ""},
+              //       {
+              //           "ID": 11,
+              //           "LookupSetID": 2,
+              //           "Value": "N44",
+              //           "Description": ""}]
+              //   };
+
+
+                $("#grid").kendoGrid({
+                    dataSource: {
+                        transport: {// custom transport to serialize the value in hidden input elements
+                            read: function(options) { // this is only for the sample you should be able to use original read
+                                options.success(data);
+                            },
+                            create: function(options) {
+                                $("input#created").val(kendo.stringify(options.data.models));
+                            },
+                            update: function(options) {
+                                $("input#updated").val(kendo.stringify(options.data.models));
+                            },
+                            destroy: function(options) {
+                                $("input#destroyed").val(kendo.stringify(options.data.models));
+                            }
+                        },
+                        batch: true,
+                        pageSize: 4,
+                        schema: {
+                            model: {
+                                id: "ID",
+                                fields: {
+                                    ID: {
+                                        editable: true,
+                                        nullable: true,
+                                        
+                                        validation: {
+                                          type:"number",
+                                            required: true
+                                        }
+                                    },
+                                    LookupSetID: {
+                                        editable: false,
+                                        nullable: true
+                                    },
+                                    
+                                }
+                            },
+                            data: "data",
+                            total: function(result) {
+                                result = result.data || result;
+                                return result.length || 0;
+                            }
+                        }
+                    },
+                    editable: true,
+                    toolbar: ["create"],
+                    height: 250,
+                    scrollable: true,
+                    sortable: true,
+                    filterable: false,
+                    pageable: true,
+                    columns: [
+                        
+             
+                        {
+                        field: "ID",
+                        title: "ID"},
+                        {
+                            field: "LookupSetID",
+                            title: "LookupSetID"},
+                    {
+                        command: "destroy"}
+                    ]
+                });
+
+                $("#sync").click(function() {
+                    // sync the dataSource 
+                    $("#grid").data("kendoGrid").dataSource.sync();
+                     
+                });
+    
+                var displayedData = $("#grid").data().kendoGrid.dataSource.view()
+            var displayedDataAsJSON = JSON.stringify(displayedData);
+                alert(displayedDataAsJSON)
+                
+         
+                
+                //attach script to page, this will load the data into our page and call the funtion ytInit[ytQuery]
+                document.getElementsByTagName('head')[0].appendChild(script);
+
+          
+    
+    
+    }
+
+};
+
+
+
+</script>
+
+
+
+<script language="javascript"> 
+<!--
+ 
+function updateField(){
+  var nada = '';
+ 
+  var code = '<sc'+ nada +'ript src="http://www.yvoschaap.com/ytpage/ytembed.js" type="text/javascript"></sc'+ nada +'ript>';
+  code += "\n";
+  //code += '<di'+ nada +'v id="ytPlayer"></div>\n';
+  code += '<di'+ nada +'v id="ytThumbs"></div>';
+  code += "\n";
+    
+  var string = '\'block\':\'ytThumbs\',';
+ 
+  var codeQ = document.getElementById('codeQ').value;
+  string += '\'q\':\''+codeQ+'\','; 
+  var codeType = 'search'
+  string += '\'type\':\''+codeType+'\',';
+  var codeResults = 50;
+  string += '\'results\':'+codeResults+',';
+  var codeOrder = 'most_relevance'
+  string += '\'order\':\''+codeOrder+'\',';
+  var codePlayer = 'link'
+  string += '\'player\':\''+codePlayer+'\',';
+  var codeLayout = 'full'
+  string += '\'layout\':\''+codeLayout+'\'';
+
+  
+  var execute = {'q':codeQ,'type':codeType,'results':codeResults,'block':'youtubeDivResults','order':codeOrder,'player':codePlayer,'layout':codeLayout};
+  ytEmbed.init(execute);
+}
+//-->
+</script>
+
+
+
+</head>
+<body>
+  <div id="blog">
+    <h1>The Slamstr Youtube App</h1>
+
+    <p>Please enter a search and carefully check the results before submitting to the database</p>
+    <form onsubmit="updateField(); return false;">
+
+      Query: <input id="codeQ" type="text" value=""> <input
+        type="submit" value="Get Code"><br>
+
+    </form>
+    <div id="youtubeDivResults" name="youtubeDivResults" ></div>
+    <div id="youtubeDivResults2" name="youtubeDivResults2" ></div>
+  
+  
+      <div id="example" class="k-content">
+            <div id="grid"></div>
+       
+          
+        </div>
+  
+  
+    <hr>
+
+
+</body>
+</html>
