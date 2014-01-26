@@ -76,27 +76,82 @@
             
      $(document).ready(function() {
                 	
-//        $.ajax({
-//		    type: "GET",
-//		    dataType: "json",
-//		    url: "/createTable"				    
-//		}).done(function(data){
+       
 			
-		
+var userID = localStorage.userID;
+			
+if(userID!='noid'){
+
+
+
+ $.ajax({
+		    type: "POST",
+		    dataType: "json",
+		    url: "/getAccount"	,
+		    data: { uID: userID },			    
+		}).done(function(dataOut){
+			
+			//alert(JSON.stringify(dataOut[0]))
 			data = []
 		      data.push({
-		    	  "field": "email",
-                  "value":"slamstradmin@slamstr.com",
+		    	  "field": "type",
+                  "value":dataOut[0]['type'],
       		})
       		
       		data.push({
+		    	  "field": "email",
+                  "value":dataOut[0]['email'],
+      		})
+
+      		      		data.push({
 		    	  "field": "user name",
-                  "value":"swbevan",
+                  "value":dataOut[0]['uname'],
+      		})
+
+      		data.push({
+		    	  "field": "first name",
+                  "value":dataOut[0]['fname'],
+      		})
+
+      		data.push({
+		    	  "field": "surname",
+                  "value":dataOut[0]['lname'],
+      		})
+
+      		data.push({
+		    	  "field": "country",
+                  "value":dataOut[0]['country'],
+      		})
+
+      		data.push({
+		    	  "field": "city",
+                  "value":dataOut[0]['city'],
       		})
 			
+			 data.push({
+		    	  "field": "age",
+                  "value":dataOut[0]['age'],
+      		})
+
+			 data.push({
+		    	  "field": "gender",
+                  "value":dataOut[0]['gender'],
+      		})
+
+			 			 data.push({
+		    	  "field": "preferences",
+                  "value":dataOut[0]['prefs'],
+      		})
+
+			 data.push({
+		    	  "field": "link",
+                  "value":dataOut[0]['link'],
+      		})
+	 
+	      
+
 			data = {"data":data};
-			
-			
+
 			 $("#grid").kendoGrid({
                  dataSource: {
                      transport: {// custom transport to serialize the value in hidden input elements
@@ -130,8 +185,7 @@
                                  },
                                  value: {
                                      editable: true,
-                                     
-                                     
+                                    
                                      validation: {
                                          type:"string",
                                            required: true
@@ -154,7 +208,7 @@
                  editable: true,
                  
       
-                 height: 350,
+                 
                  scrollable: true,
                  sortable: false,
                  filterable: false,
@@ -185,9 +239,13 @@
                  $("#grid").data("kendoGrid").dataSource.sync();
                   
              });
+         });
                     
                     
-                    
+               }else{
+$("#grid").html('<h1>To see your account please <a href="/">login</a></h1<>')
+
+}     
            
                   
                     

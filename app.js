@@ -729,7 +729,18 @@ app.post('/getPlaylist', function (req, res) {
 			new sqlite3.Database('bbbDB', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE)
 	);
 
+
+
+if(userID=='noid'){
+
+res.json({'message':'noid'});
+
+}else{
+
 	db.serialize(function() {
+
+
+
 
 		db.beginTransaction(function(err, transaction) {
 
@@ -790,49 +801,75 @@ app.post('/getPlaylist', function (req, res) {
 
 	});
 
+}
 	//res.json({'msg':artistsA});
 
 })
 
 
-app.get('/getPlaylist2', function (req, res) {
+app.post('/getAccount', function (req, res) {
 
+	var userID = req.body.uID;
 	var artistsA = new Array();
-	var fileLinkA = new Array();
-	var genreA = new Array();
-	var titleA = new Array();
-	var linkA = new Array();
-	var dateA = new Array();
-	var playsA = new Array();
+	//console.log(userID);
 
-	userID = "swbevan@googlemail.com";
 
 	var db = new TransactionDatabase(
 			new sqlite3.Database('bbbDB', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE)
 	);
 
 
+
+if(userID=='noid'){
+
+res.json({'message':'noid'});
+
+}else{
+
+
+
 	db.serialize(function() {
-		db.each("SELECT ID,PLAYS,DATE from PLAYLIST WHERE USER="+userID+" ORDER BY plays", function(err, row) {
 
-			vidID =  row.ID
-			playsA.push(row.PLAYS)
-			dateA.push(row.DATE)
-			db.each("SELECT ARTIST,FILELINK,GENRE,TITLE,LINK from CONTENT WHERE ID="+vidID, function(err2, row2) {
-				artistA.push(row.ARTIST);
-				fileLinkA.push(row.FILELINK)
-				genreA.push(row.GENRE);
-				titleA.push(row.TITLE);
-				linkA.push(row.LINK);
+		db.beginTransaction(function(err, transaction) {
 
+		
+				output = [];
+				sqlQuery = "SELECT TYPE, EMAIL, USERNAME, FIRSTNAME, SURNAME, COUNTRY, CITY, AGE, GENDER, PREFERENCES, LINK FROM PROFILE WHERE EMAIL="+userID;     						
+					transaction.all(sqlQuery, function(err2, row2) {
+										
+						//console.log(row2)		
+						
+						row2.forEach(function(rows2){
+							//console.log(1)	
+							
+								//console.log({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA})
+								//res.json({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA});
+							
+							
+								output.push({'type':rows2.TYPE,'email':rows2.EMAIL,'uname':rows2.USERNAME,  'fname':rows2.FIRSTNAME, 'lname':rows2.SURNAME, 'country':rows2.COUNTRY,'city':rows2.CITY,'age':rows2.AGE, 'gender':rows2.GENDER,'prefs':rows2.PREFERENCES,'link':rows2.LINK});
+							
+							if(output.length==1){
+								res.json(output);
+							}
+							 
+						});
+						//console.log(artistsA)
+					});
+					//console.log(artistsA		
 
 			});
-		});
-	});
 
-	res.json({'msg':artistsA});
+		
+
+		});	
+
+		
+
+}
+	//res.json({'msg':artistsA});
 
 })
+
 
 
 //Begin listening

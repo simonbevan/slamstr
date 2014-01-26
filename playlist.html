@@ -99,6 +99,7 @@ var userID = localStorage.userID;
 
 			//var data = createRandomData(5);
 					
+					if(userID!='noid'){
 					
                     $("#grid").kendoGrid({
                         dataSource: {
@@ -161,6 +162,13 @@ var userID = localStorage.userID;
                             }
                         ]
                     });
+}else{
+$("#grid").html('<h1>To see your personalised playlists please <a href="/">login</a></h1<>')
+
+}
+
+
+
                 });
 
 
