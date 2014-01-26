@@ -60,8 +60,8 @@ app.post('/addToDB', express.bodyParser(), function (req, res){
 	db.serialize(function() {
 
 		vidID = 0
-		db.run(sqlStr);  
-		db.run(sqlStr2 );  
+		//db.run(sqlStr);  
+		//db.run(sqlStr2 );  
 
 		});
 

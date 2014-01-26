@@ -459,8 +459,8 @@ function updateField(){
                              data: { 'sqlString1':sqlStr1, 'sqlString2':sqlStr2 }, 
                              success: function(data){
   
-                                fileDisplayArea.innerText = sqlStr1 + " " +sqlStr2;
-                                  
+                                //fileDisplayArea.innerText = sqlStr1 + " " +sqlStr2;
+                                alert(sqlStr1 + " " +sqlStr2)
                                   
                              }
                              , error: function(jqXHR, textStatus, err){
