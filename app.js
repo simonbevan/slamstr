@@ -1,6 +1,7 @@
 //Module dependencies
 
 var express    = require('express');
+var fs = require('fs');
 //var jade = require('jade');
 
 var testVar = '';
@@ -869,6 +870,46 @@ res.json({'message':'noid'});
 	//res.json({'msg':artistsA});
 
 })
+
+
+app.post('/upload', function(req, res) {
+
+    var tmp_path = req.files.files.path;
+    // set where the file should actually exists - in this case it is in the "images" directory
+    var target_path = './public/music/' + req.files.files.name;
+	    fs.rename(tmp_path, target_path, function(err) {
+        if (err) throw err;
+        // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+        fs.unlink(tmp_path, function() {
+
+            if (err) throw err;
+            
+	output = "<!DOCTYPE html>"+
+	"<html>"+
+	"<head>"+
+	"<title>slamstr</title>"+
+	"<script src=\"js/jquery.min.js\" type=\"text/javascript\"></script>"+
+	"</head>"+
+	"<body>"+
+
+
+	"<script type=\"text/javascript\">"+
+	"$(document).ready(function() {"+
+
+	"	 window.location.replace(\"/upload.html\");"+
+
+	"});"+
+	" </script>"
+	"<h3>Redirecting</h3>"+
+	"</body>"+
+	"</html>";
+
+            res.send(output);
+        });
+    });
+
+});
+
 
 
 
