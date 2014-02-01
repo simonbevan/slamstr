@@ -60,14 +60,23 @@ app.post('/addToDB', express.bodyParser(), function (req, res){
 
 	db.serialize(function() {
 
-		vidID = 0
-		db.run(sqlStr);  
-		db.run(sqlStr2 );  
 
+		db.beginTransaction(function(err, transaction) {
+			vidID = 0
+			db.run(sqlStr);  
+			db.run(sqlStr2 );  
 
-		res.json({'data':sqlStr2});
+			db.run("SELECT COUNT (VIDID) FROM BATTLE"); 
 
+			sqlString = 'SELECT COUNT (VIDID) FROM BATTLE'
+			transaction.each(sqlString, function(err, row3) {
+
+				res.json({'data':row3['COUNT (VIDID)']});
+
+			});
 		});
+
+	});
 
 	
 
