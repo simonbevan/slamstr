@@ -112,17 +112,103 @@
          });
 	 
 	
-$('#next').click(function(){
+     $('#next').click(function(){  
 
-location.reload(true);
+	
+            var vidID = sessionStorage.vidID2 ;
+            var userID = sessionStorage.userID; 
+            var pLName = "'playList1'"//sessionStorage.pLName;
+			
+         $.ajax({ 
+               url: '/next',
+               type: 'POST',
+               cache: false, 
 
-	});
+               data: { uID: userID, vID:vidID, type:'challengerbin',pLName:pLName  }, 
+               success: function(data){
+  
+            	   
+     			 	data1 = data['out1'];
+    				 data2 = data['out2'];
+      
+    				
+       				sessionStorage.fileLink = data1['fileLink'];
+    				sessionStorage.vidID = data1['vID'];
+    				sessionStorage.bandName = data1['bandName'];
+    				sessionStorage.songName = data1['songName'];
+    				//sessionStorage.country = data1['country'];
+    				sessionStorage.artistLink = data1['artistLink'];
+    				sessionStorage.votes = data1['votes'];
+				
+       				sessionStorage.fileLink2 = data2['fileLink'];
+    				sessionStorage.vidID2 = data2['vID'];
+    				sessionStorage.bandName2 = data2['bandName'];
+    				sessionStorage.songName2 = data2['songName'];
+    				//sessionStorage.country = data1['country'];
+    				sessionStorage.artistLink2 = data2['artistLink'];
+    				sessionStorage.votes2 = data2['votes'];
+    				
+    				location.reload(true);
+    				
+				//alert(sessionStorage.bandName);
+               }
+               , error: function(jqXHR, textStatus, err){
+                   alert('text status '+textStatus+', err '+err)
+               }
+            })
+         }); 
 
-$('#next2').click(function(){
 
-location.reload(true);
 
-	});
+
+     $('#next2').click(function(){  
+
+	
+            var vidID = sessionStorage.vidID2 ;
+            var userID = sessionStorage.userID; 
+            var pLName = "'playList1'"//sessionStorage.pLName;
+			
+         $.ajax({ 
+               url: '/next',
+               type: 'POST',
+               cache: false, 
+
+               data: { uID: userID, vID:vidID, type:'challengerbin',pLName:pLName  }, 
+               success: function(data){
+  
+            	   
+     			 	data1 = data['out1'];
+    				data2 = data['out2'];
+      
+      				//alert(data1)
+    				
+       				sessionStorage.fileLink = data1['fileLink'];
+    				sessionStorage.vidID = data1['vID'];
+    				sessionStorage.bandName = data1['bandName'];
+    				sessionStorage.songName = data1['songName'];
+    				//sessionStorage.country = data1['country'];
+    				sessionStorage.artistLink = data1['artistLink'];
+    				sessionStorage.votes = data1['votes'];
+				
+       				sessionStorage.fileLink2 = data2['fileLink'];
+    				sessionStorage.vidID2 = data2['vID'];
+    				sessionStorage.bandName2 = data2['bandName'];
+    				sessionStorage.songName2 = data2['songName'];
+    				//sessionStorage.country = data1['country'];
+    				sessionStorage.artistLink2 = data2['artistLink'];
+    				sessionStorage.votes2 = data2['votes'];
+    				
+
+
+    				location.reload(true);
+    				
+				//alert(sessionStorage.bandName);
+               }
+               , error: function(jqXHR, textStatus, err){
+                   alert('text status '+textStatus+', err '+err)
+               }
+            })
+         }); 
 
 
 	 
@@ -232,25 +318,25 @@ location.reload(true);
                success: function(data){
   
             	   
-     				data1 = data['out1'];
-    				data2 = data['out2'];
+     			 	data1 = data['out1'];
+    				 data2 = data['out2'];
       
     				
-       				sessionStorage.fileLink = data1['fileLink'];
-    				sessionStorage.vidID = data1['vID'];
-    				sessionStorage.bandName = data1['bandName'];
-    				sessionStorage.songName = data1['songName'];
-    				//sessionStorage.country = data1['country'];
-    				sessionStorage.artistLink = data1['artistLink'];
-    				sessionStorage.votes = data1['votes'];
+       	// 			sessionStorage.fileLink = data1['fileLink'];
+    				// sessionStorage.vidID = data1['vID'];
+    				// sessionStorage.bandName = data1['bandName'];
+    				// sessionStorage.songName = data1['songName'];
+    				// //sessionStorage.country = data1['country'];
+    				// sessionStorage.artistLink = data1['artistLink'];
+    				// sessionStorage.votes = data1['votes'];
 				
-       				sessionStorage.fileLink2 = data2['fileLink'];
-    				sessionStorage.vidID2 = data2['vID'];
-    				sessionStorage.bandName2 = data2['bandName'];
-    				sessionStorage.songName2 = data2['songName'];
-    				//sessionStorage.country = data1['country'];
-    				sessionStorage.artistLink2 = data2['artistLink'];
-    				sessionStorage.votes2 = data2['votes'];
+       	// 			sessionStorage.fileLink2 = data2['fileLink'];
+    				// sessionStorage.vidID2 = data2['vID'];
+    				// sessionStorage.bandName2 = data2['bandName'];
+    				// sessionStorage.songName2 = data2['songName'];
+    				// //sessionStorage.country = data1['country'];
+    				// sessionStorage.artistLink2 = data2['artistLink'];
+    				// sessionStorage.votes2 = data2['votes'];
     				
     				//location.reload(true);
     				
@@ -283,24 +369,24 @@ location.reload(true);
             success: function(data){
 
          	   
-  				data1 = data['out1'];
-				data2 = data['out2'];
+  //				data1 = data['out1'];
+//				data2 = data['out2'];
   
-   				sessionStorage.fileLink = data1['fileLink'];
-				sessionStorage.vidID = data1['vID'];
-				sessionStorage.bandName = data1['bandName'];
-				sessionStorage.songName = data1['songName'];
-				//sessionStorage.country = data1['country'];
-				sessionStorage.artistLink = data1['artistLink'];
-				sessionStorage.votes = data1['votes'];
+   	// 			sessionStorage.fileLink = data1['fileLink'];
+				// sessionStorage.vidID = data1['vID'];
+				// sessionStorage.bandName = data1['bandName'];
+				// sessionStorage.songName = data1['songName'];
+				// //sessionStorage.country = data1['country'];
+				// sessionStorage.artistLink = data1['artistLink'];
+				// sessionStorage.votes = data1['votes'];
 
-   				sessionStorage.fileLink2 = data2['fileLink'];
-				sessionStorage.vidID2 = data2['vID'];
-				sessionStorage.bandName2 = data2['bandName'];
-				sessionStorage.songName2 = data2['songName'];
-				//sessionStorage.country = data1['country'];
-				sessionStorage.artistLink2 = data2['artistLink'];
-				sessionStorage.votes2 = data2['votes'];
+   	// 			sessionStorage.fileLink2 = data2['fileLink'];
+				// sessionStorage.vidID2 = data2['vID'];
+				// sessionStorage.bandName2 = data2['bandName'];
+				// sessionStorage.songName2 = data2['songName'];
+				// //sessionStorage.country = data1['country'];
+				// sessionStorage.artistLink2 = data2['artistLink'];
+				// sessionStorage.votes2 = data2['votes'];
 				
 				//location.reload(true);
 				
@@ -331,25 +417,25 @@ location.reload(true);
                data: { uID: userID, vID:vidID, type:'legendbin' ,pLName:pLName }, 
                success: function(data){
 
-  				data1 = data['out1'];
-				data2 = data['out2'];
+  	//			data1 = data['out1'];
+	//			data2 = data['out2'];
   
 				
-   				sessionStorage.fileLink = data1['fileLink'];
-				sessionStorage.vidID = data1['vID'];
-				sessionStorage.bandName = data1['bandName'];
-				sessionStorage.songName = data1['songName'];
-				//sessionStorage.country = data1['country'];
-				sessionStorage.artistLink = data1['artistLink'];
-				sessionStorage.votes = data1['votes'];
+   	// 			sessionStorage.fileLink = data1['fileLink'];
+				// sessionStorage.vidID = data1['vID'];
+				// sessionStorage.bandName = data1['bandName'];
+				// sessionStorage.songName = data1['songName'];
+				// //sessionStorage.country = data1['country'];
+				// sessionStorage.artistLink = data1['artistLink'];
+				// sessionStorage.votes = data1['votes'];
 				
-   				sessionStorage.fileLink2 = data2['fileLink'];
-				sessionStorage.vidID2 = data2['vID'];
-				sessionStorage.bandName2 = data2['bandName'];
-				sessionStorage.songName2 = data2['songName'];
-				//sessionStorage.country = data1['country'];
-				sessionStorage.artistLink2 = data2['artistLink'];
-				sessionStorage.votes2 = data2['votes'];
+   	// 			sessionStorage.fileLink2 = data2['fileLink'];
+				// sessionStorage.vidID2 = data2['vID'];
+				// sessionStorage.bandName2 = data2['bandName'];
+				// sessionStorage.songName2 = data2['songName'];
+				// //sessionStorage.country = data1['country'];
+				// sessionStorage.artistLink2 = data2['artistLink'];
+				// sessionStorage.votes2 = data2['votes'];
 				
 				//location.reload(true);
 				
@@ -379,25 +465,25 @@ location.reload(true);
                success: function(data){
 
 
-  				data1 = data['out1'];
-				data2 = data['out2'];
+  	//			data1 = data['out1'];
+	//			data2 = data['out2'];
   
 				
-   				sessionStorage.fileLink = data1['fileLink'];
-				sessionStorage.vidID = data1['vID'];
-				sessionStorage.bandName = data1['bandName'];
-				sessionStorage.songName = data1['songName'];
-				//sessionStorage.country = data1['country'];
-				sessionStorage.artistLink = data1['artistLink'];
-				sessionStorage.votes = data1['votes'];
+   	// 			sessionStorage.fileLink = data1['fileLink'];
+				// sessionStorage.vidID = data1['vID'];
+				// sessionStorage.bandName = data1['bandName'];
+				// sessionStorage.songName = data1['songName'];
+				// //sessionStorage.country = data1['country'];
+				// sessionStorage.artistLink = data1['artistLink'];
+				// sessionStorage.votes = data1['votes'];
 				
-   				sessionStorage.fileLink2 = data2['fileLink'];
-				sessionStorage.vidID2 = data2['vID'];
-				sessionStorage.bandName2 = data2['bandName'];
-				sessionStorage.songName2 = data2['songName'];
-				//sessionStorage.country = data1['country'];
-				sessionStorage.artistLink2 = data2['artistLink'];
-				sessionStorage.votes2 = data2['votes'];
+   	// 			sessionStorage.fileLink2 = data2['fileLink'];
+				// sessionStorage.vidID2 = data2['vID'];
+				// sessionStorage.bandName2 = data2['bandName'];
+				// sessionStorage.songName2 = data2['songName'];
+				// //sessionStorage.country = data1['country'];
+				// sessionStorage.artistLink2 = data2['artistLink'];
+				// sessionStorage.votes2 = data2['votes'];
 				
 				//location.reload(true);
 				

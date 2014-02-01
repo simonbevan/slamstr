@@ -220,9 +220,7 @@ app.get('/createDB', function(req, res) {
 
 
 
-
-
-app.post('/like', function(req, res) {
+app.post('/next', function(req, res) {
 
 	//var vidID =   JSON.stringify(req.body.vidID) ;
 	//var userID =   JSON.stringify(req.body.userID) ;
@@ -237,8 +235,6 @@ app.post('/like', function(req, res) {
 			new sqlite3.Database('bbbDB', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE)
 	);
 
-
-	//console.log(userID);
 
 	db.serialize(function() {
 
@@ -284,31 +280,11 @@ app.post('/like', function(req, res) {
 
 		}else{
 
-				//console.log(type);
+				
 				timestamp = new Date().getTime();
 				var uuid = JSON.stringify(guid());
 
 				db.beginTransaction(function(err, transaction) {
-
-					if(type=="legendbin") {	//vote					
-						transaction.run("INSERT INTO VOTES (ID,VIDID,USER,VOTE,DATE) VALUES ("+uuid+","+vidID+","+userID+",1,"+timestamp+" )") 
-						transaction.run("UPDATE BATTLE set VOTE = VOTE+1 where VIDID="+vidID)
-					}else if(type=="legendkeep") {	//add to playlist					
-						//transaction.run("INSERT INTO VOTES (ID,VIDID,USER,VOTE,DATE) VALUES ("+uuid+","+vidID+","+userID+",1,"+timestamp+" )")
-						
-						//console.log("INSERT INTO PLAYLIST (VIDID,USER,PLAYLISTNAME,PLAYS,DATE) VALUES ("+vidID+","+userID+","+playlistName+",1,"+timestamp+" )");
-
-						transaction.run("INSERT INTO PLAYLIST (VIDID,USER,PLAYLISTNAME,PLAYS,DATE) VALUES ("+vidID+","+userID+","+playlistName+",1,"+timestamp+" )")
-						//transaction.run("UPDATE BATTLE set VOTE = VOTE+1 where VIDID="+vidID)
-					}else if(type=="challengerbin") {						
-						transaction.run("INSERT INTO VOTES (ID,VIDID,USER,VOTE,DATE) VALUES ("+uuid+","+vidID+","+userID+",1,"+timestamp+" )") 
-						transaction.run("UPDATE BATTLE set VOTE = VOTE+1 where VIDID="+vidID)
-					}else if(type=="challengerkeep") {	
-						transaction.run("INSERT INTO PLAYLIST (VIDID,USER,PLAYLISTNAME,PLAYS,DATE) VALUES ("+vidID+","+userID+","+playlistName+",1,"+timestamp+" )")
-						//transaction.run("INSERT INTO VOTES (ID,VIDID,USER,VOTE,DATE) VALUES ("+uuid+","+vidID+","+userID+",1,"+timestamp+" )") 
-						//transaction.run("UPDATE BATTLE set VOTE = VOTE+1 where VIDID="+vidID)
-					}
-	
 
 						
 						sqlString = "SELECT DISTINCT VIDID,VOTE,VIEWS FROM BATTLE " +
@@ -326,14 +302,12 @@ app.post('/like', function(req, res) {
 							votes2 = row.VOTE;
 							views2 = row.VIEWS;
 
-
 							sqlString = "SELECT FILELINK,TITLE,ARTIST,LINK,USER FROM CONTENT WHERE VIDID =" + vidID2;	
-
 
 							transaction.get(sqlString, function(err, row2) {
 
 
-								output1 = {'vID':vidID2,'fileLink':row2.FILELINK,'songName':row2.TITLE,'bandName':row2.ARTIST,'artistLink':row2.LINK,'votes':votes2[0]};
+								output1 = {'vID':vidID2,'fileLink':row2.FILELINK,'songName':row2.TITLE,'bandName':row2.ARTIST,'artistLink':row2.LINK,'votes':votes2};
 
 								sqlString = "SELECT DISTINCT VIDID,VOTE,VIEWS FROM BATTLE " +
 								"WHERE VIDID NOT IN " +
@@ -347,6 +321,8 @@ app.post('/like', function(req, res) {
 									votes2 = row3.VOTE;
 									views2 = row3.VIEWS;
 
+								
+
 									sqlString = "SELECT FILELINK,TITLE,ARTIST,LINK,USER FROM CONTENT WHERE VIDID =" + vidID2;	
 
 									transaction.get(sqlString, function(err, row4) {
@@ -357,6 +333,7 @@ app.post('/like', function(req, res) {
 										//res.writeHead(200, { 'Content-Type': 'application/json' });
 										//res.write(JSON.stringify({'out1':output1,'out2':output2,'out2':output3}));
 										//res.end();
+
 
 										res.json({'out1':output1,'out2':output2});
 
@@ -369,6 +346,92 @@ app.post('/like', function(req, res) {
 								});
 							});
 						});
+
+						transaction.commit(function(err) {
+							if (err) return console.log("Sad panda :-( commit() failed.", err);
+							//console.log("Happy panda :-) commit() was successful.");
+						});
+					
+					
+
+				});
+
+
+
+			}
+
+	});
+
+
+	//res.sendfile( 'index.html' , {root:__dirname});
+	//res.json({'msg':'like','msg2':'sdfdsds'});
+
+});
+
+
+
+
+app.post('/like', function(req, res) {
+
+	//var vidID =   JSON.stringify(req.body.vidID) ;
+	//var userID =   JSON.stringify(req.body.userID) ;
+
+	var userID = req.body.uID;
+	var vidID = req.body.vID;
+	var type = req.body.type;
+	var playlistName = req.body.pLName;
+
+	//var db = new sqlite3.Database('bbbDB');
+	var db = new TransactionDatabase(
+			new sqlite3.Database('bbbDB', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE)
+	);
+
+
+	//console.log(userID);
+
+	db.serialize(function() {
+
+		if(userID=='noid'){
+
+			db.beginTransaction(function(err, transaction) {
+
+				
+				res.json('noid')
+
+				transaction.commit(function(err) {
+					if (err) return console.log("Sad panda :-( commit() failed.", err);
+					//console.log("Happy panda :-) commit() was successful.");
+				});
+				
+			});
+
+		}else{
+
+				//console.log(type);
+				timestamp = new Date().getTime();
+				var uuid = JSON.stringify(guid());
+
+				db.beginTransaction(function(err, transaction) {
+
+					if(type=="legendbin") {	//vote					
+						transaction.run("INSERT INTO VOTES (ID,VIDID,USER,VOTE,DATE) VALUES ("+uuid+","+vidID+","+userID+",1,"+timestamp+" )") 
+						transaction.run("UPDATE BATTLE set VOTE = VOTE+1 where VIDID="+vidID)
+					}else if(type=="legendkeep") {	//add to playlist					
+						//transaction.run("INSERT INTO VOTES (ID,VIDID,USER,VOTE,DATE) VALUES ("+uuid+","+vidID+","+userID+",1,"+timestamp+" )")
+						//console.log("INSERT INTO PLAYLIST (VIDID,USER,PLAYLISTNAME,PLAYS,DATE) VALUES ("+vidID+","+userID+","+playlistName+",1,"+timestamp+" )");
+						transaction.run("INSERT INTO PLAYLIST (VIDID,USER,PLAYLISTNAME,PLAYS,DATE) VALUES ("+vidID+","+userID+","+playlistName+",1,"+timestamp+" )")
+						//transaction.run("UPDATE BATTLE set VOTE = VOTE+1 where VIDID="+vidID)
+					}else if(type=="challengerbin") {					
+						transaction.run("INSERT INTO VOTES (ID,VIDID,USER,VOTE,DATE) VALUES ("+uuid+","+vidID+","+userID+",1,"+timestamp+" )") 
+						transaction.run("UPDATE BATTLE set VOTE = VOTE+1 where VIDID="+vidID)
+					}else if(type=="challengerkeep") {	
+						transaction.run("INSERT INTO PLAYLIST (VIDID,USER,PLAYLISTNAME,PLAYS,DATE) VALUES ("+vidID+","+userID+","+playlistName+",1,"+timestamp+" )")
+						//transaction.run("INSERT INTO VOTES (ID,VIDID,USER,VOTE,DATE) VALUES ("+uuid+","+vidID+","+userID+",1,"+timestamp+" )") 
+						//transaction.run("UPDATE BATTLE set VOTE = VOTE+1 where VIDID="+vidID)
+					}
+	
+
+					res.json('submitted')
 
 						transaction.commit(function(err) {
 							if (err) return console.log("Sad panda :-( commit() failed.", err);
@@ -874,14 +937,39 @@ res.json({'message':'noid'});
 
 app.post('/upload', function(req, res) {
 
+	
+	
+//	var type =   JSON.stringify(req.body.type) ;
+//	var email =   JSON.stringify(req.body.email) ;
+//	var emailConfirm = '\"1\"';
+//	timestamp = new Date();
+//	created = JSON.stringify(timestamp) ;
+//	username = JSON.stringify(req.body.uname) ;
+//	firstname = JSON.stringify(req.body.firstname) ;
+//	surname  = JSON.stringify(req.body.lastname) ;
+//	password =  JSON.stringify(req.body.password) ;
+//	country= JSON.stringify(req.body.country) ;
+//	city =  JSON.stringify(req.body.city) ;
+//	birthday = JSON.stringify(req.body.age2) ;
+//	gender = JSON.stringify(req.body.gender2) ;
+//	preferences  = '\"'+req.body.prefs3 + '\"';
+//	link =  ' \"slamstr.com \"';
+//	playList = ' \"playList1,playList2,playList3,playList4,playList5\" ';
+//	insertString = type +"," + email + "," + emailConfirm + "," + username +"," +created+ "," + firstname + "," + surname + "," + password + "," + country + "," + city + "," + birthday + "," + gender + "," + preferences + "," + link + "," + playList;	
+	
+	
     var tmp_path = req.files.files.path;
-    // set where the file should actually exists - in this case it is in the "images" directory
+    // set where the file should actually exists
     var target_path = './public/music/' + req.files.files.name;
 	    fs.rename(tmp_path, target_path, function(err) {
         if (err) throw err;
         // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
         fs.unlink(tmp_path, function() {
 
+        	
+        	
+        	
+        	
             if (err) throw err;
             
 	output = "<!DOCTYPE html>"+
@@ -910,6 +998,36 @@ app.post('/upload', function(req, res) {
 
 });
 
+//npm install express-mailer
+//mailer = require('express-mailer');
+//app.get('/', function (req, res, next) {
+//	  app.mailer.send('email', {
+//	    to: 'example@example.com', // REQUIRED. This can be a comma delimited string just like a normal email to field. 
+//	    subject: 'Test Email', // REQUIRED.
+//	    otherProperty: 'Other Property' // All additional properties are also passed to the template as local variables.
+//	  }, function (err) {
+//	    if (err) {
+//	      // handle error
+//	      console.log(err);
+//	      res.send('There was an error sending the email');
+//	      return;
+//	    }
+//	    res.send('Email Sent');
+//	  });
+//	});
+
+
+//<div id='playerNgslptTQgfbH'></div>
+//<script type='text/javascript'>
+//    jwplayer('playerNgslptTQgfbH').setup({
+//        file: 'https://www.youtube.com/watch?v=qQXP6TDtW0w',
+//        title: '"Sirens" (Official Music Video) - Pearl Jam',
+//        width: '100%',
+//        aspectratio: '16:9',
+//        fallback: 'false',
+//        primary: 'flash'
+//    });
+//</script>
 
 
 
@@ -947,8 +1065,6 @@ app.listen(port, function() {
 //		res.send( output );
 
 //		});
-
-
 
 
 
