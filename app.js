@@ -65,7 +65,7 @@ app.post('/addToDB', express.bodyParser(), function (req, res){
 		db.run(sqlStr2 );  
 
 
-		res.json({'data':sqlStr});
+		res.json({'data':sqlStr2});
 
 		});
 

@@ -123,7 +123,7 @@ var ytEmbed = {
                             }
                         },
                         batch: true,
-                        pageSize: 5,
+                        pageSize: 50,
                         schema: {
                             model: {
                                 id: "id",
@@ -355,7 +355,7 @@ function updateField(){
   string += '\'q\':\''+codeQ+'\','; 
   var codeType = 'search'
   string += '\'type\':\''+codeType+'\',';
-  var codeResults = 50;
+  var codeResults = 5;
   string += '\'results\':'+codeResults+',';
   var codeOrder = 'most_relevance'
   string += '\'order\':\''+codeOrder+'\',';
