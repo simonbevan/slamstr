@@ -2,6 +2,7 @@
 
 var express    = require('express');
 var fs = require('fs');
+var pg = require('pg'); 
 //var jade = require('jade');
 
 var testVar = '';
@@ -11,8 +12,9 @@ app.use(express.static(__dirname + '/kendoui'));
 app.use("/", express.static(__dirname + "/"));
 //app.use(express.static(__dirname));
 //app.set("view engine", "jade");
-var sqlite3 = require("sqlite3"),
-TransactionDatabase = require("sqlite3-transactions").TransactionDatabase;
+//var sqlite3 = require("sqlite3"),
+//TransactionDatabase = require("sqlite3-transactions").TransactionDatabase;
+
 
 app.use(express.bodyParser());
 //Database setup
@@ -31,6 +33,15 @@ function guid() {
 	s4() + '-' + s4() + s4() + s4();
 }
 
+Date.prototype.yyyymmdd = function() {         
+                                
+        var yyyy = this.getFullYear().toString();                                    
+        var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based         
+        var dd  = this.getDate().toString();             
+                            
+        return yyyy + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]);
+   }; 
+
 app.post('/ajax', express.bodyParser(), function (req, res){
 
 	//console.log(req.body.sqlString1);
@@ -43,40 +54,69 @@ app.post('/ajax', express.bodyParser(), function (req, res){
 
 app.post('/addToDB', express.bodyParser(), function (req, res){
 
-	
 
-	var db = new TransactionDatabase(
-			new sqlite3.Database('bbbDB', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE)
-	);
+	//var db = new TransactionDatabase(
+	//		new sqlite3.Database('bbbDB', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE)
+	//);
 
-	var sqlString =   req.body.sqlString1 ;
+	var sqlString1 =   req.body.sqlString1 ;
 	var sqlString2 =   req.body.sqlString2 ;
 
+	//sqlString1 = sqlString1.replace("\"","'")
+	//sqlString2 = sqlString2.replace("\"","'")
 	
-	sqlStr = "INSERT INTO CONTENT (VIDID,USER,FILELINK,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+sqlString+")" 
+	sqlStr1 = "INSERT INTO CONTENT (VIDID,USERNAME,FILELINK,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+sqlString1+")" 
 	sqlStr2 = "INSERT INTO BATTLE (VIDID,VIEWS,STATUS,VOTE) VALUES ("+sqlString2+")" 
-	//console.log(sqlStr)
+	//console.log(sqlStr1)
 	//console.log(sqlStr2)
 
-	db.serialize(function() {
+	//db.serialize(function() {
+
+//var conString = "postgres://simonbevan:5432@localhost/postgres"
+//var conString = "postgres://tkplqpramikmhp:4-QVsIeBnFOjlVziYa05HNmiI2@ec2-54-197-241-79.compute-1.amazonaws.com:5432/d8tmbdij58htc8"
+//Host	ec2-54-197-241-79.compute-1.amazonaws.com
+//Database	d8tmbdij58htc8
+//User	tkplqpramikmhp
+//Port	5432
+//Password	Hide 4-QVsIeBnFOjlVziYa05HNmiI2
+//Port	5432
 
 
-		db.beginTransaction(function(err, transaction) {
-			vidID = 0
-			db.run(sqlStr);  
-			db.run(sqlStr2 );  
+var params = {host: 'ec2-54-197-241-79.compute-1.amazonaws.com',user: 'tkplqpramikmhp',password: '4-QVsIeBnFOjlVziYa05HNmiI2',database: 'd8tmbdij58htc8',ssl: true };
 
-			db.run("SELECT COUNT (VIDID) FROM BATTLE"); 
+var client = new pg.Client(params);
+client.connect(function(err) {
+  if(err) {
+    return console.error('could not connect to postgres', err);
+  }
+  client.query(sqlStr1, function(err, result) {
+    if(err) {
+      return //console.error('error running query', err);
+    }
+    //console.log(sqlStr1);
 
-			sqlString = 'SELECT COUNT (VIDID) FROM BATTLE'
-			transaction.each(sqlString, function(err, row3) {
 
-				res.json({'data':row3['COUNT (VIDID)']});
+		  client.query(sqlStr2, function(err, result) {
+		    if(err) {
+		      //return console.error('error running query', err);
+		    }
+	
 
-			});
-		});
+		    client.end();
+		  //});
 
-	});
+		  });
+  });
+});
+
+
+
+
+
+
+				res.json({'data':sqlStr2});
+
+	
 
 	
 
@@ -85,50 +125,112 @@ app.post('/addToDB', express.bodyParser(), function (req, res){
 
 app.get('/initialOpen', function(req, res) {
 
-	var db = new TransactionDatabase(
-			new sqlite3.Database('bbbDB', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE)
-	);
 
 
-	db.serialize(function() {
 
-		//console.log('here');
-		db.beginTransaction(function(err, transaction) {
 
-			sqlString = "SELECT VIDID,VOTE FROM BATTLE WHERE STATUS = 0 ORDER BY VOTE DESC LIMIT 1"	;	 
-			//db.get(sqlString, function(tx,results){
-			transaction.each(sqlString, function(err, row) {
-//				console.log(row);
-				var vidID = JSON.stringify(row.VIDID);
-				votes = row.VOTE;
-				sqlString = "SELECT FILELINK,TITLE,ARTIST,LINK,USER FROM CONTENT WHERE VIDID =" + vidID;
-				//console.log(sqlString)	
-				transaction.each(sqlString, function(err, row2) {	
+var params = {host: 'ec2-54-197-241-79.compute-1.amazonaws.com',user: 'tkplqpramikmhp',password: '4-QVsIeBnFOjlVziYa05HNmiI2',database: 'd8tmbdij58htc8',ssl: true };
+var client = new pg.Client(params);
 
-					output1 = {'id':vidID,'userID':'noid','fileLink':row2.FILELINK,'songName':row2.TITLE,'bandName':row2.ARTIST,'artistLink':row2.LINK,'votes':votes};
 
-					sqlString = "SELECT VIDID,VOTE FROM BATTLE WHERE STATUS = 1 ORDER BY RANDOM() LIMIT 1"	;	 
-					//db.get(sqlString, function(tx,results){
-					transaction.each(sqlString, function(err, row3) {
+	data = 0;
+	sqlString = "SELECT VIDID,VOTE FROM BATTLE WHERE STATUS = 0 ORDER BY VOTE DESC LIMIT 1"	;
+	//console.log(sqlStr);
 
-						var vidID = JSON.stringify(row3.VIDID);
-						votes = row3.VOTE;
-						sqlString = "SELECT FILELINK,TITLE,ARTIST,LINK,USER FROM CONTENT WHERE VIDID =" + vidID;	
-						transaction.each(sqlString, function(err, row4) {
+client.connect(function(err) {
+  if(err) {
+    return console.error('could not connect to postgres', err);
+  }
+  client.query(sqlString, function(err, row) {
+    if(err) {
+      return console.error('error running query', err);
+    }
 
-							output2 = {'id':vidID,'userID':'noid','fileLink':row4.FILELINK,'songName':row4.TITLE,'bandName':row4.ARTIST,'artistLink':row4.LINK,'votes':votes};
-//							console.log(output2);
-							res.json({'out1':output1,'out2':output2})
+		//console.log(row.rows[0].vidid);
+		var vidID = row.rows[0].vidid;
+		votes = row.rows[0].vote;
+		sqlString = "SELECT FILELINK,TITLE,ARTIST,LINK,USERNAME FROM CONTENT WHERE VIDID ='" + vidID+"'";
+		
+			//sqlStr2 = "INSERT INTO PROFILE (TYPE,EMAIL,EMAILCONFIRM,USERNAME,CREATED,FIRSTNAME,SURNAME,PASSWORD,COUNTRY,CITY,AGE,GENDER,PREFERENCES,LINK,PLAYLISTS) VALUES ("+insertString+")";  
+				//console.log(sqlString);
+		  	client.query(sqlString, function(err, row2) {
+		    if(err) {
+		      return console.error('error running query', err);
+		    }
+		   		//console.log(row2.rows[0]);
+				output1 = {'id':vidID,'userID':'noid','fileLink':row2.rows[0].filelink,'songName':row2.rows[0].title,'bandName':row2.rows[0].artist,'artistLink':row2.rows[0].link,'votes':votes};
+				sqlString = "SELECT VIDID,VOTE FROM BATTLE WHERE STATUS = 1 ORDER BY RANDOM() LIMIT 1"	;	 
+					
+ 				client.query(sqlString, function(err, row3) {
+		    		if(err) {
+		      			return console.error('error running query', err);
+		    		}
 
-						});
+		    		var vidID = row3.rows[0].vidid;
+					votes = row3.rows[0].vote;
+					sqlString = "SELECT FILELINK,TITLE,ARTIST,LINK,USERNAME FROM CONTENT WHERE VIDID ='" + vidID + "'";
+
+					client.query(sqlString, function(err, row4) {
+		    		if(err) {
+		      			return console.error('error running query', err);
+		    		}
+						output2 = {'id':vidID,'userID':'noid','fileLink':row4.rows[0].filelink,'songName':row4.rows[0].title,'bandName':row4.rows[0].artist,'artistLink':row4.rows[0].link,'votes':votes};
+						//console.log(output2);
+						client.end();
+						res.json({'out1':output1,'out2':output2})
+
 					});
-				});
-			});
+		    	});
 
-		});
+
+		    
+		  });
+		
 
 	});
+  });
 });
+
+
+// 	db.serialize(function() {
+
+// 		//console.log('here');
+// 		db.beginTransaction(function(err, transaction) {
+
+// 			sqlString = "SELECT VIDID,VOTE FROM BATTLE WHERE STATUS = 0 ORDER BY VOTE DESC LIMIT 1"	;	 
+// 			//db.get(sqlString, function(tx,results){
+// 			transaction.each(sqlString, function(err, row) {
+// //				console.log(row);
+// 				var vidID = JSON.stringify(row.VIDID);
+// 				votes = row.VOTE;
+// 				sqlString = "SELECT FILELINK,TITLE,ARTIST,LINK,USER FROM CONTENT WHERE VIDID =" + vidID;
+// 				//console.log(sqlString)	
+// 				transaction.each(sqlString, function(err, row2) {	
+
+// 					output1 = {'id':vidID,'userID':'noid','fileLink':row2.FILELINK,'songName':row2.TITLE,'bandName':row2.ARTIST,'artistLink':row2.LINK,'votes':votes};
+
+// 					sqlString = "SELECT VIDID,VOTE FROM BATTLE WHERE STATUS = 1 ORDER BY RANDOM() LIMIT 1"	;	 
+// 					//db.get(sqlString, function(tx,results){
+// 					transaction.each(sqlString, function(err, row3) {
+
+// 						var vidID = JSON.stringify(row3.VIDID);
+// 						votes = row3.VOTE;
+// 						sqlString = "SELECT FILELINK,TITLE,ARTIST,LINK,USER FROM CONTENT WHERE VIDID =" + vidID;	
+// 						transaction.each(sqlString, function(err, row4) {
+
+// 							output2 = {'id':vidID,'userID':'noid','fileLink':row4.FILELINK,'songName':row4.TITLE,'bandName':row4.ARTIST,'artistLink':row4.LINK,'votes':votes};
+// //							console.log(output2);
+// 							res.json({'out1':output1,'out2':output2})
+
+// 						});
+// 					});
+// 				});
+// 			});
+
+// 		});
+
+// 	});
+// });
 
 app.get('/createDB', function(req, res) {
 
@@ -140,7 +242,7 @@ app.get('/createDB', function(req, res) {
 
 		db.run("CREATE TABLE IF NOT EXISTS CONTENT"+
 				"(VIDID VARCHAR(50)  PRIMARY KEY     NOT NULL,"+
-				"USER         VARCHAR(50)    NOT NULL,"+
+				"USERNAME         VARCHAR(50)    NOT NULL,"+
 				"FILELINK           VARCHAR(50)    NOT NULL,"+
 				"FILETYPE           VARCHAR(50)    NOT NULL,"+
 				"GENRE            VARCHAR(50)     NOT NULL,"+
@@ -617,51 +719,57 @@ app.post('/register', function (req, res) {
 	"</body>"+
 	"</html>";
 
-	var db = new sqlite3.Database('bbbDB');
+//	var db = new sqlite3.Database('bbbDB');
+
 
 	if(req.body.type=="fan"){
 
-	var type =   JSON.stringify(req.body.type) ;
-	var email =   JSON.stringify(req.body.email) ;
-	var emailConfirm = '\"1\"';
-	timestamp = new Date();
-	created = JSON.stringify(timestamp) ;
-	username = JSON.stringify(req.body.uname) ;
-	firstname = JSON.stringify(req.body.firstname) ;
-	surname  = JSON.stringify(req.body.lastname) ;
-	password =  JSON.stringify(req.body.password) ;
-	country= JSON.stringify(req.body.country) ;
-	city =  JSON.stringify(req.body.city) ;
-	birthday = JSON.stringify(req.body.age2) ;
-	gender = JSON.stringify(req.body.gender2) ;
-	preferences  = '\"'+req.body.prefs3 + '\"';
-	link =  ' \"slamstr.com \"';
-	playList = ' \"playList1,playList2,playList3,playList4,playList5\" ';
+	var type =   "'" +req.body.type +"'"  ;
+	var email =   "'" +req.body.email+"'" ;
+	var emailConfirm = "'1'";
+	d = new Date();
+    timeStamp = d.yyyymmdd();
+	created = "'" +timeStamp+"'" ;
+	username = "'" +req.body.uname+"'" ;
+	firstname = "'" +req.body.firstname+"'" ;
+	surname  = "'" +req.body.lastname+"'" ;
+	password =  "'" +req.body.password+"'" ;
+	country= "'" +req.body.country+"'" ;
+	city =  "'" +req.body.city+"'" ;
+	birthday = "'" +req.body.age2+"'" ;
+	gender = "'" +req.body.gender2+"'" ;
+	preferences  = "'" +req.body.prefs3 +"'" ;
+	link =  "'slamstr.com '" ;
+	playList = "'playList1,playList2,playList3,playList4,playList5'" ;
 	insertString = type +"," + email + "," + emailConfirm + "," + username +"," +created+ "," + firstname + "," + surname + "," + password + "," + country + "," + city + "," + birthday + "," + gender + "," + preferences + "," + link + "," + playList;
 	}else{
 
-	var type =   JSON.stringify(req.body.type) ;
-	var email =   JSON.stringify(req.body.email) ;
-	var emailConfirm = '\"1\"';
-	timestamp = new Date();
-	created = JSON.stringify(timestamp) ;
-	username = JSON.stringify(req.body.uname) ;
-	firstname = JSON.stringify(req.body.firstname) ;
-	surname  = JSON.stringify(req.body.lastname) ;
-	password =  JSON.stringify(req.body.password) ;
-	country= JSON.stringify(req.body.country) ;
-	city =  JSON.stringify(req.body.city) ;
-	birthday = JSON.stringify(req.body.age) ;
-	gender = JSON.stringify(req.body.gender) ;
-	preferences  = '\"'+req.body.prefs2 + '\"';
-	link =  ' \"slamstr.com \"';
-	playList = ' \"playList1,playList2,playList3,playList4,playList5\" ';
-	insertString = type +"," + email + "," + emailConfirm + "," + username +"," + created+ "," + firstname + "," + surname + "," + password + "," + country + "," + city + "," + birthday + "," + gender + "," + preferences + "," + link + "," + playList;
+	var type =   "'" +req.body.type +"'"  ;
+	var email =   "'" +req.body.email+"'" ;
+	var emailConfirm = "'1'";
+	d = new Date();
+    timeStamp = d.yyyymmdd();
+	created = "'" +timeStamp+"'" ;
+	username = "'" +req.body.uname+"'" ;
+	firstname = "'" +req.body.firstname+"'" ;
+	surname  = "'" +req.body.lastname+"'" ;
+	password =  "'" +req.body.password+"'" ;
+	country= "'" +req.body.country+"'" ;
+	city =  "'" +req.body.city+"'" ;
+	birthday = "'" +req.body.age2+"'" ;
+	gender = "'" +req.body.gender2+"'" ;
+	preferences  = "'" +req.body.prefs3 +"'" ;
+	link =  "'slamstr.com '" ;
+	playList = "'playList1,playList2,playList3,playList4,playList5'" ;
+	insertString = type +"," + email + "," + emailConfirm + "," + username +"," +created+ "," + firstname + "," + surname + "," + password + "," + country + "," + city + "," + birthday + "," + gender + "," + preferences + "," + link + "," + playList;
 	
 
 
 	}
 
+
+var params = {host: 'ec2-54-197-241-79.compute-1.amazonaws.com',user: 'tkplqpramikmhp',password: '4-QVsIeBnFOjlVziYa05HNmiI2',database: 'd8tmbdij58htc8',ssl: true };
+var client = new pg.Client(params);
 
 
 	data = 0;
@@ -669,39 +777,81 @@ app.post('/register', function (req, res) {
 	//console.log(sqlStr);
 			
 
-	db.serialize(function() {
 
-//console.log(db.all(sqlStr))
+client.connect(function(err) {
+  if(err) {
+    return console.error('could not connect to postgres', err);
+  }
+  client.query(sqlStr, function(err, result) {
+    if(err) {
+      return console.error('error running query', err);
+    }
+    //console.log(result.rows);
 
-		db.all(sqlStr, function(err, row) {
+		if(result.rows.length>0){
+			console.log('error');
+			client.end();
 
-			if(row.length>0){   
-				//console.log('exists')				
-				//console.log(row)
+		}else{
+
+			sqlStr2 = "INSERT INTO PROFILE (TYPE,EMAIL,EMAILCONFIRM,USERNAME,CREATED,FIRSTNAME,SURNAME,PASSWORD,COUNTRY,CITY,AGE,GENDER,PREFERENCES,LINK,PLAYLISTS) VALUES ("+insertString+")";  
 				
-				//res.json({'msg':'email_already_exists','msg2':'sdfdsds'});
-			}else{
+		  	client.query(sqlStr2, function(err, result) {
+		    if(err) {
+		      return console.error('error running query', err);
+		    }
+		    //console.log(result.rows);
 
-				//res.json({'msg':'insering','msg2':'sdfdsds'});
 
-				//console.log("INSERT INTO PROFILE (TYPE,EMAIL,EMAILCONFIRM,USERNAME,CREATED,FIRSTNAME,SURNAME,PASSWORD,COUNTRY,CITY,AGE,GENDER,PREFERENCES,LINK,PLAYLISTS) VALUES (" +insertString +")");  
+		    //client.query("select count (title) from content", function(err, result) {
+		    //if(err) {
+		    //  return console.error('error running query', err);
+		    //}
+		    //console.log(result.rows);
 
+		    client.end();
+		  });
+		}
 
-				db.run("INSERT INTO PROFILE (TYPE,EMAIL,EMAILCONFIRM,USERNAME,CREATED,FIRSTNAME,SURNAME,PASSWORD,COUNTRY,CITY,AGE,GENDER,PREFERENCES,LINK,PLAYLISTS) VALUES ("+insertString+")");  
-				
-				//finalString = "INSERT INTO PROFILE (ID, EMAIL,FIRSTNAME,SURNAME,PASSWORD,COUNTRY,CITY,BIRTHDAY,GENDER,PREFERENCES,LINK) VALUES ("+insertString+")"
-
-			}
-
-		});
 	});
+  });
 
-res.send( output );
+	res.send( output );
+});
+
+// 	db.serialize(function() {
+
+// //console.log(db.all(sqlStr))
+
+// 		db.all(sqlStr, function(err, row) {
+
+// 			if(row.length>0){   
+// 				//console.log('exists')				
+// 				//console.log(row)
+				
+// 				//res.json({'msg':'email_already_exists','msg2':'sdfdsds'});
+// 			}else{
+
+// 				//res.json({'msg':'insering','msg2':'sdfdsds'});
+
+// 				//console.log("INSERT INTO PROFILE (TYPE,EMAIL,EMAILCONFIRM,USERNAME,CREATED,FIRSTNAME,SURNAME,PASSWORD,COUNTRY,CITY,AGE,GENDER,PREFERENCES,LINK,PLAYLISTS) VALUES (" +insertString +")");  
+
+
+// 				db.run("INSERT INTO PROFILE (TYPE,EMAIL,EMAILCONFIRM,USERNAME,CREATED,FIRSTNAME,SURNAME,PASSWORD,COUNTRY,CITY,AGE,GENDER,PREFERENCES,LINK,PLAYLISTS) VALUES ("+insertString+")");  
+				
+// 				//finalString = "INSERT INTO PROFILE (ID, EMAIL,FIRSTNAME,SURNAME,PASSWORD,COUNTRY,CITY,BIRTHDAY,GENDER,PREFERENCES,LINK) VALUES ("+insertString+")"
+
+// 			}
+
+// 		});
+// 	});
+
+	
 
 	//console.log(firstname);
 
 	
-});
+
 
 
 app.get('/createTable', function (req, res) {
@@ -711,86 +861,135 @@ app.get('/createTable', function (req, res) {
 	var genreA = new Array();
 	var titleA = new Array();
 	var linkA = new Array();
+	var output = []
 
-	var db = new TransactionDatabase(
-			new sqlite3.Database('bbbDB', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE)
-	);
+//	var db = new TransactionDatabase(
+//			new sqlite3.Database('bbbDB', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE)
+//	);
 
+		var params = {host: 'ec2-54-197-241-79.compute-1.amazonaws.com',user: 'tkplqpramikmhp',password: '4-QVsIeBnFOjlVziYa05HNmiI2',database: 'd8tmbdij58htc8',ssl: true };
 
-	
-
-	db.serialize(function() {
-
-		db.beginTransaction(function(err, transaction) {
-
-			transaction.all("SELECT VIDID,VOTE FROM BATTLE ORDER BY VOTE DESC", function(err, row) {
+		var sqlStr1 = "SELECT VIDID,VOTE FROM BATTLE ORDER BY VOTE DESC"
+		var client = new pg.Client(params);
+		client.connect(function(err) {
+		  if(err) {
+		    return console.error('could not connect to postgres', err);
+		  }
+		  client.query(sqlStr1, function(err, result) {
+		    if(err) {
+		      return //console.error('error running query', err);
+		    }
+		    //console.log(sqlStr1);
 
 				vidID = [];
 				votes = [];
-				row.forEach(function(rows4){
-					vidID.push(JSON.stringify(rows4.VIDID));
-					votes.push(rows4.VOTE);
-					
-					//vidID =  row.ID
-					//votes = row.VOTE
-				});
+				//row.forEach(function(rows4){
+				for (var i=0;i<result.rows.length;i++){
+					vidID.push("'"+result.rows[i].vidid+"'");
+					votes.push("'"+result.rows[i].vote+"'");
+				};
 
 
+					for (var i=0;i<vidID.length;i++){
 
-				output=[];
-				for (var i=0;i<vidID.length;i++){
-
-
-					sqlQuery = "SELECT CONTENT.ARTIST,CONTENT.FILELINK,CONTENT.GENRE,CONTENT.TITLE,CONTENT.LINK,BATTLE.VOTE "+
-										"from CONTENT JOIN BATTLE ON BATTLE.VIDID = CONTENT.VIDID "+
-										"WHERE CONTENT.VIDID="+vidID[i];
-					//console.log(sqlQuery)				
-					transaction.all(sqlQuery, function(err2, row2) {
-						
-
-						
-						row2.forEach(function(rows2){
+						sqlStr = "SELECT CONTENT.ARTIST,CONTENT.FILELINK,CONTENT.GENRE,CONTENT.TITLE,CONTENT.LINK,BATTLE.VOTE "+
+											"from CONTENT JOIN BATTLE ON BATTLE.VIDID = CONTENT.VIDID "+
+											"WHERE CONTENT.VIDID="+vidID[i];
 
 
-							 artistsA.push(rows2.ARTIST);
-							// fileLinkA.push(rows2.FILELINK);
-							// genreA.push(rows2.GENRE);
-							// titleA.push(rows2.TITLE);
-							// linkA.push(rows2.LINK);
+						  	client.query(sqlStr, function(err, result2) {
+							    if(err) {
+							      return console.error('error running query', err);
+							    }
 
-
-							output.push({'artist':rows2.ARTIST,'fileLink':rows2.FILELINK,'genre':rows2.GENRE,'title':rows2.TITLE,'votes':rows2.VOTE});
-							
-							if(artistsA.length==vidID.length-1){
-								//console.log({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA})
-								//res.json({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA});
-								res.json(output);
-							}
-
-						});
-
-						//console.log(artistsA)
-					});
-					//console.log(artistsA)
-
-				}
-
+		 						artistsA.push(result2.rows[0].artist);
+								
+								output.push({'artist':result2.rows[0].artist,'fileLink':result2.rows[0].filelink,'genre':result2.rows[0].genre,'title':result2.rows[0].title,'votes':result2.rows[0].vote});
+								
+								if(artistsA.length==vidID.length){
+									//console.log({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA})
+									//res.json({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA});
+									client.end();
+									res.json(output);
+								}
+						    
+						  });
+					}
 			});
-
-			transaction.commit(function(err) {
-				if (err) return console.log("Sad panda :-( commit() failed.", err);
-				//console.log("Happy panda :-) commit() was successful.");
-			});
-
 		});
+});
+	
 
-	});
+	// db.serialize(function() {
+
+	// 	db.beginTransaction(function(err, transaction) {
+
+	// 		transaction.all("SELECT VIDID,VOTE FROM BATTLE ORDER BY VOTE DESC", function(err, row) {
+
+	// 			vidID = [];
+	// 			votes = [];
+	// 			row.forEach(function(rows4){
+	// 				vidID.push(JSON.stringify(rows4.VIDID));
+	// 				votes.push(rows4.VOTE);
+					
+	// 				//vidID =  row.ID
+	// 				//votes = row.VOTE
+	// 			});
+
+
+
+	// 			output=[];
+	// 			for (var i=0;i<vidID.length;i++){
+
+
+	// 				sqlQuery = "SELECT CONTENT.ARTIST,CONTENT.FILELINK,CONTENT.GENRE,CONTENT.TITLE,CONTENT.LINK,BATTLE.VOTE "+
+	// 									"from CONTENT JOIN BATTLE ON BATTLE.VIDID = CONTENT.VIDID "+
+	// 									"WHERE CONTENT.VIDID="+vidID[i];
+	// 				//console.log(sqlQuery)				
+	// 				transaction.all(sqlQuery, function(err2, row2) {
+						
+
+						
+	// 					row2.forEach(function(rows2){
+
+
+	// 						 artistsA.push(rows2.ARTIST);
+	// 						// fileLinkA.push(rows2.FILELINK);
+	// 						// genreA.push(rows2.GENRE);
+	// 						// titleA.push(rows2.TITLE);
+	// 						// linkA.push(rows2.LINK);
+
+
+	// 						output.push({'artist':rows2.ARTIST,'fileLink':rows2.FILELINK,'genre':rows2.GENRE,'title':rows2.TITLE,'votes':rows2.VOTE});
+							
+	// 						if(artistsA.length==vidID.length){
+	// 							//console.log({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA})
+	// 							//res.json({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA});
+	// 							res.json(output);
+	// 						}
+
+	// 					});
+
+	// 					//console.log(artistsA)
+	// 				});
+	// 				//console.log(artistsA)
+
+	// 			}
+
+	// 		});
+
+	// 		transaction.commit(function(err) {
+	// 			if (err) return console.log("Sad panda :-( commit() failed.", err);
+	// 			//console.log("Happy panda :-) commit() was successful.");
+	// 		});
+
+	// 	});
+
+	// });
 
 	//res.json({'msg':artistsA});
 
-})
-
-
+//})
 
 
 

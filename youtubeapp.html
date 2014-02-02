@@ -39,6 +39,14 @@ function guid() {
   s4() + '-' + s4() + s4() + s4();
 }
 
+Date.prototype.yyyymmdd = function() {         
+                                
+        var yyyy = this.getFullYear().toString();                                    
+        var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based         
+        var dd  = this.getDate().toString();             
+                            
+        return yyyy + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]);
+   }; 
 
 
 var myData = []
@@ -85,7 +93,9 @@ var ytEmbed = {
                 for (var i = 0; i < json.data.items.length; i++) {
                     var entry = json.data.items[i];
                     
-                    dateNow = new Date()
+                    //dateNow = new Date()
+                    d = new Date();
+                    dateNow = d.yyyymmdd();
                     split = (entry.title.replace(/"/g, "")).split("-")
                     var uuid = guid();
                     myData.push({"id": uuid,
@@ -355,7 +365,7 @@ function updateField(){
   string += '\'q\':\''+codeQ+'\','; 
   var codeType = 'search'
   string += '\'type\':\''+codeType+'\',';
-  var codeResults = 5;
+  var codeResults = 20;
   string += '\'results\':'+codeResults+',';
   var codeOrder = 'most_relevance'
   string += '\'order\':\''+codeOrder+'\',';
@@ -388,7 +398,7 @@ function updateField(){
       <button class="k-button" id="reset" type="button">Reset</button>
       <button class="k-button" id="submitdb" type="button">Submit
         To DB</button>
-
+        submitted <a id="count" name="count"><a>
 
       <br>
 
@@ -426,7 +436,7 @@ function updateField(){
                         
                
                 //fileID = line.split(",");
-                          numID = JSON.stringify(line["id"]);
+                          numID = "'" + (line["id"]) + "'";
                           status = 0;
                           if (i%2 == 0){
                               status = 0;
@@ -436,17 +446,17 @@ function updateField(){
                           
          
   
-                        sqlStr1 = JSON.stringify(line["id"])
-                          + "," + JSON.stringify(line["user"])
-                          + "," + JSON.stringify(line["vidlink"])
-                          + "," + JSON.stringify(line["vidtype"])
-                          + "," + JSON.stringify(line["category"])
-                          + "," + JSON.stringify(line["title"])
-                          + "," + JSON.stringify(line["artist"])
-                          + "," + JSON.stringify(line["date"])
-                          + "," + JSON.stringify(line["city"])
-                          + "," + JSON.stringify(line["country"])
-                          + "," + JSON.stringify(line["link"]);
+                        sqlStr1 = "'" +line["id"]+ "'"
+                          + "," + "'" +line["user"]+ "'"
+                          + "," + "'" +line["vidlink"]+ "'"
+                          + "," + "'" +line["vidtype"]+ "'"
+                          + "," + "'" +line["category"]+ "'"
+                          + "," + "'" +line["title"]+ "'"
+                          + "," + "'" +line["artist"]+ "'"
+                          + "," + "'" +line["date"]+ "'"
+                          + "," + "'" +line["city"]+ "'"
+                          + "," + "'" +line["country"]+ "'"
+                          + "," + "'" +line["link"]+ "'";
                           
                         sqlStr2 = ""+numID+",0,"+status+",0";
                         
@@ -461,7 +471,7 @@ function updateField(){
                              success: function(data){
   
                                 //fileDisplayArea.innerText = sqlStr1 + " " +sqlStr2;
-                                alert(data['data'])
+                                //alert(data['data'])
                                   
                              }
                              , error: function(jqXHR, textStatus, err){
@@ -470,7 +480,8 @@ function updateField(){
                           });
   
                 
-                  i++;                     //  increment the counter
+                  i++;   
+                  $("#count").html(i);                  //  increment the counter
                   if (i < displayedData.length) {            //  if the counter < 10, call the loop function
                      myLoop();             //  ..  again which will trigger another 
                   }                        //  ..  setTimeout()
