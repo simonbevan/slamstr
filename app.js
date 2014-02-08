@@ -744,7 +744,7 @@ app.post('/register', function (req, res) {
 
 
 app.get('/listFiles', function (req, res) {
- fs.readdir('/', function(err, list) {
+ fs.readdir(__dirname , function(err, list) {
 	//console.log(list)
 	res.json(JSON.stringify(list));
   });
