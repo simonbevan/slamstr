@@ -1107,8 +1107,10 @@ primary: 'flash'
 				                    	window.location.assign("/");
 				                    }else if($(e.item).children(".k-link").text()=='All'){
 											sessionStorage.filter='all';
+											filterSelect = true;
 				                    }else if($(e.item).children(".k-link").text()=='Alternative & Indie'){
 											sessionStorage.filter='indie';
+											filterSelect = true;
 									}else if($(e.item).children(".k-link").text()=='Blues'){
 											sessionStorage.filter='blues';
 											filterSelect = true;

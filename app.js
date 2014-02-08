@@ -209,6 +209,21 @@ app.get('/createDB', function(req, res) {
 		"PLAYLISTNAME    VARCHAR(50)  NOT NULL);");
 
 
+		db.run("CREATE TABLE IF NOT EXISTS AWAITINGAPPROVAL"+
+				"(VIDID VARCHAR(50)  PRIMARY KEY     NOT NULL,"+
+				"FILELINK        VARCHAR(50)    NOT NULL,"+
+				"USERNAME         VARCHAR(50)    NOT NULL,"+
+				"FILETYPE           VARCHAR(50)    NOT NULL,"+
+				"GENRE            VARCHAR(50)     NOT NULL,"+
+				"TITLE        VARCHAR(50)    NOT NULL,"+
+				"ARTIST         VARCHAR(50)    NOT NULL,"+
+				"CREATED        DATE    NOT NULL,"+
+				"CITY        VARCHAR(50)     NOT NULL,"+
+				"COUNTRY      VARCHAR(50)     NOT NULL,"+
+				"LINK VARCHAR(50)    NOT NULL);");
+
+insertString = "'"+uuid+"'" + "," + "none"+ ","+ type +"," + id + ","  +created+ "," + artist + "," + title + "," + country + "," + city + "," + genre +"," + link;
+
 		db.run("INSERT INTO PROFILE (EMAIL,EMAILCONFIRM,CREATED,FIRSTNAME,SURNAME,PASSWORD,COUNTRY,CITY,AGE,GENDER,PREFERENCES,LINK,PLAYLISTS) VALUES ("+insertString+")");  			       
 
 
@@ -244,7 +259,6 @@ app.post('/next', function(req, res) {
 		}
 
 
-
 		client.connect(function(err) {
 			if(err) {
 				return console.error('could not connect to postgres', err);
@@ -269,7 +283,7 @@ app.post('/next', function(req, res) {
 
 					if(genre=="'all'"){
 						sqlString = "SELECT VIDID,VOTE FROM BATTLE WHERE STATUS = 1 ORDER BY RANDOM() LIMIT 1"	;	 
-					}{
+					}else{
 						sqlString = "SELECT VIDID,VOTE FROM BATTLE WHERE STATUS = 1 AND GENRE = "+genre+" ORDER BY RANDOM() LIMIT 1"	;	 
 					}
 					//console.log(sqlString)
@@ -916,66 +930,239 @@ app.post('/getAccount', function (req, res) {
 app.post('/upload', function(req, res) {
 
 
-
+	var uuid = guid() ;
 	var type =  req.body.type  ;
+
+	//console.log(type)
 
 	if(type == "mp4"){
 		type =   "'" +type+"'"  ;
 
-
 		var tmp_path = req.files.files.path;
-		// set where the file should actually exists
-		var target_path = './public/music/' + req.files.files.name;
-		fs.rename(tmp_path, target_path, function(err) {
-			if (err) throw err;
-			// delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-			fs.unlink(tmp_path, function() {
+		var target_path = './public/video/' + uuid;
 
-
-				if (err) throw err;
-
-				output = "<!DOCTYPE html>"+
-				"<html>"+
-				"<head>"+
-				"<title>slamstr</title>"+
-				"<script src=\"js/jquery.min.js\" type=\"text/javascript\"></script>"+
-				"</head>"+
-				"<body>"+
-
-				"<script type=\"text/javascript\">"+
-				"$(document).ready(function() {"+
-
-				"	 window.location.replace(\"/upload.html\");"+
-
-				"});"+
-				" </script>"
-				"<h3>Redirecting</h3>"+
-				"</body>"+
-				"</html>";
-
-				res.send(output);
-			});
-		});
-
-	}else if(type == "mp3"){
-		type =   "'" +type+"'"  ;
-	}else if(type == "yt"){
-		type =   "'" +type+"'"  ;
-	}
-
-	var uuid = "'"+guid() +"'";
-	var email =   "'" +req.body.email+"'" ;
+	var id =   "'" +req.body.id+"'" ;
 	d = new Date();
 	timeStamp = d.yyyymmdd();
 	created = "'" +timeStamp+"'" ;
 	artist = "'" +req.body.artist+"'" ;
-	title = "'" +req.body.firstname+"'" ;
+	title = "'" +req.body.title+"'" ;
 	country= "'" +req.body.country+"'" ;
 	city =  "'" +req.body.city+"'" ;
-	genre  = "'" +req.body.genre +"'" ;
+	genre  = "'" +req.body.genre2 +"'" ;
 	link =  "'slamstr.com '" ;
 
-	insertString = type +"," + email + "," + emailConfirm + "," + username +"," +created+ "," + firstname + "," + surname + "," + password + "," + country + "," + city + "," + birthday + "," + gender + "," + preferences + "," + link + "," + playList;
+	insertString = "'"+uuid+"'" + "," + "'none'"+ ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
+	//console.log(insertString)
+	
+
+		fs.rename(tmp_path, target_path, function(err) {
+			if (err) throw err;
+			// delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+			fs.unlink(tmp_path, function() {
+				if (err) throw err;
+
+				fs.rename(tmp_path2, target_path2, function(err) {
+					if (err) throw err;
+				// delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+					fs.unlink(tmp_path2, function() {
+						if (err) throw err;
+
+
+
+						sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
+						
+						//console.log(sqlStr2)
+						var params = {host: 'ec2-54-197-241-79.compute-1.amazonaws.com',user: 'tkplqpramikmhp',password: '4-QVsIeBnFOjlVziYa05HNmiI2',database: 'd8tmbdij58htc8',ssl: true };
+
+						var client = new pg.Client(params);
+						client.connect(function(err) {
+							if(err) {
+								return console.error('could not connect to postgres', err);
+							}
+							client.query(sqlStr1, function(err, result) {
+								if(err) {
+									return //console.error('error running query', err);
+								}
+									client.end();
+								});
+						});
+						
+
+						output = "<!DOCTYPE html>"+
+						"<html>"+
+						"<head>"+
+						"<title>slamstr</title>"+
+						"<script src=\"js/jquery.min.js\" type=\"text/javascript\"></script>"+
+						"</head>"+
+						"<body>"+
+
+						"<script type=\"text/javascript\">"+
+						"$(document).ready(function() {"+
+
+						"	 window.location.replace(\"/upload.html\");"+
+
+						"});"+
+						" </script>"
+						"<h3>Redirecting</h3>"+
+						"</body>"+
+						"</html>";
+
+						res.send(output);
+
+					});
+				});
+			});
+		});
+
+
+	}else if(type == "mp3"){
+		type =   "'" +type+"'"  ;
+
+
+		var tmp_path = req.files.files.path;
+		var target_path = './public/music/' + uuid;
+		var tmp_path2 = req.files.files2.path;
+		var target_path2 = './public/picture/' + uuid;
+
+	var id =   "'" +req.body.id+"'" ;
+	d = new Date();
+	timeStamp = d.yyyymmdd();
+	created = "'" +timeStamp+"'" ;
+	artist = "'" +req.body.artist+"'" ;
+	title = "'" +req.body.title+"'" ;
+	country= "'" +req.body.country+"'" ;
+	city =  "'" +req.body.city+"'" ;
+	genre  = "'" +req.body.genre2 +"'" ;
+	link =  "'slamstr.com '" ;
+
+	insertString = "'"+uuid+"'" + "," + "'none'"+ ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
+	//console.log(insertString)
+	
+
+		fs.rename(tmp_path, target_path, function(err) {
+			if (err) throw err;
+			// delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+			fs.unlink(tmp_path, function() {
+				if (err) throw err;
+
+				fs.rename(tmp_path2, target_path2, function(err) {
+					if (err) throw err;
+				// delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+					fs.unlink(tmp_path2, function() {
+						if (err) throw err;
+
+						sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
+						console.log(sqlStr1)	
+
+						//console.log(sqlStr2)
+						var params = {host: 'ec2-54-197-241-79.compute-1.amazonaws.com',user: 'tkplqpramikmhp',password: '4-QVsIeBnFOjlVziYa05HNmiI2',database: 'd8tmbdij58htc8',ssl: true };
+
+						var client = new pg.Client(params);
+						client.connect(function(err) {
+							if(err) {
+								return console.error('could not connect to postgres', err);
+							}
+							client.query(sqlStr1, function(err, result) {
+								if(err) {
+									return //console.error('error running query', err);
+								}
+									client.end();
+								});
+						});
+						
+
+						output = "<!DOCTYPE html>"+
+						"<html>"+
+						"<head>"+
+						"<title>slamstr</title>"+
+						"<script src=\"js/jquery.min.js\" type=\"text/javascript\"></script>"+
+						"</head>"+
+						"<body>"+
+
+						"<script type=\"text/javascript\">"+
+						"$(document).ready(function() {"+
+
+						"	 window.location.replace(\"/upload.html\");"+
+
+						"});"+
+						" </script>"
+						"<h3>Redirecting</h3>"+
+						"</body>"+
+						"</html>";
+
+						res.send(output);
+
+					});
+				});
+			});
+		});
+
+
+	}else if(type == "yt"){
+		type =   "'" +type+"'"  ;
+
+
+
+	var id =   "'" +req.body.id+"'" ;
+	d = new Date();
+	timeStamp = d.yyyymmdd();
+	created = "'" +timeStamp+"'" ;
+	artist = "'" +req.body.artist+"'" ;
+	title = "'" +req.body.title+"'" ;
+	country= "'" +req.body.country+"'" ;
+	city =  "'" +req.body.city+"'" ;
+	genre  = "'" +req.body.genre2 +"'" ;
+	ytLink  = "'" +req.body.link +"'" ;
+	link =  "'slamstr.com '" ;
+
+	insertString = "'"+uuid+"'" + "," + ytLink + ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
+	//console.log(insertString)
+	
+		sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
+				
+				
+						//console.log(sqlStr2)
+						var params = {host: 'ec2-54-197-241-79.compute-1.amazonaws.com',user: 'tkplqpramikmhp',password: '4-QVsIeBnFOjlVziYa05HNmiI2',database: 'd8tmbdij58htc8',ssl: true };
+
+						var client = new pg.Client(params);
+						client.connect(function(err) {
+							if(err) {
+								return console.error('could not connect to postgres', err);
+							}
+							client.query(sqlStr1, function(err, result) {
+								if(err) {
+									return //console.error('error running query', err);
+								}
+									client.end();
+								});
+							});
+
+						output = "<!DOCTYPE html>"+
+						"<html>"+
+						"<head>"+
+						"<title>slamstr</title>"+
+						"<script src=\"js/jquery.min.js\" type=\"text/javascript\"></script>"+
+						"</head>"+
+						"<body>"+
+
+						"<script type=\"text/javascript\">"+
+						"$(document).ready(function() {"+
+
+						"	 window.location.replace(\"/upload.html\");"+
+
+						"});"+
+						" </script>"
+						"<h3>Redirecting</h3>"+
+						"</body>"+
+						"</html>";
+
+						res.send(output);
+					
+
+	}
+
+	
 
 
 
@@ -1000,17 +1187,7 @@ app.post('/upload', function(req, res) {
 //});
 
 
-//<div id='playerNgslptTQgfbH'></div>
-//<script type='text/javascript'>
-//jwplayer('playerNgslptTQgfbH').setup({
-//file: 'https://www.youtube.com/watch?v=qQXP6TDtW0w',
-//title: '"Sirens" (Official Music Video) - Pearl Jam',
-//width: '100%',
-//aspectratio: '16:9',
-//fallback: 'false',
-//primary: 'flash'
-//});
-//</script>
+
 
 
 

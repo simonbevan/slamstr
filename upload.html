@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+									
+									
+									
+									<!DOCTYPE html>
 <html>
 <head>
 <title>slamstr</title>
@@ -6,7 +9,7 @@
 <link href="examples/content/shared/styles/examples-offline.css"
 	rel="stylesheet">
 <link href="styles/kendo.common.min.css" rel="stylesheet">
-
+<link href="styles/kendo.default.min.css" rel="stylesheet">
 <script src="js/kendo.all.min.js" type="text/javascript"></script>
 <link href="bbb.css" rel="stylesheet">
 
@@ -18,10 +21,7 @@
 
 <script src="examples/content/shared/js/people.js"></script>
 
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-      google.load('visualization', '1', {packages: ['corechart']});
-    </script>
+
 
 
 
@@ -29,8 +29,10 @@
 <body>
 
 
+<script>
+sessionStorage.signuptype="mp4";
 
-
+</script>
 
 	<div id="body" class="k-content">
 
@@ -45,257 +47,573 @@
 
 			<div>
 
-				<ul id="menu">
 
-					<li>battle</li>
-					<li>charts</li>
-					<li>myslamstr
-						<ul>
-							<li>playLists</li>
-							<li>account</li>
+				<div id="register" class="k-content">
+
+
+
+					<div>
+
+						<ul id="menu">
+
+							<li>battle
+								
+
+							</li>
+
+
+							<li>charts</li>
+
+							<li>mySlamBox
+								<ul>
+									<li>playLists</li>
+									<li>account</li>
+								</ul>
+
+							</li>
+
+							<li>about</li>
+							<li>contact</li>
+
+
+
+
 						</ul>
-
-					</li>
-
-					<li>about</li>
-					<li>contact</li>
+					</div>
 
 
+					<div id="splitter" class=k-content>
+
+						<br>
 
 
-				</ul>
-			</div>
+						<div id="vertical">
 
-		
-            
-            
-            
-
-
-				<script>
-      
-            
-                $(document).ready(function() {
-                	
-
-                	
-                	
+							<div id="bottom-pane">
+								<div id="horizontal" style="height: 100%; width: 100%;">
+									<div id="left-pane">
+										<div class="pane-content">
 
 
-		});
+											
 
 
+											<div id="register" class="k-content">
+												
+												<div id="signupMP3" name="signupMP3" style="display: none">
 
 
-                
-                
-                
-                
-            
+													<div id="registration" class="registration">
+																<center>
+																	<div id ="name"><h2>MP3<h2></div>
+																</center>
 
 
+															<form action="/upload" method="post"  enctype="multipart/form-data" id ="registerMP3">
+															<ul>
+															
+															<input type="hidden" name="type" value="mp3">
+															
+															<script>
+																document.write("<input type=\"hidden\" name=\"id\" value="+sessionStorage.userID +">");
+															</script>
+
+															<label for="files" class="required">mp3:</label>
+															<input type="file" name="files" required  multiple accept='music/*'>
+															<br>
+															
+															<label for="files2" class="required">jpeg:</label>
+															<input type="file" name="files2" required  multiple accept='picture/*'>
+															<br>
+															
+																<label for="artist" class="required">artist:</label>
+																<input type="text" id="artist" name="artist" data-bind="value: artist"
+																	 required  style="width: 181px"class="k-textbox" />
+															
+																
+																<label for="title" class="required">title:</label>
+																<input type="text" id="title" name="title" data-bind="value: title"
+																	 data-bind="value: title" style="width: 181px"
+																	class="k-textbox" type="text" pattern="[A-Za-z0-9]+"
+																	required validationMessage="Sorry only letters and numbers" />
+																	
+																<br>
+																<label for="city" class="required">city:</label>
+																<input id="city" name="city"
+																	data-bind="value: city" type="text"
+																	required validationMessage="Please enter a city" style="width: 181px" class="k-textbox" style="width: 181px" class="k-textbox" />
+																
+																<label for="country" class="required">country:</label>
+																<input id="country" name="country"
+																	data-bind="value: country" type="text"
+																	required validationMessage="Please enter a country" style="width: 181px" class="k-textbox" style="width: 181px" class="k-textbox" />
+																<br>
+																
+																<label for="genre2" class="required">genre:</label>
+																<select id="genre2" multiple="multiple" name="genre2" required validationMessage="Please Select Your Genre"
+																	data-bind="value: Genre2" style="width: 181px">
+
+															<option>Alternative & Indie</option>
+															<option>Blues</option>
+															<option>Classical</option>
+															<option>Country</option>
+															<option>Dance & Electronic</option>
+															<option>Easy optionstening</option>
+															<option>Folk & Songwriter</option>
+															<option>Hard Rock & Metal</option>
+															<option>Jazz</option>
+															<option>Miscellaneous</option>
+															<option>Pop</option>
+															<option>R&B & Soul</option>
+															<option>Rap & Hip-Hop</option>
+															<option>Reggae</option>
+															<option>Rock</option>
+															<option>Soundtracks & Musicals</option>
+															<option>World Music</option>
+
+																</select>
+																
+																<label for="agree">please select</label>
+																<input type="checkbox" id="agree" name="agree"
+																	data-bind="checked: agreed" />
+&nbsp I have read the licence greement
+																<br>
+																<br>
+																<label for="reg">Enter the Ring</label>
+																<button data-bind="enabled: agreed" id="regFan" name="regFan"
+																	style="display: inline-block; width: 181px">Upload</button>
 
 
-  </script>    
-
-         
-            
-            
-				<div id="splitter" class=k-content>
-
-					<br>
+															</ul>
+														</form>
 
 
-
-
-
-				
-
-					<div id="vertical">
-
-						<div id="bottom-pane">
-							<div id="horizontal" style="height: 100%; width: 100%;">
-								<div id="left-pane">
-									<div class="pane-content">
-
-
-       <h3 id="uploadtitle">Please Select </h3>
-       
-      <form method="post" enctype="multipart/form-data" action="/upload" >
-    <input type="text" name="username">
-    <input type="password" name="password">
-    <input type="file" name="files">
-    <input type="submit">
-</form>
-   
-
-
-<script>
-
-
-var numberOfUploads = 0;
-$("#music").kendoUpload({
-    async: {
-        saveUrl: "/upload",
-        removeUrl: "/remove",
-        autoUpload: false
-    },
-    select: onSelect
-});
-
-
-
-
-    function onSelect(e) {
-    
-        $.each(e.files, function (index, value) {
-        	// if(numberOfUploads==0){
-        	// 	alert(value.extension)
-	        // 	if(value.extension=='.mp3'){
-	        // 		numberOfUploads = numberOfUploads+1
-	        // 	}else if(value.extension=='.mp4'){
-	        // 		numberOfUploads = numberOfUploads+1
-	        // 	}else{
-		       //  	e.preventDefault();
-		       //     	alert('only audio files allowed');
-	        		
-	        // 	}
-        	// }else if(numberOfUploads==1){
-	        // 	if(value.extension!='.jpg'){
-		       //  	e.preventDefault();
-		       //     	alert('only jpg files allowed');
-	        // 	}else{
-	        // 		numberOfUploads = numberOfUploads+1
-	        // 	}
-        		
-        	// }else{
-        	// 	e.preventDefault();
-        	// }
-        	
-        	
-        });
-    };
-</script>
+						
 
 
 
-									</div>
-								</div>
+													</div>
 
-								<div id="right-pane">
 
-									<div id="vertical2">
-										<div id="top-pane2">
-											<div id=login class="pane-content">
+												</div>
+												
+												
+												
+												
+												
+												
+												
+												<div id="signupMP4" name="signupMP4" style="display: visible">
+
+
+													<div id="registration2" class="registration">
+<center>
+																<div id ="name"><h2>MP4<h2></div>
+</center>
 
 
 
 
-											</div>
-										</div>
+								
+								
+
+														<form action="/upload" method="post"  enctype="multipart/form-data" id ="registerMP4">
+															<ul>
+															
+															<input type="hidden" name="type" value="mp4">
+															
+																<script>
+																document.write("<input type=\"hidden\" name=\"id\" value="+sessionStorage.userID +">");
+															</script>
+
+															<label for="files" class="required">mp4:</label>
+															<input type="file" name="files" required  multiple accept='video/*'>
+															<br>
+																<label for="artist" class="required">artist:</label>
+																<input type="text" id="artist" name="artist" data-bind="value: artist"
+																	 required  style="width: 181px"class="k-textbox" />
+															
+																
+																<label for="title" class="required">title:</label>
+																<input type="text" id="title" name="title" data-bind="value: title"
+																	 data-bind="value: title" style="width: 181px"
+																	class="k-textbox" type="text" pattern="[A-Za-z0-9]+"
+																	required validationMessage="Sorry only letters and numbers" />
+																	
+																<br>
+																<label for="city" class="required">city:</label>
+																<input id="city" name="city"
+																	data-bind="value: city" type="text"
+																	required validationMessage="Please enter a city" style="width: 181px" class="k-textbox" style="width: 181px" class="k-textbox" />
+																
+																<label for="country" class="required">country:</label>
+																<input id="country" name="country"
+																	data-bind="value: country" type="text"
+																	required validationMessage="Please enter a country" style="width: 181px" class="k-textbox" style="width: 181px" class="k-textbox" />
+																<br>
+																
+																<label for="genre" class="required">genre:</label>
+																<select id="genre" multiple="multiple" name="genre" required validationMessage="Please Select Your Genre"
+																	data-bind="value: Genre" style="width: 181px">
+
+															<option>Alternative & Indie</option>
+															<option>Blues</option>
+															<option>Classical</option>
+															<option>Country</option>
+															<option>Dance & Electronic</option>
+															<option>Easy optionstening</option>
+															<option>Folk & Songwriter</option>
+															<option>Hard Rock & Metal</option>
+															<option>Jazz</option>
+															<option>Miscellaneous</option>
+															<option>Pop</option>
+															<option>R&B & Soul</option>
+															<option>Rap & Hip-Hop</option>
+															<option>Reggae</option>
+															<option>Rock</option>
+															<option>Soundtracks & Musicals</option>
+															<option>World Music</option>
+
+																</select>
+																
+																<label for="agree">please select</label>
+																<input type="checkbox" id="agree" name="agree"
+																	data-bind="checked: agreed" />
+&nbsp I have read the licence greement
+																<br>
+																<br>
+																<label for="reg">Enter the Ring</label>
+																<button data-bind="enabled: agreed" id="regFan" name="regFan"
+																	style="display: inline-block; width: 181px">Upload</button>
+
+
+															</ul>
+														</form>
+
+
+						
 
 
 
-										<div id="bottom-pane2">
+													</div>
 
 
-
-											<div class="pane-content" id="vidInfo">
-
+												</div>
+												
+												
 												
 
+
+
+									<div id="signupYT" name="signupYT" style="display: none">
+
+
+													<div id="registration" class="registration">
+																<center>
+																	<div id ="name"><h2>YouTube<h2></div>
+																</center>
+
+
+															<form action="/upload" method="post"  enctype="multipart/form-data" id ="registerYT">
+															<ul>
+															
+															<input type="hidden" name="type" value="yt">
+															
+																<script>
+																document.write("<input type=\"hidden\" name=\"id\" value="+sessionStorage.userID +">");
+															</script>
+
+															<label for="link" class="required">link:</label>
+																<input type="text" id="link" name="link" data-bind="value: youtubelink"
+																	 required  style="width: 181px"class="k-textbox" />
+															<br>
+															
+																<label for="artist" class="required">artist:</label>
+																<input type="text" id="artist" name="artist" data-bind="value: artist"
+																	 required  style="width: 181px"class="k-textbox" />
+															
+																
+																<label for="title" class="required">title:</label>
+																<input type="text" id="title" name="title" data-bind="value: title"
+																	 data-bind="value: title" style="width: 181px"
+																	class="k-textbox" type="text" pattern="[A-Za-z0-9]+"
+																	required validationMessage="Sorry only letters and numbers" />
+																	
+																<br>
+																<label for="city" class="required">city:</label>
+																<input id="city" name="city"
+																	data-bind="value: city" type="text"
+																	required validationMessage="Please enter a city" style="width: 181px" class="k-textbox" style="width: 181px" class="k-textbox" />
+																
+																<label for="country" class="required">country:</label>
+																<input id="country" name="country"
+																	data-bind="value: country" type="text"
+																	required validationMessage="Please enter a country" style="width: 181px" class="k-textbox" style="width: 181px" class="k-textbox" />
+																<br>
+																
+																<label for="genre3" class="required">genre:</label>
+																<select id="genre3" multiple="multiple" name="genre2" required validationMessage="Please Select Your Genre"
+																	data-bind="value: Genre3" style="width: 181px">
+
+															<option>Alternative & Indie</option>
+															<option>Blues</option>
+															<option>Classical</option>
+															<option>Country</option>
+															<option>Dance & Electronic</option>
+															<option>Easy optionstening</option>
+															<option>Folk & Songwriter</option>
+															<option>Hard Rock & Metal</option>
+															<option>Jazz</option>
+															<option>Miscellaneous</option>
+															<option>Pop</option>
+															<option>R&B & Soul</option>
+															<option>Rap & Hip-Hop</option>
+															<option>Reggae</option>
+															<option>Rock</option>
+															<option>Soundtracks & Musicals</option>
+															<option>World Music</option>
+
+																</select>
+																
+																<label for="agree">please select</label>
+																<input type="checkbox" id="agree" name="agree"
+																	data-bind="checked: agreed" />
+&nbsp I have read the licence greement
+																<br>
+																<br>
+																<label for="reg">Enter the Ring</label>
+																<button data-bind="enabled: agreed" id="regFan" name="regFan"
+																	style="display: inline-block; width: 181px">Upload</button>
+
+
+															</ul>
+														</form>
+
+
+						
+
+
+
+													</div>
+
+
+												</div>
+
+												
+												
+												
 											</div>
+
+
+
 										</div>
-
-
 									</div>
 
+									<div id="right-pane">
+
+										<div id="vertical2">
+											<div id="top-pane2">
+												<div id=login class="pane-content">
+												
+												<center>
+												<h1>Upload a...</h1>
+													<button id="mp4Button" name="mp4Button"
+																	style="display: inline-block; width: 90%; height:80px">MP4</button>
+													
+													<button  id="mp3Button" name="mp3Button"
+																	style="display: inline-block; width: 90%; height:80px">MP3</button>
+
+													<button  id="ytButton" name="ytButton"
+																	style="display: inline-block; width: 90%; height:80px">YouTube Link</button>
+
+												</center>
+												
+												</div>
+											</div>
+
+
+
+											<div id="bottom-pane2">
+
+
+
+												<div class="pane-content" id="vidInfo"></div>
+											</div>
+
+
+										</div>
+
+									</div>
 								</div>
+
 							</div>
 
 						</div>
 
-					</div>
+
+
+						<script type="text/javascript">
+							$(document).ready(
+									function() {
+										var viewModel = kendo.observable({
+											firstName : "",
+											lastName : "",
+											country : "",
+											city : "",
+											age : "",
+											gender : "",
+											agreed : false,
+											confirmed : false,
+											register : function(e) {
+												e.preventDefault();
+
+												this.set("confirmed", true);
+											},
+											register2 : function(e) {
+												e.preventDefault();
+
+												this.set("confirmed", true);
+											},
+
+										});
+
+										
+
+										var required = $("#genre")
+										.kendoMultiSelect().data(
+												"kendoMultiSelect");
+										
+										$("#genre2")
+										.kendoMultiSelect().data(
+												"kendoMultiSelect");
+
+									$("#genre3")
+										.kendoMultiSelect().data(
+												"kendoMultiSelect");
+
+										kendo.bind($("#registration"),
+												viewModel, required);
+										
+
+										kendo.bind($("#registration2"),
+												viewModel, required);
+										
+
+										
+									       var validator = $("#registerMP3").kendoValidator().data("kendoValidator"),
+						                    status = $(".status");
+									       
+									       var validator = $("#registerMP4").kendoValidator().data("kendoValidator"),
+						                    status = $(".status");
+
+						   
+										
+
+									});
+						</script>
 
 
 
+						<script type="text/javascript">
+							$(document)
+									.ready(
+											function() {
 
-				<script type="text/javascript">
+												var tes = 1;
 
-						 $(document).ready(function() {
-							 
-							
-							 
-							 var tes = 1;
-							 
-				                function onOpen(e) {
-				                    kendoConsole.log("Opened: " + $(e.item).children(".k-link").text());
-				                
-				                    
-				                }
+												function onOpen(e) {
+													kendoConsole
+															.log("Opened: "
+																	+ $(e.item)
+																			.children(
+																					".k-link")
+																			.text());
 
-				                function onClose(e) {
-				                    kendoConsole.log("Closed: " + $(e.item).children(".k-link").text());
-				                }
+												}
 
-				                function onSelect(e) {
-				                    kendoConsole.log("Selected: " + $(e.item).children(".k-link").text());
-				                    
-				                    if($(e.item).children(".k-link").text()=='charts'){
-				                    	window.location.assign("/charts.html");
-				                    }else if($(e.item).children(".k-link").text()=='playLists'){
-				                    	window.location.assign("/playlist.html");
-				                    }else if($(e.item).children(".k-link").text()=='account'){
-				                    	window.location.assign("/account.html");
-				                    }else if($(e.item).children(".k-link").text()=='about'){
-				                    	window.location.assign("/about.html");
-				                    }else if($(e.item).children(".k-link").text()=='contact'){
-				                    	window.location.assign("/contact.html");
-				                    }else if($(e.item).children(".k-link").text()=='upload'){
-				                    	window.location.assign("/upload.html");
-				                    }else if($(e.item).children(".k-link").text()=='battle'){
-				                    	window.location.assign("/");
-				                    }
-				                    
-				                    
-				                }
+												function onClose(e) {
+													kendoConsole
+															.log("Closed: "
+																	+ $(e.item)
+																			.children(
+																					".k-link")
+																			.text());
+												}
 
-				                function onActivate(e) {
-				                    kendoConsole.log("Activated: " + $(e.item).children(".k-link").text());
-				                    
-				                }
+												function onSelect(e) {
+													kendoConsole
+															.log("Selected: "
+																	+ $(e.item)
+																			.children(
+																					".k-link")
+																			.text());
 
-				                function onDeactivate(e) {
-				                    kendoConsole.log("Deactivated: " + $(e.item).children(".k-link").text());
-				                }
+													if ($(e.item).children(
+															".k-link").text() == 'battle') {
+														window.location
+																.assign("/");
 
-				                $("#menu").kendoMenu({
-				                    select: onSelect,
-				                    open: onOpen,
-				                    close: onClose,
-				                    activate: onActivate,
-				                    deactivate: onDeactivate,
-				                    
-				                });
-				            });
-						
-						
+													} else if ($(e.item)
+															.children(".k-link")
+															.text() == 'playlists') {
+														window.location
+																.assign("/playlist.html");
+													} else if ($(e.item)
+															.children(".k-link")
+															.text() == 'account') {
+														window.location
+																.assign("/account.html");
+													} else if ($(e.item)
+															.children(".k-link")
+															.text() == 'about') {
+														window.location
+																.assign("/about.html");
+													} else if ($(e.item)
+															.children(".k-link")
+															.text() == 'contact') {
+														window.location
+																.assign("/contact.html");
+													}
+
+												}
+
+												function onActivate(e) {
+													kendoConsole
+															.log("Activated: "
+																	+ $(e.item)
+																			.children(
+																					".k-link")
+																			.text());
+
+												}
+
+												function onDeactivate(e) {
+													kendoConsole
+															.log("Deactivated: "
+																	+ $(e.item)
+																			.children(
+																					".k-link")
+																			.text());
+												}
+
+												$("#menu").kendoMenu({
+													select : onSelect,
+													open : onOpen,
+													close : onClose,
+													activate : onActivate,
+													deactivate : onDeactivate,
+
+												});
+											});
+
 							$(document).ready(function() {
-				
-								
-								
-								 
-								
-							
-								
-								
-								
+
 								$("#vertical").kendoSplitter({
 									orientation : "vertical",
 									panes : [ {
 										collapsible : true,
 										size : "7%"
-									},{
+									}, {
 										collapsible : false,
 										size : "93%"
 									},
@@ -306,40 +624,36 @@ $("#music").kendoUpload({
 								$("#horizontal2").kendoSplitter({
 									panes : [ {
 										collapsible : false,
-										resizable: false,
-										size : "70%"
-									}, 
-
-									]
-								});
-								
-								$("#horizontal").kendoSplitter({
-									panes : [ {
-										collapsible : false,
-										resizable: false,
-										size : "60%"
-									}, {
-										collapsible : true,
-										resizable: false,
+										resizable : false,
+										size : "80%"
 									},
 
 									]
 								});
-								
-		
-								
+
+								$("#horizontal").kendoSplitter({
+									panes : [ {
+										collapsible : false,
+										resizable : false,
+										size : "70%"
+									}, {
+										collapsible : true,
+										resizable : false,
+									},
+
+									]
+								});
 
 								$("#vertical2").kendoSplitter({
 									orientation : "vertical",
 									panes : [ {
 										collapsible : false,
-										resizable: false,
+										resizable : false,
 										size : "70%"
-									},
-									{
+									}, {
 										collapsible : false,
 										size : "30%"
-									},{
+									}, {
 										collapsible : false
 									},
 
@@ -351,20 +665,108 @@ $("#music").kendoUpload({
 
 
 
+<script type="text/javascript">
+ $(document).ready(function() {
+	 
+	
+	 
+	 $('#mp4Button').click(function(){ 
+		 
+		 if(sessionStorage.signuptype=="mp3" ){
+		 	$("#signupMP4").toggle();
+		 	$("#signupMP3").toggle();
+			sessionStorage.signuptype="mp4";
+		 }else if(sessionStorage.signuptype=="yt"){
+		 	$("#signupMP4").toggle();
+		 	$("#signupYT").toggle();
+		 	sessionStorage.signuptype="mp4";
+		 }
+		 
+		 
+	 });
+	 
+	 $('#mp3Button').click(function(){ 
 
-				<style scoped type="text/css">
-				
-								
+		 if(sessionStorage.signuptype=="mp4" ){
+		 	$("#signupMP4").toggle();
+		 	$("#signupMP3").toggle();
+			sessionStorage.signuptype="mp3";
+		 }else if(sessionStorage.signuptype=="yt"){
+		 	$("#signupMP3").toggle();
+		 	$("#signupYT").toggle();
+		 	sessionStorage.signuptype="mp3";
+		 }
+
+		 
+	 });
+	 
+	 $('#ytButton').click(function(){ 
+		if(sessionStorage.signuptype=="mp3" ){
+		 	$("#signupYT").toggle();
+		 	$("#signupMP3").toggle();
+			sessionStorage.signuptype="yt";
+		 }else if(sessionStorage.signuptype=="mp4"){
+		 	$("#signupMP4").toggle();
+		 	$("#signupYT").toggle();
+		 	sessionStorage.signuptype="yt";
+		 }
+		 
+	 });
+	 
+	 
+ });
+
+	 </script>
+
+
+<style scoped type="text/css">
+
+span.k-tooltip
+{
+    position: static;
+    display: inline-block;
+    border-width: 1px;
+   padding: 6px 5px 1px 6px;
+}
+
+.k-widget.k-multiselect {
+	width: 400px;
+	vertical-align: middle;
+	display: inline-block;
+}
+
 #clientsDb {
 	width: 692px;
 	margin: 30px auto;
 	padding: 51px 4px 0 4px;
 }
-				
+
 #vertical {
 	height: 501px;
 	width: 90%;
 	margin: 0 auto;
+}
+
+
+
+label {
+	display: inline-block;
+	width: 70px;
+	text-align: right;
+	padding: 8px 4px 0 4px;
+	font-size: 14px;
+}
+
+#menu {
+	font-size: 2em;
+	text-transform: lowercase;
+	padding: 0px 0px;
+	background-color: white;
+
+	background: -webkit-linear-gradient(white,white,white); /* For Safari */
+background: -o-linear-gradient(white,white,white); /* For Opera 11.1 to 12.0 */
+background: -moz-linear-gradient(white,white,white); /* For Firefox 3.6 to 15 */
+background: linear-gradient(white,white,white); /* Standard syntax */
 }
 
 .demo-section {
@@ -378,21 +780,6 @@ $("#music").kendoUpload({
 	border-color: #D7D9D9;
 }
 
-#menu {
-	font-size: 2em;
-	text-transform: lowercase;
-	padding: 0px 0px;
-	background-color: white; //
-	border: none;
-	background: -webkit-linear-gradient(white, white, white);
-	/* For Safari */
-	background: -o-linear-gradient(white, white, white);
-	/* For Opera 11.1 to 12.0 */
-	background: -moz-linear-gradient(white, white, white);
-	/* For Firefox 3.6 to 15 */
-	background: linear-gradient(white, white, white); /* Standard syntax */
-}
-
 #menu h2 {
 	font-size: 1em;
 	text-transform: lowercase;
@@ -403,8 +790,8 @@ $("#music").kendoUpload({
 #menu li {
 	font-size: smaller; //
 	text-transform: uppercase;
-	padding: 0px 0px; //
-	border: none;
+	padding: 0px 0px;
+
 	background-color: white;
 }
 
@@ -413,8 +800,6 @@ $("#music").kendoUpload({
 	width: 100%;
 	margin: 0 auto;
 }
-
-
 
 .pane-content {
 	padding: 0 10px;
@@ -425,10 +810,10 @@ $("#music").kendoUpload({
 
 
 
-			</div>
+					</div>
 
-<br>
-			<div class="demo-section2">
+					<br>
+						<div class="demo-section2">
 
 				<div align="center">
 
@@ -451,21 +836,21 @@ $("#music").kendoUpload({
 			</div>
 
 
-			<div></div>
+					<div></div>
 
 
 
 
 
 
-			<div>
+					<div>
 
 
-				<br>
+						<br>
 
 
 
-				<style scoped type="text/css">
+						<style scoped type="text/css">
 input.keep,submit:visited {
 	background: #222 repeat-x;
 	display: inline-block;
@@ -526,6 +911,6 @@ input.bin,submit:visited {
 	color: #000;
 }
 </style>
-			</div>
+					</div>
 </body>
 </html>
