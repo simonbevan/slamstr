@@ -23,6 +23,8 @@
       google.load('visualization', '1', {packages: ['corechart']});
     </script>
 
+    <script src="http://jwpsrv.com/library/NehFHIphEeOg5SIACi0I_Q.js"></script>
+
 <script type="text/javascript">
  $(document).ready(function() {
 
@@ -646,37 +648,43 @@ if(sessionStorage.firstOpen == 'opened'){
 
 
 	var str = sessionStorage.fileLink
-	var n = str.indexOf("=");
-	var vidID = str.substring(n+1);
+	//var n = str.indexOf("=");
+	//var vidID = str.substring(n+1);
+	var vidID = str;
 	sessionStorage.ytvidID = vidID
 
 	var str2 = sessionStorage.fileLink2
-	var n2 = str2.indexOf("=");
-	var vidID2 = str2.substring(n2+1);
+	//var n2 = str2.indexOf("=");
+	//var vidID2 = str2.substring(n2+1);
+	var vidID2 = str2;
 	sessionStorage.ytvidID2 = vidID2
+	
 	localStorage.userID = sessionStorage.userID ;
 	
 
-	 function onYouTubePlayerAPIReady() {
-		    player = new YT.Player('ytplayer', {
-		      height: '298px',
-		      width: '99%',
-		      playerVars: { 'autoplay': 0, 'controls': 1,'autohide':1,'wmode':'opaque' },
-		      videoId: sessionStorage.ytvidID,
+	//  function onYouTubePlayerAPIReady() {
+	// 	    player = new YT.Player('ytplayer', {
+	// 	      height: '298px',
+	// 	      width: '99%',
+	// 	      playerVars: { 'autoplay': 0, 'controls': 1,'autohide':1,'wmode':'opaque' },
+	// 	      videoId: sessionStorage.ytvidID,
 		      
-		    });
+	// 	    });
 		    
 		    
-		    	player2 = new YT.Player('ytplayer2', {
-			      height: '298px',
-			      width: '99%',
-			      playerVars: { 'autoplay': 0, 'controls': 1,'autohide':1,'wmode':'opaque' },
-			      videoId: sessionStorage.ytvidID2,
+	// 	    	player2 = new YT.Player('ytplayer2', {
+	// 		      height: '298px',
+	// 		      width: '99%',
+	// 		      playerVars: { 'autoplay': 0, 'controls': 1,'autohide':1,'wmode':'opaque' },
+	// 		      videoId: sessionStorage.ytvidID2,
 			      
-			    });
+	// 		    });
+	// }
+
+
+
 		    
 		    
-		  }
 
 	
 	
@@ -759,7 +767,7 @@ if(sessionStorage.firstOpen == 'opened'){
 							<li>Genre
 
 								<ul>
-
+									<li>All</li>
 									<li>Alternative & Indie</li>
 									<li>Blues</li>
 									<li>Classical</li>
@@ -925,6 +933,26 @@ if(sessionStorage.firstOpen == 'opened'){
 
 										<br>
 										<div id="ytplayer2" style="display: visible;"></div>
+<script>
+jwplayer('ytplayer').setup({
+file: sessionStorage.ytvidID,
+width: '100%',
+aspectratio: '8:6',
+fallback: 'false',
+primary: 'flash'
+});
+</script>
+
+<script>
+jwplayer('ytplayer2').setup({
+file: sessionStorage.ytvidID2,
+width: '100%',
+aspectratio: '8:6',
+fallback: 'false',
+primary: 'flash'
+});
+</script>
+
 
 										<div id="info2"></div>
 
@@ -1077,6 +1105,8 @@ if(sessionStorage.firstOpen == 'opened'){
 				                    	window.location.assign("/upload.html");
 				                    }else if($(e.item).children(".k-link").text()=='battle'){
 				                    	window.location.assign("/");
+				                    }else if($(e.item).children(".k-link").text()=='All'){
+											sessionStorage.filter='all';
 				                    }else if($(e.item).children(".k-link").text()=='Alternative & Indie'){
 											sessionStorage.filter='indie';
 									}else if($(e.item).children(".k-link").text()=='Blues'){
@@ -1344,6 +1374,9 @@ if(sessionStorage.firstOpen == 'opened'){
 
 
 			<div class="demo-section2">
+
+
+
 
 				<div align="center">
 
