@@ -78,6 +78,7 @@ app.post('/addToDB', express.bodyParser(), function (req, res){
 
 app.get('/initialOpen', function(req, res) {
 
+var fs = require('fs');
 
 
 
@@ -742,8 +743,12 @@ app.post('/register', function (req, res) {
 
 
 
-
-
+app.get('/listFiles', function (req, res) {
+ fs.readdir('/', function(err, list) {
+	//console.log(list)
+	res.json(JSON.stringify(list));
+  });
+});
 
 app.get('/createTable', function (req, res) {
 
@@ -754,6 +759,7 @@ app.get('/createTable', function (req, res) {
 	var linkA = new Array();
 	var output = []
 
+ 
 
 	var params = {host: 'ec2-54-197-241-79.compute-1.amazonaws.com',user: 'tkplqpramikmhp',password: '4-QVsIeBnFOjlVziYa05HNmiI2',database: 'd8tmbdij58htc8',ssl: true };
 
