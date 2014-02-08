@@ -124,7 +124,7 @@
                type: 'POST',
                cache: false, 
 
-               data: { uID: userID, vID:vidID, type:'challengerbin',pLName:pLName  }, 
+               data: { uID: userID, vID:vidID, type:'challengerbin',pLName:pLName,genre:sessionStorage.filter  }, 
                success: function(data){
   
             	   
@@ -173,7 +173,7 @@
                type: 'POST',
                cache: false, 
 
-               data: { uID: userID, vID:vidID, type:'challengerbin',pLName:pLName  }, 
+               data: { uID: userID, vID:vidID, type:'challengerbin',pLName:pLName ,genre:sessionStorage.filter  }, 
                success: function(data){
   
             	   
@@ -643,7 +643,7 @@ $(document).ready(function() {
 //sessionStorage.firstOpen = '';
 
 if(sessionStorage.firstOpen == 'opened'){
-		
+
 
 	var str = sessionStorage.fileLink
 	var n = str.indexOf("=");
@@ -710,7 +710,7 @@ if(sessionStorage.firstOpen == 'opened'){
 			sessionStorage.artistLink2 = data2['artistLink'];
 			sessionStorage.votes2 = data2['votes'];
 			
-
+			sessionStorage.filter = 'all';
 			
 			location.reload(true);
 			
@@ -1060,7 +1060,9 @@ if(sessionStorage.firstOpen == 'opened'){
 
 				                function onSelect(e) {
 				                    kendoConsole.log("Selected: " + $(e.item).children(".k-link").text());
-				                    
+					                    
+									
+				                    filterSelect = false;
 				                    if($(e.item).children(".k-link").text()=='charts'){
 				                    	window.location.assign("/charts.html");
 				                    }else if($(e.item).children(".k-link").text()=='playLists'){
@@ -1075,7 +1077,104 @@ if(sessionStorage.firstOpen == 'opened'){
 				                    	window.location.assign("/upload.html");
 				                    }else if($(e.item).children(".k-link").text()=='battle'){
 				                    	window.location.assign("/");
-				                    }
+				                    }else if($(e.item).children(".k-link").text()=='Alternative & Indie'){
+											sessionStorage.filter='indie';
+									}else if($(e.item).children(".k-link").text()=='Blues'){
+											sessionStorage.filter='blues';
+											filterSelect = true;
+									}else if($(e.item).children(".k-link").text()=='Classical'){
+										sessionStorage.filter='classical';
+											filterSelect = true;
+									}else if($(e.item).children(".k-link").text()=='Country'){
+										sessionStorage.filter='country';
+										filterSelect = true;
+									}else if($(e.item).children(".k-link").text()=='Dance & Electronic'){
+										sessionStorage.filter='electronic';
+										filterSelect = true;
+									}else if($(e.item).children(".k-link").text()=='Easy Listening'){
+										sessionStorage.filter='easy';
+										filterSelect = true;
+									}else if($(e.item).children(".k-link").text()=='Folk & Songwriter'){
+										sessionStorage.filter='folk';
+										filterSelect = true;
+									}else if($(e.item).children(".k-link").text()=='Hard Rock & Metal'){
+										sessionStorage.filter='metal';
+										filterSelect = true;
+									}else if($(e.item).children(".k-link").text()=='Jazz'){
+										sessionStorage.filter='jazz';
+										filterSelect = true;
+									}else if($(e.item).children(".k-link").text()=='Miscellaneous'){
+										sessionStorage.filter='misc';
+										filterSelect = true;
+									}else if($(e.item).children(".k-link").text()=='Pop'){
+										sessionStorage.filter='pop';
+										filterSelect = true;
+									}else if($(e.item).children(".k-link").text()=='R&B & Soul'){
+										sessionStorage.filter='r&b';
+										filterSelect = true;
+									}else if($(e.item).children(".k-link").text()=='Rap & Hip-Hop'){
+										sessionStorage.filter='hiphop';
+										filterSelect = true;
+									}else if($(e.item).children(".k-link").text()=='Reggae'){
+										sessionStorage.filter='reggae';
+										filterSelect = true;
+									}else if($(e.item).children(".k-link").text()=='Rock'){
+										sessionStorage.filter='rock';
+										filterSelect = true;
+									}else if($(e.item).children(".k-link").text()=='Soundtracks & Musicals'){
+										sessionStorage.filter='musical';
+										filterSelect = true;
+									}else if($(e.item).children(".k-link").text()=='World Music'){
+										sessionStorage.filter='world';
+										filterSelect = true;
+									}
+
+									if(filterSelect){
+									    var vidID = sessionStorage.vidID2 ;
+									            var userID = sessionStorage.userID; 
+									            var pLName = "'playList1'"//sessionStorage.pLName;
+												
+									         $.ajax({ 
+									               url: '/next',
+									               type: 'POST',
+									               cache: false, 
+
+									               data: { uID: userID, vID:vidID, type:'challengerbin',pLName:pLName,genre:sessionStorage.filter  }, 
+									               success: function(data){
+									  
+									            	   
+									     			 	data1 = data['out1'];
+									    				 data2 = data['out2'];
+									      
+									    				
+									       				sessionStorage.fileLink = data1['fileLink'];
+									    				sessionStorage.vidID = data1['vID'];
+									    				sessionStorage.bandName = data1['bandName'];
+									    				sessionStorage.songName = data1['songName'];
+									    				//sessionStorage.country = data1['country'];
+									    				sessionStorage.artistLink = data1['artistLink'];
+									    				sessionStorage.votes = data1['votes'];
+													
+									       				sessionStorage.fileLink2 = data2['fileLink'];
+									    				sessionStorage.vidID2 = data2['vID'];
+									    				sessionStorage.bandName2 = data2['bandName'];
+									    				sessionStorage.songName2 = data2['songName'];
+									    				//sessionStorage.country = data1['country'];
+									    				sessionStorage.artistLink2 = data2['artistLink'];
+									    				sessionStorage.votes2 = data2['votes'];
+									    				
+									    				location.reload(true);
+									    				
+													//alert(sessionStorage.bandName);
+									               }
+									               , error: function(jqXHR, textStatus, err){
+									                   alert('text status '+textStatus+', err '+err)
+									               }
+									            })
+									       
+										}
+
+
 				                    
 				                    
 				                }
