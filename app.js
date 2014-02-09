@@ -658,7 +658,7 @@ app.post('/register', function (req, res) {
 		firstname = "'" +req.body.firstname+"'" ;
 		surname  = "'" +req.body.lastname+"'" ;
 		password =  "'" +req.body.password+"'" ;
-		country= "'" +req.body.country+"'" ;
+		country= "'" +req.body.country2+"'" ;
 		city =  "'" +req.body.city+"'" ;
 		birthday = "'" +req.body.age2+"'" ;
 		gender = "'" +req.body.gender2+"'" ;
@@ -689,6 +689,7 @@ app.post('/register', function (req, res) {
 
 	}
 
+//console.log(insertString)
 
 	var params = {host: 'ec2-54-197-241-79.compute-1.amazonaws.com',user: 'tkplqpramikmhp',password: '4-QVsIeBnFOjlVziYa05HNmiI2',database: 'd8tmbdij58htc8',ssl: true };
 	var client = new pg.Client(params);
