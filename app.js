@@ -790,7 +790,7 @@ app.get('/createTable', function (req, res) {
 				sqlStr = "SELECT CONTENT.ARTIST,CONTENT.FILELINK,CONTENT.GENRE,CONTENT.TITLE,CONTENT.LINK,BATTLE.VOTE "+
 				"from CONTENT JOIN BATTLE ON BATTLE.VIDID = CONTENT.VIDID "+
 				"WHERE CONTENT.VIDID="+vidID[i];
-
+				
 
 				client.query(sqlStr, function(err, result2) {
 					if(err) {
@@ -799,9 +799,10 @@ app.get('/createTable', function (req, res) {
 
 					artistsA.push(result2.rows[0].artist);
 
+					//console.log(output);
 					output.push({'artist':result2.rows[0].artist,'fileLink':result2.rows[0].filelink,'genre':result2.rows[0].genre,'title':result2.rows[0].title,'votes':result2.rows[0].vote});
 
-					if(artistsA.length==vidID.length){
+					if(artistsA.length==50){
 						//console.log({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA})
 						//res.json({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA});
 						client.end();
