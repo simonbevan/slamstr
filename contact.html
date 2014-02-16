@@ -20,9 +20,78 @@
 
 
 
+
 </head>
 <body>
 
+
+<script >
+
+$(document).ready(function() {
+
+ $('#feedback').click(function(){
+		    //e.PreventDefault();
+		 
+	userID = ($('#feedback-email').val());
+	title = ($('#feedback-title').val());
+	content = ($('#feedback-content').val());
+
+	 dataIn = {uID:userID,title:title,content:content};
+	 
+	       $.ajax({ 
+               url: '/feedback',
+               type: 'POST',
+               //async: false,
+               cache: false, 
+               data: dataIn, 
+               success: function(data){
+				
+				location.reload(true);
+				
+  				
+               }
+               , error: function(jqXHR, textStatus, err){
+                   alert('text status '+textStatus+', err '+err)
+               }
+            }); 
+		 
+         });
+
+
+
+ $('#bug').click(function(){
+		    //e.PreventDefault();
+		 
+	userID = ($('#bug-email').val());
+	title = ($('#bug-title').val());
+	content = ($('#bug-content').val());
+
+	 dataIn = {uID:userID,title:title,content:content};
+	 
+	       $.ajax({ 
+               url: '/bug',
+               type: 'POST',
+               //async: false,
+               cache: false, 
+               data: dataIn, 
+               success: function(data){
+				
+				location.reload(true);
+				
+  				
+               }
+               , error: function(jqXHR, textStatus, err){
+                   alert('text status '+textStatus+', err '+err)
+               }
+            }); 
+		 
+         });
+
+ });
+
+
+
+</script >
 
 
 	<div id="body" class="k-content">
@@ -90,17 +159,54 @@
 							<div id="horizontal" style="height: 100%; width: 100%;">
 								<div id="left-pane">
 									<div class="pane-content">
-<br>
 
-<h2>Conatct us:</h2>
-<h2>Feature Feedback:</h2>
- Here at slamstr we're constantly trying to improve your experience, so please let us know what you like, dislike, or would like. We'd love to hear from you. Please email us at <br><br>
- feedback@slamstr.com
+
+<div id="example2">
+ <div id="panel"  >
+<h2>Feedback:</h2>
+ Here at slamstr we're constantly trying to improve your experience, so please let us know what you like, dislike, or would like. We'd love to hear from you. <br><br>
+
+        <ul>
+            <li>
+                <label for="feedback-title">subject:</label>
+                <input type="text" id="feedback-title" value="I love the site, but...." class="k-textbox" />
+            </li>
+            <li>
+                <label for="feedback-email">email:</label>
+                <input type="text" id="feedback-email" value="slamstr@slamstr.com" class="k-textbox" />
+            </li>
+            <li>
+                <label for="feedback-content">description:</label>
+                <textarea id="feedback-content" rows="4" cols="60" class="k-textbox">I would like to see (your suggestion here)</textarea>
+            </li>
+        </ul>
+
+        <button id="feedback" name="feedback" class="k-button">Submit</button>
+
+
+
  <h2>Bug Report:</h2>
- We're aware of some bugs and we're sure we've missed something. Please help by emailing <br><br>
- bugreport@slamstr.com
+ We're aware of some bugs and we're sure we've missed something. Please help us <br><br>
 
+        <ul>
+            <li>
+                <label for="bug-title">subject:</label>
+                <input type="text" id="bug-title" value="Come on guys" class="k-textbox" />
+            </li>
+            <li>
+                <label for="bug-email">email:</label>
+                <input type="text" id="bug-email" value="slamstr@slamstr.com" class="k-textbox" />
+            </li>
+            <li>
+                <label for="bug-content">description:</label>
+                <textarea id="bug-content" rows="4" cols="60" class="k-textbox">Sort it out</textarea>
+            </li>
+        </ul>
 
+        <button id="bug" class="k-button">Submit</button>
+
+</div>
+</div>
 
 
 <br>
@@ -117,7 +223,7 @@
 											<div id=login class="pane-content">
 
 
-					maybe a list of comments or bugs?
+												list of feedback
 
 
 
@@ -132,7 +238,7 @@
 
 											<div class="pane-content" id="vidInfo">
 
-												streaming votes?
+													list of bugs
 
 											</div>
 										</div>
@@ -264,7 +370,7 @@
 									panes : [ {
 										collapsible : false,
 										resizable: false,
-										size : "70%"
+										size : "50%"
 									},
 									{
 										collapsible : false,
@@ -292,7 +398,7 @@
 }
 				
 #vertical {
-	height: 501px;
+	height: 601px;
 	width: 90%;
 	margin: 0 auto;
 }
@@ -339,7 +445,7 @@
 }
 
 #vertical2 {
-	height: 501px;
+	height: 601px;
 	width: 100%;
 	margin: 0 auto;
 }
@@ -452,6 +558,107 @@ input.bin,submit:visited {
 	font-size: 10pt;
 }
 
+
+<style scoped>
+    #panel, #blog-preview {
+        display: inline-block;
+        vertical-align: top;
+        width: 310px;
+        margin: 10px;
+        padding: 30px 15px 20px 15px;
+        min-height: 200px;
+    }
+    
+    #blog-preview {
+        width: 310px;
+    }
+
+    #panel input,
+    #panel textarea {
+        font: inherit;
+        width: 310px;
+        margin: 0;
+        padding: 2px 0.3em;
+    }
+
+    #example2 ul h3 {
+        margin-bottom: 0.6em;
+        padding: 0;
+    }
+
+    #example2 ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    #example2 ul label {
+        display: inline-block;
+        vertical-align: top;
+        line-height: 26px;
+        width: 80px;
+        padding: 0 3px;
+        text-align: right;
+    }
+
+    #feedback {
+        margin-left: 92px;
+        height: 26px;
+        width: 148px;
+    }
+
+    #bug {
+        margin-left: 92px;
+        height: 26px;
+        width: 148px;
+    }
+
+    #example2 li {
+        margin: 0.4em ;
+    }
+
+    #example2 h3.k-header {
+        margin: 1.4em 0 1em;
+        padding: .4em 1.4em;
+        font-size: 1.4em;
+        border-radius: 2px;
+    }
+
+    #feedback-content {
+        height: 100px;
+    }
+
+    #bug-content {
+        height: 100px;
+    }
+
+    #blog-preview img {
+        float: left;
+        margin: 0 14px 0 0;
+        border: 3px solid #dedede;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+    }
+
+    #blog-preview h4 {
+        font-size: 9px;
+        font-weight: normal;
+        text-transform: uppercase;
+        color: #8d8d8d;
+        margin-top: 3px;
+        width: 100%;
+    }
+
+    #blog-preview h4 strong {
+        color: #ed662e;
+    }
+
+    #blog-preview p {
+        margin-left: 93px;
+    }
+</style>
 
 ::-webkit-input-placeholder { /* WebKit browsers */
 	color: #000;

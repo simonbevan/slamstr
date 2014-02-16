@@ -213,6 +213,19 @@
          }); 
 
 
+
+     $('#feedbackBut').click(function(){  
+     	
+		window.location.assign("/contact.html");
+      }); 
+
+          $('#logout').click(function(){  
+			sessionStorage.clear()
+			location.reload(true);
+      }); 
+
+
+
 	 
      $('#textButton').click(function(){  
 
@@ -644,6 +657,7 @@ $(document).ready(function() {
 
 //sessionStorage.firstOpen = '';
 
+
 if(sessionStorage.firstOpen == 'opened'){
 
 
@@ -818,6 +832,8 @@ if(sessionStorage.firstOpen == 'opened'){
 			<div class="demo-section">
 
 
+<button class="feedbackBut" type="button" name="feedbackBut" id="feedbackBut" ;">Feedback</button>
+
 
 				<div id="register" class="k-content">
 					<div id="window" style="visibility: visible"></div>
@@ -859,6 +875,8 @@ if(sessionStorage.firstOpen == 'opened'){
                     //dialog.open();
                 });
             </script>
+
+
 				<div id="splitter" class="k-content">
 
 
@@ -984,10 +1002,13 @@ primary: 'flash'
 														//	if(false){
 															formHTML = 
 																
-																'<center><h1>Hello ' + sessionStorage.userName + '</h1>'+
+																'<center><h2>Hello ' + sessionStorage.userName + '</h2>'+
 																'<h4>You have cast ' + '0' + ' votes</h4>' +
-																'<h4>Making you a slamstr ' + '</h4>'+
-																'<h3>pup ' + '</h3></center>';
+																'<h4>Making you a slamstr pup ' + '</h4>'+
+																
+																'<button class=\"logout\" type=\"button\" name=\"logout\" id=\"logout\"'+
+																'style=\"display: visible;\">logout</button>';
+
 															
 														}else{
 														
@@ -1462,6 +1483,27 @@ button.bin,submit:visited {
 	cursor: pointer;
 	background-color: white;
 	font-size: 10pt;
+}
+
+button.feedbackBut {
+	background: #222 repeat-x;
+	display: inline-block;
+
+	color: grey;
+	text-decoration: none;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 8px;
+	-webkit-transform: rotate(-90deg); 
+    -moz-transform: rotate(-90deg); 
+	position: absolute;
+	cursor: pointer;
+	border: 1px solid #DBDBDB;
+	background-color: white;
+	font-size: 15pt;
+	width: 140px;
+	height: 30px;
+	margin-left: -66px;
+	margin-top: 70px;
 }
 
 ::-webkit-input-placeholder { /* WebKit browsers */

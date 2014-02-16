@@ -56,10 +56,7 @@ sessionStorage.signuptype="yt";
 
 						<ul id="menu">
 
-							<li>battle
-								
-
-							</li>
+							<li>battle</li>
 
 
 							<li>charts</li>
@@ -542,6 +539,10 @@ sessionStorage.signuptype="yt";
 												}
 
 												function onSelect(e) {
+
+
+
+
 													kendoConsole
 															.log("Selected: "
 																	+ $(e.item)
@@ -549,33 +550,22 @@ sessionStorage.signuptype="yt";
 																					".k-link")
 																			.text());
 
-													if ($(e.item).children(
-															".k-link").text() == 'battle') {
-														window.location
-																.assign("/");
+				    								if($(e.item).children(".k-link").text()=='charts'){
+								                    	window.location.assign("/charts.html");
+								                    }else if($(e.item).children(".k-link").text()=='playLists'){
+								                    	window.location.assign("/playlist.html");
+								                    }else if($(e.item).children(".k-link").text()=='account'){
+								                    	window.location.assign("/account.html");
+								                    }else if($(e.item).children(".k-link").text()=='about'){
+								                    	window.location.assign("/about.html");
+								                    }else if($(e.item).children(".k-link").text()=='contact'){
+								                    	window.location.assign("/contact.html");
+								                    }else if($(e.item).children(".k-link").text()=='upload'){
+								                    	window.location.assign("/upload.html");
+								                    }else if($(e.item).children(".k-link").text()=='battle'){
 
-													} else if ($(e.item)
-															.children(".k-link")
-															.text() == 'playlists') {
-														window.location
-																.assign("/playlist.html");
-													} else if ($(e.item)
-															.children(".k-link")
-															.text() == 'account') {
-														window.location
-																.assign("/account.html");
-													} else if ($(e.item)
-															.children(".k-link")
-															.text() == 'about') {
-														window.location
-																.assign("/about.html");
-													} else if ($(e.item)
-															.children(".k-link")
-															.text() == 'contact') {
-														window.location
-																.assign("/contact.html");
-													}
-
+								                    	window.location.assign("/");
+													}						
 												}
 
 												function onActivate(e) {

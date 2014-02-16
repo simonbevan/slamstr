@@ -99,16 +99,18 @@ var fs = require('fs');
 				return console.error('error running query', err);
 			}
 
-			//console.log(row.rows[0].vidid);
+			
 			var vidID = row.rows[0].vidid ;
 			votes = row.rows[0].vote;
 			sqlString = "SELECT FILELINK,TITLE,ARTIST,LINK,USERNAME FROM CONTENT WHERE VIDID ='" + vidID+"'";
+
+			//console.log(sqlString);
 
 			client.query(sqlString, function(err, row2) {
 				if(err) {
 					return console.error('error running query', err);
 				}
-				//console.log(row2.rows[0]);
+				
 				output1 = {'id':vidID,'userID':'noid','fileLink':row2.rows[0].filelink,'songName':row2.rows[0].title,'bandName':row2.rows[0].artist,'artistLink':row2.rows[0].link,'votes':votes};
 				sqlString = "SELECT VIDID,VOTE FROM BATTLE WHERE STATUS = 1 ORDER BY RANDOM() LIMIT 1"	;	 
 
@@ -204,10 +206,25 @@ app.get('/createDB', function(req, res) {
 
 		db.run("CREATE TABLE IF NOT EXISTS PLAYLIST"+
 				"(VIDID VARCHAR(50) NOT NULL,"+
-				"USER VARCHAR(50) NOT NULL,"+
+				"USERID VARCHAR(50) NOT NULL,"+
 				"PLAYS           INT    NOT NULL,"+
 				"DATE     VARCHAR(50)     NOT NULL,"+
 		"PLAYLISTNAME    VARCHAR(50)  NOT NULL);");
+
+
+		db.run("CREATE TABLE IF NOT EXISTS BUGS"+
+				"(BUGID VARCHAR(50) NOT NULL,"+
+				"USERID VARCHAR(50) NOT NULL,"+
+				"CREATED        DATE    NOT NULL,"+
+				"TITLE        VARCHAR(50)     NOT NULL,"+
+				"CONTENT     VARCHAR(50)  NOT NULL);");
+
+		db.run("CREATE TABLE IF NOT EXISTS FEEDBACK"+
+				"(FEEDBACKID VARCHAR(50) NOT NULL,"+
+				"USERID VARCHAR(50) NOT NULL,"+
+				"CREATED        DATE    NOT NULL,"+
+				"TITLE        VARCHAR(50)     NOT NULL,"+
+				"CONTENT     VARCHAR(50)  NOT NULL);");
 
 
 		db.run("CREATE TABLE IF NOT EXISTS AWAITINGAPPROVAL"+
@@ -233,6 +250,102 @@ insertString = "'"+uuid+"'" + "," + "none"+ ","+ type +"," + id + ","  +created+
 });
 
 
+
+app.post('/feedback', function(req, res) {
+
+ 	d = new Date();
+ 	timestamp = "'"+d.yyyymmdd() +"'";
+ 	var uuid = "'"+guid() +"'";
+	var userID =  req.body.uID ;
+	var content =  req.body.content ;
+	var title =  req.body.title; 
+	content = "'"+ content.replace("'", "''") +"'";
+	title = "'"+ title.replace("'", "''") +"'";
+	userID = "'"+ userID.replace("'", "''") +"'";
+
+
+	var params = {host: 'ec2-54-197-241-79.compute-1.amazonaws.com',user: 'tkplqpramikmhp',password: '4-QVsIeBnFOjlVziYa05HNmiI2',database: 'd8tmbdij58htc8',ssl: true };
+
+	var client = new pg.Client(params);
+	client.connect(function(err) {
+		if(err) {
+			return console.error('could not connect to postgres', err);
+		}
+
+		d = new Date();
+		timestamp = "'"+d.yyyymmdd() +"'";
+		var uuid = "'"+guid() +"'";
+
+		sqlStr1 = "INSERT INTO FEEDBACK (FEEDBACKID,USERID,TITLE,CONTENT,CREATED) VALUES ("+uuid+","+userID+","+title+","+content+","+timestamp+" )" 
+		
+
+
+		 client.query(sqlStr1, function(err, row2) {
+
+		 		//console.log(sqlStr1);
+
+		 			if(err) {
+		 				return console.error('error running query', err);
+		 			}
+
+		 	client.end();
+			res.json({'out1':'done'})
+
+		 });
+
+
+	});
+
+
+});
+
+app.post('/bug', function(req, res) {
+
+ 	d = new Date();
+ 	timestamp = "'"+d.yyyymmdd() +"'";
+ 	var uuid = "'"+guid() +"'";
+	var userID =  req.body.uID ;
+	var content =  req.body.content ;
+	var title =  req.body.title; 
+	content = "'"+ content.replace("'", "''") +"'";
+	title = "'"+ title.replace("'", "''") +"'";
+	userID = "'"+ userID.replace("'", "''") +"'";
+
+
+	var params = {host: 'ec2-54-197-241-79.compute-1.amazonaws.com',user: 'tkplqpramikmhp',password: '4-QVsIeBnFOjlVziYa05HNmiI2',database: 'd8tmbdij58htc8',ssl: true };
+
+	var client = new pg.Client(params);
+	client.connect(function(err) {
+		if(err) {
+			return console.error('could not connect to postgres', err);
+		}
+
+		d = new Date();
+		timestamp = "'"+d.yyyymmdd() +"'";
+		var uuid = "'"+guid() +"'";
+
+		sqlStr1 = "INSERT INTO BUGS (BUGID,USERID,TITLE,CONTENT,CREATED) VALUES ("+uuid+","+userID+","+title+","+content+","+timestamp+" )" 
+		
+
+
+		 client.query(sqlStr1, function(err, row2) {
+
+		 		//console.log(sqlStr1);
+
+		 			if(err) {
+		 				return console.error('error running query', err);
+		 			}
+
+		 	client.end();
+			res.json({'out1':'done'})
+
+		 });
+
+
+	});
+
+
+});
 
 
 app.post('/next', function(req, res) {
