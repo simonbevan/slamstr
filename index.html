@@ -4,58 +4,160 @@
 <title>slamstr</title>
 
 <link href="examples/content/shared/styles/examples-offline.css"
-	rel="stylesheet">
+  rel="stylesheet">
 <link href="styles/kendo.common.min.css" rel="stylesheet">
 
 <script src="js/kendo.all.min.js" type="text/javascript"></script>
 <link href="bbb.css" rel="stylesheet">
+<link href="slamstr.css" rel="stylesheet">
 
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="js/kendo.web.min.js" type="text/javascript"></script>
 <script src="examples/content/shared/js/console.js"
-	type="text/javascript"></script>
+  type="text/javascript"></script>
 <script src="bbb.js" type="text/javascript"></script>
 
-<script src="examples/content/shared/js/people.js"></script>
+<script src="examples/content/shared/js/people.js"
+  type="text/javascript"></script>
 
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
       google.load('visualization', '1', {packages: ['corechart']});
     </script>
 
-    <script src="http://jwpsrv.com/library/NehFHIphEeOg5SIACi0I_Q.js"></script>
+<script src="http://jwpsrv.com/library/NehFHIphEeOg5SIACi0I_Q.js"
+  type="text/javascript"></script>
+
+<script src="d3.js" type="text/javascript"></script>
+<script src="d3.layout.cloud.js" type="text/javascript"></script>
+
+
 
 <script type="text/javascript">
  $(document).ready(function() {
 
-	 //     $.ajax({
-		//     type: "GET",
-		//     dataType: "json",
-		//     url: "/createDB"				    
-		// }).done(function(data){
-		// 	alert(data['msg']);
-		//     // $("#bandName").text(data);
-		// });  
-	 
-		
-	 
-		var tag = document.createElement('script');
-		tag.src = "https://www.youtube.com/player_api";
-		var firstScriptTag = document.getElementsByTagName('script')[0];
-		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-		
-		// Replace the 'ytplayer' element with an <iframe> and
-		// YouTube player after the API code downloads.
-		var player;
-		var player2;
-		
-		//sessionStorage.firstOpen = '';
-	 $('#loginButton').click(function(){
-		    //e.PreventDefault();
-		 
-	 dataIn = $("#loginForm").serialize();
-	 
-	       $.ajax({ 
+
+
+    var fill = d3.scale.category20();
+    var words = [{"text":"coming soon", "url":"#","size":10},
+                 {"text":"coming soon", "url":"#","size":2},
+                 {"text":"coming soon", "url":"#","size":3},
+                 {"text":"coming soon", "url":"#","size":10},
+                 {"text":"coming soon", "url":"#","size":3},
+                 {"text":"coming soon", "url":"#","size":5},
+                 {"text":"coming soon", "url":"#","size":2},
+                 {"text":"coming soon", "url":"#","size":1},
+                 {"text":"coming soon", "url":"#","size":8},
+                 {"text":"coming soon", "url":"#","size":1},
+                 {"text":"coming soon", "url":"#","size":10},
+                 {"text":"coming soon", "url":"#","size":2},
+                 {"text":"coming soon", "url":"#","size":3},
+                 {"text":"coming soon", "url":"#","size":10},
+                 {"text":"coming soon", "url":"#","size":3},
+                 {"text":"coming soon", "url":"#","size":5},
+                 {"text":"coming soon", "url":"#","size":2},
+                 {"text":"coming soon", "url":"#","size":1},
+                 {"text":"coming soon", "url":"#","size":8},
+                 {"text":"coming soon", "url":"#","size":1},
+                 {"text":"coming soon", "url":"#","size":10},
+                 {"text":"coming soon", "url":"#","size":2},
+                 {"text":"coming soon", "url":"#","size":3},
+                 {"text":"coming soon", "url":"#","size":10},
+                 {"text":"coming soon", "url":"#","size":3},
+                 {"text":"coming soon", "url":"#","size":5},
+                 {"text":"coming soon", "url":"#","size":2},
+                 {"text":"coming soon", "url":"#","size":1},
+                 {"text":"coming soon", "url":"#","size":8},
+                 {"text":"coming soon", "url":"#","size":1}
+                
+                
+                ]
+    var width = 160;
+    var height = 180;
+    for (var i = 0; i < words.length; i++) {
+     words[i].size = 8+ words[i]["size"];
+    }
+
+    d3.layout.cloud()
+      .size([width, height])
+      .words(words)
+      .padding(3)
+      .rotate(function() { return ~~(Math.random() * 5) * 30 - 60; })
+      .font("Ariel")
+      .fontSize(function(d) { return d.size;})
+      .on("end", draw)
+      .start();
+
+    function draw(words) {
+        d3.select("#wordcloud")
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .append("g")
+          .attr("transform", "translate("+ width/2 +","+ height/2 +")")
+          .selectAll("text")
+          .data(words)
+          .enter()
+          .append("text")
+          .style("font-size", function(d) { return d.size + "px"; })
+          .style("font-family", "Ariel")
+          .style("fill", "#3B5998")
+          .attr("text-anchor", "middle")
+          .attr("transform", function(d) {
+              return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")"; 
+          })
+          .text(function(d) { return d.text; })
+          .on("click", function (d, i){
+              window.open(d.url, "_blank");
+          });
+    }
+
+   
+   
+   //     $.ajax({
+    //     type: "GET",
+    //     dataType: "json",
+    //     url: "/createDB"           
+    // }).done(function(data){
+    //  alert(data['msg']);
+    //     // $("#bandName").text(data);
+    // });  
+   
+
+      function loadVideo1(myFile,myImage) { 
+        jwplayer('ytplayer').load([{
+          file: myFile,
+          //image: myImage
+        }]);
+        jwplayer().play();
+      };
+      
+      function loadVideo2(myFile,myImage) { 
+          jwplayer('ytplayer2').load([{
+            file: myFile,
+            //image: myImage
+          }]);
+          jwplayer().play();
+        };
+
+   
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/player_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    
+    // Replace the 'ytplayer' element with an <iframe> and
+    // YouTube player after the API code downloads.
+    var player;
+    var player2;
+    
+    //sessionStorage.firstOpen = '';
+   $('#loginButton').click(function(){
+        //e.PreventDefault();
+     
+   dataIn = $("#loginForm").serialize();
+   
+         $.ajax({ 
                url: '/login',
                type: 'POST',
                //async: false,
@@ -63,64 +165,82 @@
                data: dataIn, 
                success: function(data){
   
-            	   //alert($("#loginForm").serialize())
-            	   
-  				data1 = data['out1'];
-				data2 = data['out2'];
-				data3 = data['out3'];
+                 //alert($("#loginForm").serialize())
+                 
+          data1 = data['out1'];
+        data2 = data['out2'];
+        data3 = data['out3'];
   
-   				sessionStorage.fileLink = data1['fileLink'];
-				sessionStorage.vidID = data1['vID'];
-				sessionStorage.bandName = data1['bandName'];
-				sessionStorage.songName = data1['songName'];
-				//sessionStorage.country = data1['country'];
-				sessionStorage.artistLink = data1['artistLink'];
-				sessionStorage.votes = data1['votes'];
-				
-   				sessionStorage.fileLink2 = data2['fileLink'];
-				sessionStorage.vidID2 = data2['vID'];
-				sessionStorage.bandName2 = data2['bandName'];
-				sessionStorage.songName2 = data2['songName'];
-				//sessionStorage.country = data1['country'];
-				sessionStorage.artistLink2 = data2['artistLink'];
-				sessionStorage.votes2 = data2['votes'];
-				
-				
-				sessionStorage.userName = data3['userName'];
-				sessionStorage.userID = data3['userID'];
-				sessionStorage.loggedIn = data3['loggedIn']; 
-				sessionStorage.pLName = data3['pLName']; 
+          sessionStorage.fileLink = data1['fileLink'];
+        sessionStorage.vidID = data1['vID'];
+        sessionStorage.bandName = data1['bandName'];
+        sessionStorage.songName = data1['songName'];
+        //sessionStorage.country = data1['country'];
+        sessionStorage.artistLink = data1['artistLink'];
+        sessionStorage.votes = data1['votes'];
+        
+          sessionStorage.fileLink2 = data2['fileLink'];
+        sessionStorage.vidID2 = data2['vID'];
+        sessionStorage.bandName2 = data2['bandName'];
+        sessionStorage.songName2 = data2['songName'];
+        //sessionStorage.country = data1['country'];
+        sessionStorage.artistLink2 = data2['artistLink'];
+        sessionStorage.votes2 = data2['votes'];
+        
+        
+        sessionStorage.userName = data3['userName'];
+        sessionStorage.userID = data3['userID'];
+        sessionStorage.loggedIn = data3['loggedIn']; 
+        sessionStorage.pLName = data3['pLName']; 
 
-				//alert(data3['userName']);
-				
-				location.reload(true);
-				
-  				
+        //alert(data3['userName']);
+        
+        location.reload(true);
+        
+          
                }
                , error: function(jqXHR, textStatus, err){
                    alert('text status '+textStatus+', err '+err)
                }
             });
 
-	       //setInterval(function(){
-		    //   location.reload(true);
-		     //  },500);
-	       
+         //setInterval(function(){
+        //   location.reload(true);
+         //  },500);
+         
             
           
              //location.reload(true); 
          //return false;   
-		 
+     
          });
-	 
-	
+   
+
+   function updateName(){
+              output = '<center><h3>'+sessionStorage.bandName+' '+sessionStorage.songName+'</h3>'+
+              '<p>Visit at: '+sessionStorage.artistLink+'</p> '+
+              '<p>Votes: '+sessionStorage.votes+'</p></center> ' 
+            
+          
+
+          document.getElementById("info1").innerHTML = output;  
+
+          output2 = '<center><h3>'+sessionStorage.bandName2+' '+sessionStorage.songName2+'</h3>'+
+                '<p>Visit at: '+sessionStorage.artistLink2 +'</p> '+
+                '<p>Votes: '+sessionStorage.votes2 +'</p></center> '
+
+
+
+          document.getElementById("info2").innerHTML = output2; 
+   }
+  
      $('#next').click(function(){  
 
-	
+  
             var vidID = sessionStorage.vidID2 ;
             var userID = sessionStorage.userID; 
             var pLName = "'playList1'"//sessionStorage.pLName;
-			
+      
          $.ajax({ 
                url: '/next',
                type: 'POST',
@@ -129,30 +249,40 @@
                data: { uID: userID, vID:vidID, type:'challengerbin',pLName:pLName,genre:sessionStorage.filter  }, 
                success: function(data){
   
-            	   
-     			 	data1 = data['out1'];
-    				 data2 = data['out2'];
+                 
+            data1 = data['out1'];
+             data2 = data['out2'];
       
-    				
-       				sessionStorage.fileLink = data1['fileLink'];
-    				sessionStorage.vidID = data1['vID'];
-    				sessionStorage.bandName = data1['bandName'];
-    				sessionStorage.songName = data1['songName'];
-    				//sessionStorage.country = data1['country'];
-    				sessionStorage.artistLink = data1['artistLink'];
-    				sessionStorage.votes = data1['votes'];
-				
-       				sessionStorage.fileLink2 = data2['fileLink'];
-    				sessionStorage.vidID2 = data2['vID'];
-    				sessionStorage.bandName2 = data2['bandName'];
-    				sessionStorage.songName2 = data2['songName'];
-    				//sessionStorage.country = data1['country'];
-    				sessionStorage.artistLink2 = data2['artistLink'];
-    				sessionStorage.votes2 = data2['votes'];
-    				
-    				location.reload(true);
-    				
-				//alert(sessionStorage.bandName);
+            
+              sessionStorage.fileLink = data1['fileLink'];
+            sessionStorage.vidID = data1['vID'];
+            sessionStorage.bandName = data1['bandName'];
+            sessionStorage.songName = data1['songName'];
+            //sessionStorage.country = data1['country'];
+            sessionStorage.artistLink = data1['artistLink'];
+            sessionStorage.votes = data1['votes'];
+        
+              sessionStorage.fileLink2 = data2['fileLink'];
+            sessionStorage.vidID2 = data2['vID'];
+            sessionStorage.bandName2 = data2['bandName'];
+            sessionStorage.songName2 = data2['songName'];
+            //sessionStorage.country = data1['country'];
+            sessionStorage.artistLink2 = data2['artistLink'];
+            sessionStorage.votes2 = data2['votes'];
+            
+            loadVideo1(sessionStorage.fileLink)
+            loadVideo2(sessionStorage.fileLink2)
+            
+            
+          sessionStorage.ytvidID = sessionStorage.fileLink
+          sessionStorage.ytvidID2 = sessionStorage.fileLink2;
+            
+          updateName();
+
+
+            //location.reload(true);
+            
+        //alert(sessionStorage.bandName);
                }
                , error: function(jqXHR, textStatus, err){
                    alert('text status '+textStatus+', err '+err)
@@ -165,11 +295,11 @@
 
      $('#next2').click(function(){  
 
-	
+  
             var vidID = sessionStorage.vidID2 ;
             var userID = sessionStorage.userID; 
             var pLName = "'playList1'"//sessionStorage.pLName;
-			
+      
          $.ajax({ 
                url: '/next',
                type: 'POST',
@@ -178,33 +308,39 @@
                data: { uID: userID, vID:vidID, type:'challengerbin',pLName:pLName ,genre:sessionStorage.filter  }, 
                success: function(data){
   
-            	   
-     			 	data1 = data['out1'];
-    				data2 = data['out2'];
+                 
+            data1 = data['out1'];
+            data2 = data['out2'];
       
-      				//alert(data1)
-    				
-       				sessionStorage.fileLink = data1['fileLink'];
-    				sessionStorage.vidID = data1['vID'];
-    				sessionStorage.bandName = data1['bandName'];
-    				sessionStorage.songName = data1['songName'];
-    				//sessionStorage.country = data1['country'];
-    				sessionStorage.artistLink = data1['artistLink'];
-    				sessionStorage.votes = data1['votes'];
-				
-       				sessionStorage.fileLink2 = data2['fileLink'];
-    				sessionStorage.vidID2 = data2['vID'];
-    				sessionStorage.bandName2 = data2['bandName'];
-    				sessionStorage.songName2 = data2['songName'];
-    				//sessionStorage.country = data1['country'];
-    				sessionStorage.artistLink2 = data2['artistLink'];
-    				sessionStorage.votes2 = data2['votes'];
-    				
-
-
-    				location.reload(true);
-    				
-				//alert(sessionStorage.bandName);
+              //alert(data1)
+            
+              sessionStorage.fileLink = data1['fileLink'];
+            sessionStorage.vidID = data1['vID'];
+            sessionStorage.bandName = data1['bandName'];
+            sessionStorage.songName = data1['songName'];
+            //sessionStorage.country = data1['country'];
+            sessionStorage.artistLink = data1['artistLink'];
+            sessionStorage.votes = data1['votes'];
+        
+              sessionStorage.fileLink2 = data2['fileLink'];
+            sessionStorage.vidID2 = data2['vID'];
+            sessionStorage.bandName2 = data2['bandName'];
+            sessionStorage.songName2 = data2['songName'];
+            //sessionStorage.country = data1['country'];
+            sessionStorage.artistLink2 = data2['artistLink'];
+            sessionStorage.votes2 = data2['votes'];
+            
+            loadVideo1(sessionStorage.fileLink)
+            loadVideo2(sessionStorage.fileLink2)
+            
+            sessionStorage.ytvidID = sessionStorage.fileLink
+          sessionStorage.ytvidID2 = sessionStorage.fileLink2;
+            
+          updateName();
+            
+            //location.reload(true);
+            
+        //alert(sessionStorage.bandName);
                }
                , error: function(jqXHR, textStatus, err){
                    alert('text status '+textStatus+', err '+err)
@@ -215,85 +351,64 @@
 
 
      $('#feedbackBut').click(function(){  
-     	
-		window.location.assign("/contact.html");
+      
+    window.location.assign("/contact.html");
       }); 
 
           $('#logout').click(function(){  
-			sessionStorage.clear()
-			location.reload(true);
+      sessionStorage.clear()
+      location.reload(true);
       }); 
 
+   
+/*     $('#textButton').click(function(){  
 
+       
+       if (  $(this).html() == 'Challenger'){
+       $("#textButton").html('Legend');
+        
+         
+        output = '<center><h3>'+sessionStorage.bandName2+'</h3>'+
+        '<h3> '+sessionStorage.songName2+'</h3>'+
+        '<p>Country: need to change db</p> '+
+        '<p>Visit at: '+sessionStorage.artistLink2+'</p> '+
+        '<p>Votes: '+sessionStorage.votes2+'</p></center> '+
+        '<br><br>'+
+        '<p>Maybe some nice visulisation</p> '+
+        '<p>to fill the rest of the pane?</p> '+
+        '<p>or advert?</p> ';
+      
+      
+        document.getElementById("vidInfo").innerHTML = output;
+        $("#ytplayer").toggle();
+        $("#ytplayer2").toggle();
+        
+        
+        
+       }else{
+         $("#textButton").html('Challenger'); 
+         
+          
+          
+          output = '<center><h3>'+sessionStorage.bandName+'</h3>'+
+          '<h3> '+sessionStorage.songName+'</h3>'+
+          '<p>Country: need to change db</p> '+
+          '<p>Visit at: '+sessionStorage.artistLink+'</p> '+
+          '<p>Votes: '+sessionStorage.votes+'</p></center> '+
+          '<br><br>'+
+          '<p>Maybe some nice visulisation</p> '+
+          '<p>to fill the rest of the pane?</p> '+
+          '<p>or advert?</p> ';
+          
+          $("#ytplayer").toggle();
+          $("#ytplayer2").toggle();
+          
+          document.getElementById("vidInfo").innerHTML = output;
 
-	 
-     $('#textButton').click(function(){  
-
-   /*       $.ajax({ 
-             url: '/ajax',
-             type: 'POST',
-             cache: false, 
-             data: { field1: 'test', field2: 'test2' }, 
-             success: function(data){
-                //alert('Success!');
-                //alert(data['id']);
-             }
-             , error: function(jqXHR, textStatus, err){
-                 alert('text status '+textStatus+', err '+err)
-             }
-          }); */
-    	 
-    	 if (  $(this).html() == 'Challenger'){
-			 $("#textButton").html('Legend');
-			 
-			
-			 
-	    	 
-				output = '<center><h3>'+sessionStorage.bandName2+'</h3>'+
-				'<h3> '+sessionStorage.songName2+'</h3>'+
-				'<p>Country: need to change db</p> '+
-				'<p>Visit at: '+sessionStorage.artistLink2+'</p> '+
-				'<p>Votes: '+sessionStorage.votes2+'</p></center> '+
-				'<br><br>'+
-				'<p>Maybe some nice visulisation</p> '+
-				'<p>to fill the rest of the pane?</p> '+
-				'<p>or advert?</p> ';
-			
-			
-				document.getElementById("vidInfo").innerHTML = output;
-				$("#ytplayer").toggle();
-				$("#ytplayer2").toggle();
-				
-				
-			/* 	$('#result').load('ajax/test.html', function() {
-					  alert('Load was performed.');
-					}); */
-				
-				
-			 }else{
-				 $("#textButton").html('Challenger'); 
-				 
-				 	
-					
-					output = '<center><h3>'+sessionStorage.bandName+'</h3>'+
-					'<h3> '+sessionStorage.songName+'</h3>'+
-					'<p>Country: need to change db</p> '+
-					'<p>Visit at: '+sessionStorage.artistLink+'</p> '+
-					'<p>Votes: '+sessionStorage.votes+'</p></center> '+
-					'<br><br>'+
-					'<p>Maybe some nice visulisation</p> '+
-					'<p>to fill the rest of the pane?</p> '+
-					'<p>or advert?</p> ';
-					
-					$("#ytplayer").toggle();
-					$("#ytplayer2").toggle();
-					
-					document.getElementById("vidInfo").innerHTML = output;
-
-				 
-			 }
-    	 
-    	 
+         
+       }
+       
+       
          $.ajax({ 
                url: '/ajax',
                type: 'POST',
@@ -307,14 +422,14 @@
                    alert('text status '+textStatus+', err '+err)
                }
             })
-         }); 
+        }); */
 
  
      
      
      $('#challengerbin').click(function(){  
 
-	
+  
             var vidID = sessionStorage.vidID2 ;
             var userID = sessionStorage.userID; 
             var pLName = "'playList1'"//sessionStorage.pLName;
@@ -323,7 +438,7 @@
             $('#next2').toggle()
             $('#legendbin').toggle()
             $('#challengerbin').toggle()
-			
+      
          $.ajax({ 
                url: '/like',
                type: 'POST',
@@ -332,45 +447,25 @@
                data: { uID: userID, vID:vidID, type:'challengerbin',pLName:pLName  }, 
                success: function(data){
   
-            	   
-     			 	data1 = data['out1'];
-    				 data2 = data['out2'];
-      
-    				
-       	// 			sessionStorage.fileLink = data1['fileLink'];
-    				// sessionStorage.vidID = data1['vID'];
-    				// sessionStorage.bandName = data1['bandName'];
-    				// sessionStorage.songName = data1['songName'];
-    				// //sessionStorage.country = data1['country'];
-    				// sessionStorage.artistLink = data1['artistLink'];
-    				// sessionStorage.votes = data1['votes'];
-				
-       	// 			sessionStorage.fileLink2 = data2['fileLink'];
-    				// sessionStorage.vidID2 = data2['vID'];
-    				// sessionStorage.bandName2 = data2['bandName'];
-    				// sessionStorage.songName2 = data2['songName'];
-    				// //sessionStorage.country = data1['country'];
-    				// sessionStorage.artistLink2 = data2['artistLink'];
-    				// sessionStorage.votes2 = data2['votes'];
-    				
-    				//location.reload(true);
-    				
-				//alert(sessionStorage.bandName);
+                 
+            data1 = data['out1'];
+             data2 = data['out2'];
+
                }
                , error: function(jqXHR, textStatus, err){
                    alert('text status '+textStatus+', err '+err)
                }
             })
          }); 
-	 
+   
      
      $('#challengerkeep').click(function(){  
 
-    		
+        
          var vidID = sessionStorage.vidID2 ;
          var userID = sessionStorage.userID; 
         var pLName = "'playList1'"//sessionStorage.pLName;
-	 $('#challengerkeep').toggle()
+   $('#challengerkeep').toggle()
 
          
       $.ajax({ 
@@ -383,29 +478,6 @@
             data: { uID: userID, vID:vidID, type:'challengerkeep',pLName:pLName  }, 
             success: function(data){
 
-         	   
-  //				data1 = data['out1'];
-//				data2 = data['out2'];
-  
-   	// 			sessionStorage.fileLink = data1['fileLink'];
-				// sessionStorage.vidID = data1['vID'];
-				// sessionStorage.bandName = data1['bandName'];
-				// sessionStorage.songName = data1['songName'];
-				// //sessionStorage.country = data1['country'];
-				// sessionStorage.artistLink = data1['artistLink'];
-				// sessionStorage.votes = data1['votes'];
-
-   	// 			sessionStorage.fileLink2 = data2['fileLink'];
-				// sessionStorage.vidID2 = data2['vID'];
-				// sessionStorage.bandName2 = data2['bandName'];
-				// sessionStorage.songName2 = data2['songName'];
-				// //sessionStorage.country = data1['country'];
-				// sessionStorage.artistLink2 = data2['artistLink'];
-				// sessionStorage.votes2 = data2['votes'];
-				
-				//location.reload(true);
-				
-				//alert(sessionStorage.bandName);
             }
             , error: function(jqXHR, textStatus, err){
                 alert('text status '+textStatus+', err '+err)
@@ -423,7 +495,7 @@
          $('#next2').toggle()
          $('#legendbin').toggle()
          $('#challengerbin').toggle()
-    	 
+       
          $.ajax({ 
                url: '/like',
                type: 'POST',
@@ -431,31 +503,7 @@
  
                data: { uID: userID, vID:vidID, type:'legendbin' ,pLName:pLName }, 
                success: function(data){
-
-  	//			data1 = data['out1'];
-	//			data2 = data['out2'];
-  
-				
-   	// 			sessionStorage.fileLink = data1['fileLink'];
-				// sessionStorage.vidID = data1['vID'];
-				// sessionStorage.bandName = data1['bandName'];
-				// sessionStorage.songName = data1['songName'];
-				// //sessionStorage.country = data1['country'];
-				// sessionStorage.artistLink = data1['artistLink'];
-				// sessionStorage.votes = data1['votes'];
-				
-   	// 			sessionStorage.fileLink2 = data2['fileLink'];
-				// sessionStorage.vidID2 = data2['vID'];
-				// sessionStorage.bandName2 = data2['bandName'];
-				// sessionStorage.songName2 = data2['songName'];
-				// //sessionStorage.country = data1['country'];
-				// sessionStorage.artistLink2 = data2['artistLink'];
-				// sessionStorage.votes2 = data2['votes'];
-				
-				//location.reload(true);
-				
-				//alert(sessionStorage.bandName);
-            	   
+                 
                }
                , error: function(jqXHR, textStatus, err){
                    alert('text status '+textStatus+', err '+err)
@@ -478,32 +526,7 @@
  
                data: { uID: userID, vID:vidID, type:'legendkeep' ,pLName:pLName }, 
                success: function(data){
-
-
-  	//			data1 = data['out1'];
-	//			data2 = data['out2'];
-  
-				
-   	// 			sessionStorage.fileLink = data1['fileLink'];
-				// sessionStorage.vidID = data1['vID'];
-				// sessionStorage.bandName = data1['bandName'];
-				// sessionStorage.songName = data1['songName'];
-				// //sessionStorage.country = data1['country'];
-				// sessionStorage.artistLink = data1['artistLink'];
-				// sessionStorage.votes = data1['votes'];
-				
-   	// 			sessionStorage.fileLink2 = data2['fileLink'];
-				// sessionStorage.vidID2 = data2['vID'];
-				// sessionStorage.bandName2 = data2['bandName'];
-				// sessionStorage.songName2 = data2['songName'];
-				// //sessionStorage.country = data1['country'];
-				// sessionStorage.artistLink2 = data2['artistLink'];
-				// sessionStorage.votes2 = data2['votes'];
-				
-				//location.reload(true);
-				
-				//alert(sessionStorage.bandName);
-            	   
+                 
                }
                , error: function(jqXHR, textStatus, err){
                    alert('text status '+textStatus+', err '+err)
@@ -511,131 +534,105 @@
             })
          });
      
-	 
-	 $( "#textButton2" ).click(function() {
-		 
-		 if (  $(this).html() == 'Challenger'){
-			 $("#textButton").html('Legend');
-			 }else{
-				 $("#textButton").html('Challenger'); 
-				 
-			 }
-		 });
+   
+/*   $( "#textButton2" ).click(function() {
+     
+     if (  $(this).html() == 'Challenger'){
+       $("#textButton").html('Legend');
+       }else{
+         $("#textButton").html('Challenger'); 
+         
+       }
+     }); */
 
-	
-	
-	 
-	 
-	 
+  
+  
+   
+   
+   
 });
  </script>
 
 
 
 
-<script>
+<script type="text/javascript">
 
 $(document).ready(function() {
-	
-	$(function () {
-	
-	
-	
-	      google.setOnLoadCallback(drawChart);
- 		      function drawChart() {
-/*   	        var data = google.visualization.arrayToDataTable([
-	          ['Year', 'Sales', 'Expenses'],
-	          ['00:00',  Math.floor(Math.random()*11 + 1),      Math.floor(Math.random()*11)],
-	          ['01:00',  Math.floor(Math.random()*11 + 11),      Math.floor(Math.random()*21)],
-	          ['02:00',  Math.floor(Math.random()*11 + 21),       Math.floor(Math.random()*31)],
-	          ['03:00',  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*41)],
-	          ['04:00',  Math.floor(Math.random()*11 + 1),      Math.floor(Math.random()*51)],
-	          ['05:00',  Math.floor(Math.random()*11 + 11),      Math.floor(Math.random()*61)],
-	          ['06:00',  Math.floor(Math.random()*11 + 21),       Math.floor(Math.random()*71)],
-	          ['07:00',  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*81)],
-	          ['08:00',  Math.floor(Math.random()*11 + 1),      Math.floor(Math.random()*91)],
-	          ['09:00',  Math.floor(Math.random()*11 + 11),      Math.floor(Math.random()*111)],
-	          ['10:00',  Math.floor(Math.random()*11 + 21),       Math.floor(Math.random()*121)],
-	          ['11:00',  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*131)],
-	          ['12:00',  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*141)]
-	        ]);   */
-	        
-	        
+  
+/*  $(function () {
+  
+  
+  
+        google.setOnLoadCallback(drawChart);
+          function drawChart() {
+          
+          
+          //d1.setMinutes(new Date().getMinutes()); 
+          //document.write(d1.toTimeString("hh:mm"));
+          //document.write(d1.getHours()+":"+d1.getMinutes());
+          var d1 = Date();
+          Date.prototype.addMinutes= function(h){
+              this.setSeconds(this.getSeconds()+h);
+              //myDate = $.datepicker.formatDate('hh-mm-ss', this.getTime());
+         
+              myDate = this.getMinutes() + ':' + this.getSeconds()
+              return myDate ;
+          }
+          //alert(new Date().addMinutes(4));
+          //alert(d1.setMinutes(d1.getMinutes()+1))
+             var data = google.visualization.arrayToDataTable([
+                                                ['Year', 'Sales', 'Expenses'],
+                                                [new Date().addMinutes(1),  Math.floor(Math.random()*11 + 1),      Math.floor(Math.random()*11)],
+                                                [new Date().addMinutes(2),  Math.floor(Math.random()*11 + 11),      Math.floor(Math.random()*21)],
+                                                [new Date().addMinutes(3),  Math.floor(Math.random()*11 + 21),       Math.floor(Math.random()*31)],
+                                                [new Date().addMinutes(4),  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*41)],
+                                                [new Date().addMinutes(5),  Math.floor(Math.random()*11 + 1),      Math.floor(Math.random()*51)],
+                                                [new Date().addMinutes(6),  Math.floor(Math.random()*11 + 11),      Math.floor(Math.random()*61)],
+                                                [new Date().addMinutes(7),  Math.floor(Math.random()*11 + 21),       Math.floor(Math.random()*71)],
+                                                [new Date().addMinutes(8),  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*81)],
+                                                [new Date().addMinutes(9),  Math.floor(Math.random()*11 + 1),      Math.floor(Math.random()*91)],
+                                                [new Date().addMinutes(9.5),  Math.floor(Math.random()*11 + 11),      Math.floor(Math.random()*111)],
+                                                [new Date().addMinutes(10),  Math.floor(Math.random()*11 + 21),       Math.floor(Math.random()*121)],
+                                                [new Date().addMinutes(11),  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*131)],
+                                                [new Date().addMinutes(11.5),  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*141)]
+                                              ]); 
+                                              
+                                  
+                                              
+                                              
+                                              
+          
+          
+        
+        //for (var i = 0; i < 100; i++){
+        //    d1.push([i, Math.floor(Math.random()*111),Math.floor(Math.random()*111)]);
+      //}
+        //alert(d1)
+        //var data = google.visualization.arrayToDataTable(d1);
 
-	        
-	        //d1.setMinutes(new Date().getMinutes()); 
-	        //document.write(d1.toTimeString("hh:mm"));
-	        //document.write(d1.getHours()+":"+d1.getMinutes());
-	        var d1 = Date();
-	        Date.prototype.addMinutes= function(h){
-	            this.setSeconds(this.getSeconds()+h);
-	            //myDate = $.datepicker.formatDate('hh-mm-ss', this.getTime());
-	       
-	            myDate = this.getMinutes() + ':' + this.getSeconds()
-	            return myDate ;
-	        }
-	        //alert(new Date().addMinutes(4));
-	        //alert(d1.setMinutes(d1.getMinutes()+1))
-  	         var data = google.visualization.arrayToDataTable([
-                                     	          ['Year', 'Sales', 'Expenses'],
-                                     	          [new Date().addMinutes(1),  Math.floor(Math.random()*11 + 1),      Math.floor(Math.random()*11)],
-                                     	          [new Date().addMinutes(2),  Math.floor(Math.random()*11 + 11),      Math.floor(Math.random()*21)],
-                                     	          [new Date().addMinutes(3),  Math.floor(Math.random()*11 + 21),       Math.floor(Math.random()*31)],
-                                     	          [new Date().addMinutes(4),  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*41)],
-                                     	          [new Date().addMinutes(5),  Math.floor(Math.random()*11 + 1),      Math.floor(Math.random()*51)],
-                                     	          [new Date().addMinutes(6),  Math.floor(Math.random()*11 + 11),      Math.floor(Math.random()*61)],
-                                     	          [new Date().addMinutes(7),  Math.floor(Math.random()*11 + 21),       Math.floor(Math.random()*71)],
-                                     	          [new Date().addMinutes(8),  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*81)],
-                                     	          [new Date().addMinutes(9),  Math.floor(Math.random()*11 + 1),      Math.floor(Math.random()*91)],
-                                     	          [new Date().addMinutes(9.5),  Math.floor(Math.random()*11 + 11),      Math.floor(Math.random()*111)],
-                                     	          [new Date().addMinutes(10),  Math.floor(Math.random()*11 + 21),       Math.floor(Math.random()*121)],
-                                     	          [new Date().addMinutes(11),  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*131)],
-                                     	          [new Date().addMinutes(11.5),  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*141)]
-                                     	        ]); 
-                                     	        
-                             	    
-                                     	        
-                                     	        
-                                     	        
-	        
-	        
-		    
-		    //for (var i = 0; i < 100; i++){
-		    //    d1.push([i, Math.floor(Math.random()*111),Math.floor(Math.random()*111)]);
-			//}
-		    //alert(d1)
-		    //var data = google.visualization.arrayToDataTable(d1);
+          var options = {
+            title: 'Votes',
+            hAxis: {title: 'Time',  titleTextStyle: {color: '#333'}},
+            vAxis: {minValue: 0}
+          };
 
-	        var options = {
-	          title: 'Votes',
-	          hAxis: {title: 'Time',  titleTextStyle: {color: '#333'}},
-	          vAxis: {minValue: 0}
-	        };
-
-	        var chart = new google.visualization.AreaChart(document.getElementById('mygraph'));
-	        chart.draw(data, options);
-	      
-	        
-	        setTimeout(drawChart, 2000);
- 		      } 
-		
-
-	    
-	    
-	    
-	    
-	    
-
-	    
-	    //$.plot($("#mygraph"), [ d1 ],options);
-	    //$("#mygraph").html('band1 ' + d1[1][1] + '  band2 ' + d1[2][1]);
-	    
-	    
-	    
-	    //yourFunction();
-	  
-	});  
-});
+          var chart = new google.visualization.AreaChart(document.getElementById('mygraph'));
+          chart.draw(data, options);
+        
+          
+          setTimeout(drawChart, 2000);
+          } 
+      
+      //$.plot($("#mygraph"), [ d1 ],options);
+      //$("#mygraph").html('band1 ' + d1[1][1] + '  band2 ' + d1[2][1]);
+      
+      
+      
+      //yourFunction();
+    
+  });  
+}); */
 </script>
 
 
@@ -647,13 +644,7 @@ $(document).ready(function() {
 
 
 
-	<script>
-//alert('here2');
-//sessionStorage.firstOpen ='';
-
-
-
-
+  <script type="text/javascript">
 
 //sessionStorage.firstOpen = '';
 
@@ -661,191 +652,169 @@ $(document).ready(function() {
 if(sessionStorage.firstOpen == 'opened'){
 
 
-	var str = sessionStorage.fileLink
-	//var n = str.indexOf("=");
-	//var vidID = str.substring(n+1);
-	var vidID = str;
-	sessionStorage.ytvidID = vidID
+  var str = sessionStorage.fileLink
+  //var n = str.indexOf("=");
+  //var vidID = str.substring(n+1);
+  var vidID = str;
+  sessionStorage.ytvidID = vidID
 
-	var str2 = sessionStorage.fileLink2
-	//var n2 = str2.indexOf("=");
-	//var vidID2 = str2.substring(n2+1);
-	var vidID2 = str2;
-	sessionStorage.ytvidID2 = vidID2
-	
-	localStorage.userID = sessionStorage.userID ;
-	
+  var str2 = sessionStorage.fileLink2
+  //var n2 = str2.indexOf("=");
+  //var vidID2 = str2.substring(n2+1);
+  var vidID2 = str2;
+  sessionStorage.ytvidID2 = vidID2
+  
+  localStorage.userID = sessionStorage.userID ;
+  
 
-	//  function onYouTubePlayerAPIReady() {
-	// 	    player = new YT.Player('ytplayer', {
-	// 	      height: '298px',
-	// 	      width: '99%',
-	// 	      playerVars: { 'autoplay': 0, 'controls': 1,'autohide':1,'wmode':'opaque' },
-	// 	      videoId: sessionStorage.ytvidID,
-		      
-	// 	    });
-		    
-		    
-	// 	    	player2 = new YT.Player('ytplayer2', {
-	// 		      height: '298px',
-	// 		      width: '99%',
-	// 		      playerVars: { 'autoplay': 0, 'controls': 1,'autohide':1,'wmode':'opaque' },
-	// 		      videoId: sessionStorage.ytvidID2,
-			      
-	// 		    });
-	// }
-
-
-
-		    
-		    
-
-	
-	
+  //  function onYouTubePlayerAPIReady() {
+  //      player = new YT.Player('ytplayer', {
+  //        height: '298px',
+  //        width: '99%',
+  //        playerVars: { 'autoplay': 0, 'controls': 1,'autohide':1,'wmode':'opaque' },
+  //        videoId: sessionStorage.ytvidID,
+          
+  //      });
+        
+  
 }else{
-	
+  
 
-	 $.ajax({
-		    type: "GET",
-		    dataType: "json",
-		    url: "/initialOpen"				    
-		}).done(function(data){
-			
-			data1 = data['out2'];
-			data2 = data['out1'];
-			
-			sessionStorage.fileLink = data1['fileLink'];
-			sessionStorage.vidID = data1['id'];
-			sessionStorage.userID = data1['userID'];
-			sessionStorage.bandName = data1['bandName'];
-			sessionStorage.songName = data1['songName'];
-			//sessionStorage.country = data['country'];
-			sessionStorage.artistLink = data1['artistLink'];
-			sessionStorage.votes = data1['votes'];
-	
-			sessionStorage.fileLink2 = data2['fileLink'];
-			sessionStorage.vidID2 = data2['id'];
-			sessionStorage.userID2 = data2['userID'];
-			sessionStorage.bandName2 = data2['bandName'];
-			sessionStorage.songName2 = data2['songName'];
-			//sessionStorage.country = data['country'];
-			sessionStorage.artistLink2 = data2['artistLink'];
-			sessionStorage.votes2 = data2['votes'];
-			
-			sessionStorage.filter = 'all';
-			
-			location.reload(true);
-			
-			//sessionStorage. = data['country'];
+   $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "/initialOpen"           
+    }).done(function(data){
+      
+      data1 = data['out2'];
+      data2 = data['out1'];
+      
+      sessionStorage.fileLink = data1['fileLink'];
+      sessionStorage.vidID = data1['id'];
+      sessionStorage.userID = data1['userID'];
+      sessionStorage.bandName = data1['bandName'];
+      sessionStorage.songName = data1['songName'];
+      //sessionStorage.country = data['country'];
+      sessionStorage.artistLink = data1['artistLink'];
+      sessionStorage.votes = data1['votes'];
+  
+      sessionStorage.fileLink2 = data2['fileLink'];
+      sessionStorage.vidID2 = data2['id'];
+      sessionStorage.userID2 = data2['userID'];
+      sessionStorage.bandName2 = data2['bandName'];
+      sessionStorage.songName2 = data2['songName'];
+      //sessionStorage.country = data['country'];
+      sessionStorage.artistLink2 = data2['artistLink'];
+      sessionStorage.votes2 = data2['votes'];
+      
+      sessionStorage.filter = 'all';
+      sessionStorage.chartfilter='all';
+      
+      location.reload(true);
+      
+      //sessionStorage. = data['country'];
 
-		    // $("#bandName").text(data);
-		});
+        // $("#bandName").text(data);
+    });
 
-	sessionStorage.firstOpen = 'opened'
-	
+  sessionStorage.firstOpen = 'opened'
+  
 }
 
 
 </script>
 
 
-	<div id="body" class="k-content">
+  <div id="body" class="k-content">
+
+    <script type="text/javascript"></script>
+
+    <div id="mainsection" class="demo-section">
+
+
+
+      <div align="right">
+        <centre> <img src="images/banner.jpg" alt="hamster"
+          width="100%" height="150px"> </centre>
+      </div>
+
+
+
+      <div>
+
+        <ul id="menu">
+
+          <li>Filter
+            <ul>
+              <li>Genre
+
+                <ul>
+                  <li>All</li>
+                  <li>Alternative & Indie</li>
+                  <li>Blues</li>
+                  <li>Classical</li>
+                  <li>Country</li>
+                  <li>Dance & Electronic</li>
+                  <li>Easy Listening</li>
+                  <li>Folk & Songwriter</li>
+                  <li>Hard Rock & Metal</li>
+                  <li>Jazz</li>
+                  <li>Miscellaneous</li>
+                  <li>Pop</li>
+                  <li>R&B & Soul</li>
+                  <li>Rap & Hip-Hop</li>
+                  <li>Reggae</li>
+                  <li>Rock</li>
+                  <li>Soundtracks & Musicals</li>
+                  <li>World Music</li>
+                </ul>
+              </li>
 
 
 
 
-		<script type="text/javascript">
-															
+            </ul>
 
-											
-											
-															 
-															</script>
+          </li>
 
-		<div id="forecast">
+          <li>upload</li>
+          <li>charts</li>
 
+          <li>myslamstr
+            <ul>
+              <li>playLists</li>
+              <li>account</li>
+            </ul>
 
-			<div align="right">
-				<centre> <img src="images/banner.jpg" alt="hamster"
-					width="50%" height="200px"> </centre>
-			</div>
+          </li>
 
-
-
-			<div>
-
-				<ul id="menu">
-
-					<li>Filter
-						<ul>
-							<li>Genre
-
-								<ul>
-									<li>All</li>
-									<li>Alternative & Indie</li>
-									<li>Blues</li>
-									<li>Classical</li>
-									<li>Country</li>
-									<li>Dance & Electronic</li>
-									<li>Easy Listening</li>
-									<li>Folk & Songwriter</li>
-									<li>Hard Rock & Metal</li>
-									<li>Jazz</li>
-									<li>Miscellaneous</li>
-									<li>Pop</li>
-									<li>R&B & Soul</li>
-									<li>Rap & Hip-Hop</li>
-									<li>Reggae</li>
-									<li>Rock</li>
-									<li>Soundtracks & Musicals</li>
-									<li>World Music</li>
-								</ul>
-							</li>
+          <li>about</li>
+          <li>contact</li>
 
 
 
 
-						</ul>
+        </ul>
+      </div>
 
-					</li>
-
-					<li>upload</li>
-					<li>charts</li>
-
-					<li>myslamstr
-						<ul>
-							<li>playLists</li>
-							<li>account</li>
-						</ul>
-
-					</li>
-
-					<li>about</li>
-					<li>contact</li>
+      <div class="demo-section">
 
 
+        <button class="feedbackBut" type="button" name="feedbackBut"
+          id="feedbackBut";">Feedback</button>
 
 
-				</ul>
-			</div>
-
-			<div class="demo-section">
-
-
-<button class="feedbackBut" type="button" name="feedbackBut" id="feedbackBut" ;">Feedback</button>
-
-
-				<div id="register" class="k-content">
-					<div id="window" style="visibility: visible"></div>
-				</div>
-				<script>
+        <div id="register" class="k-content">
+          <div id="window" style="visibility: visible"></div>
+        </div>
+        <script type="text/javascript">
           
           
           
                 $(document).ready(function() {
-                	
-                	
-                	
+                  
+                  
+                  
                     var window = $("#window"),
                         undo = $("#undo")
                                 .bind("click", function() {
@@ -877,639 +846,578 @@ if(sessionStorage.firstOpen == 'opened'){
             </script>
 
 
-				<div id="splitter" class="k-content">
+        <div id="splitter" class="k-content">
 
 
-					<br>
+          <br>
 
-					<div id="vertical">
+          <div id="vertical">
 
-						<div id="bottom-pane">
-							<div id="horizontal" style="height: 100%; width: 100%;">
-								<div id="left-pane">
-									<div class="pane-content">
+            <div id="bottom-pane">
+              <div id="horizontal" style="height: 100%; width: 100%;">
+                <div id="left-pane">
+                  <div class="pane-content">
 
 
 
-										<center>
 
-											<br>
-											<button class="bin" type="button" name="next2" id="next2"
-												style="display: none;">next battle</button>
-											<button class="bin" type="button" name="legendbin"
-												id="legendbin" style="display: visible;">vote</button>
-											<button class="keep" type="button" name="legendkeep"
-												id="legendkeep" style="display: visible;">add to
-												playlist</button>
 
-										</center>
+                    <br>
 
-										<br>
+                    <div class="demo-section4">
+                      
 
-								
+                      <div class="demo-section3">
+                        <button class="bin" type="button" name="next2" id="next2"
+                          style="display: none; margin-left: 1cm;">next
+                          battle</button>
 
-										<div id="ytplayerwrapper">
-											<div id="ytplayer" style="display: visible;"></div>
+                        <button class="bin" type="button" name="legendbin"
+                          id="legendbin" style="display: visible; margin-left: 1cm;">vote</button>
 
-										</div>
 
+                        <br>
 
-										<div id="info1"></div>
-
-										<script>
-											
-								   
-											
- 											output = '<center><h3>'+sessionStorage.bandName+' '+sessionStorage.songName+'</h3>'+
-											'<p>Visit at: '+sessionStorage.artistLink+'</p> '+
-											'<p>Votes: '+sessionStorage.votes+'</p></center> ' 
-
-											
-											
-											document.getElementById("info1").innerHTML = output;		
-						
-											
-												</script>
-
-									</div>
-								</div>
-
-								<div id="center-pane">
-
-									<div class="pane-content">
-										<center>
-
-											<br>
-											<button class="bin" type="button" name="next" id="next"
-												style="display: none;">next battle</button>
-											<button class="bin" type="button" name="challengerbin"
-												id="challengerbin" style="display: visible;">vote</button>
-											<button class="keep" type="button" name="challengerkeep"
-												id="challengerkeep" style="display: visible;">add
-												to playlist</button>
-										</center>
-
-										<br>
-										<div id="ytplayer2" style="display: visible;"></div>
-<script>
-jwplayer('ytplayer').setup({
-file: sessionStorage.ytvidID,
-width: '100%',
-aspectratio: '8:6',
-fallback: 'false',
-primary: 'flash'
-});
-</script>
-
-<script>
-jwplayer('ytplayer2').setup({
-file: sessionStorage.ytvidID2,
-width: '100%',
-aspectratio: '8:6',
-fallback: 'false',
-primary: 'flash'
-});
-</script>
-
-
-										<div id="info2"></div>
-
-										<script>
-											
-						output2 = '<center><h3>'+sessionStorage.bandName2+' '+sessionStorage.songName2+'</h3>'+
-											'<p>Visit at: '+sessionStorage.artistLink2 +'</p> '+
-											'<p>Votes: '+sessionStorage.votes2 +'</p></center> '
-
-											document.getElementById("info2").innerHTML = output2; 
-											
-												</script>
-
-									</div>
-
-								</div>
-
-								<div id="right-pane">
 
-									<div id="vertical2">
-										<div id="top-pane2">
+                        <button class="keep" type="button" name="legendkeep"
+                          id="legendkeep" style="display: visible; margin-left: 1cm;">add
+                          to playlist</button>
 
-											<div id=login class="pane-content"></div>
+                      </div>
 
-											<div id=login2></div>
-											<script type="text/javascript">
-						
-														if(sessionStorage.userID != 'noid'){
-														//	if(false){
-															formHTML = 
-																
-																'<center><h2>Hello ' + sessionStorage.userName + '</h2>'+
-																'<h4>You have cast ' + '0' + ' votes</h4>' +
-																'<h4>Making you a slamstr pup ' + '</h4>'+
-																
-																'<button class=\"logout\" type=\"button\" name=\"logout\" id=\"logout\"'+
-																'style=\"display: visible;\">logout</button>';
-
-															
-														}else{
-														
-															formHTML = 
-																'<center><h3>Login</h3></center>'+
-																'<div id=\"loginform\" class=\"k-content\"> '+
-	
-															'	<div class=\"login\"> '+
-															'		<form action=\"/#\" id = \"loginForm\" method=\"post\"> '+
-															'			<center> '+
-															'				<input placeholder=\"email\" name= \"username\" id=\"uname\" '+
-															'					data-bind=\"value: userName\" /> <br> <input '+
-															'					placeholder=\"password\" type="password" id=\"password\" name= \"password\"'+
-															'					data-bind=\"value: pWord\" /> <br> <br/> '+
-															
-	
-															'			</center> '+
-															'		</form> '+
-															
-													
-															
-															'	</div> '+
-															'</div> '
-															
-															
-														formHTML2 = '<center><a href="signup.html" onclick=\"return notRegistered(); return false;\">Not registered?</a>' +
-															'<button id=\"loginButton\" style=\"display: float\">Login</button></center> ';
-							
-															
-														}
-														
-														
-														document.getElementById("login").innerHTML = formHTML;
-														document.getElementById("login2").innerHTML = formHTML2;
-															
-												
-														 function notRegistered() {
-															 var dialog = $("#window").data("kendoWindow");
-											                    dialog.center();
-											                    dialog.open();
-														        // return true or false, depending on whether you want to allow the `href` property to follow through or not
-														    }
-														
-														</script>
-
-
-										</div>
-
-
-
-										<div id="bottom-pane2">
-
-
-
-											<div class="pane-content" id="vidInfo">
-
-
-												<div id="mygraph" style="width: 100%; height: 30%;"></div>
-												I'm thinking of creating a slamdex here. Some algo that
-												takes into accout the number of votes, last vote, number of
-												votes per hour, and anything else I can think of.
-
-
-											</div>
-										</div>
-
-
-									</div>
-
-								</div>
-							</div>
-
-						</div>
-
-					</div>
-				</div>
-
-
-
-
-				<script type="text/javascript">
-
-						 $(document).ready(function() {
-							 
-						    
-							 
-							 var tes = 1;
-							 
-				                function onOpen(e) {
-				                    kendoConsole.log("Opened: " + $(e.item).children(".k-link").text());
-				                
-				                    
-				                }
-
-				                function onClose(e) {
-				                    kendoConsole.log("Closed: " + $(e.item).children(".k-link").text());
-				                }
-
-				                function onSelect(e) {
-				                    kendoConsole.log("Selected: " + $(e.item).children(".k-link").text());
-					                    
-									
-				                    filterSelect = false;
-				                    if($(e.item).children(".k-link").text()=='charts'){
-				                    	window.location.assign("/charts.html");
-				                    }else if($(e.item).children(".k-link").text()=='playLists'){
-				                    	window.location.assign("/playlist.html");
-				                    }else if($(e.item).children(".k-link").text()=='account'){
-				                    	window.location.assign("/account.html");
-				                    }else if($(e.item).children(".k-link").text()=='about'){
-				                    	window.location.assign("/about.html");
-				                    }else if($(e.item).children(".k-link").text()=='contact'){
-				                    	window.location.assign("/contact.html");
-				                    }else if($(e.item).children(".k-link").text()=='upload'){
-				                    	window.location.assign("/upload.html");
-				                    }else if($(e.item).children(".k-link").text()=='battle'){
-				                    	window.location.assign("/");
-				                    }else if($(e.item).children(".k-link").text()=='All'){
-											sessionStorage.filter='all';
-											filterSelect = true;
-				                    }else if($(e.item).children(".k-link").text()=='Alternative & Indie'){
-											sessionStorage.filter='indie';
-											filterSelect = true;
-									}else if($(e.item).children(".k-link").text()=='Blues'){
-											sessionStorage.filter='blues';
-											filterSelect = true;
-									}else if($(e.item).children(".k-link").text()=='Classical'){
-										sessionStorage.filter='classical';
-											filterSelect = true;
-									}else if($(e.item).children(".k-link").text()=='Country'){
-										sessionStorage.filter='country';
-										filterSelect = true;
-									}else if($(e.item).children(".k-link").text()=='Dance & Electronic'){
-										sessionStorage.filter='electronic';
-										filterSelect = true;
-									}else if($(e.item).children(".k-link").text()=='Easy Listening'){
-										sessionStorage.filter='easy';
-										filterSelect = true;
-									}else if($(e.item).children(".k-link").text()=='Folk & Songwriter'){
-										sessionStorage.filter='folk';
-										filterSelect = true;
-									}else if($(e.item).children(".k-link").text()=='Hard Rock & Metal'){
-										sessionStorage.filter='metal';
-										filterSelect = true;
-									}else if($(e.item).children(".k-link").text()=='Jazz'){
-										sessionStorage.filter='jazz';
-										filterSelect = true;
-									}else if($(e.item).children(".k-link").text()=='Miscellaneous'){
-										sessionStorage.filter='misc';
-										filterSelect = true;
-									}else if($(e.item).children(".k-link").text()=='Pop'){
-										sessionStorage.filter='pop';
-										filterSelect = true;
-									}else if($(e.item).children(".k-link").text()=='R&B & Soul'){
-										sessionStorage.filter='r&b';
-										filterSelect = true;
-									}else if($(e.item).children(".k-link").text()=='Rap & Hip-Hop'){
-										sessionStorage.filter='hiphop';
-										filterSelect = true;
-									}else if($(e.item).children(".k-link").text()=='Reggae'){
-										sessionStorage.filter='reggae';
-										filterSelect = true;
-									}else if($(e.item).children(".k-link").text()=='Rock'){
-										sessionStorage.filter='rock';
-										filterSelect = true;
-									}else if($(e.item).children(".k-link").text()=='Soundtracks & Musicals'){
-										sessionStorage.filter='musical';
-										filterSelect = true;
-									}else if($(e.item).children(".k-link").text()=='World Music'){
-										sessionStorage.filter='world';
-										filterSelect = true;
-									}
-
-									if(filterSelect){
-									    var vidID = sessionStorage.vidID2 ;
-									            var userID = sessionStorage.userID; 
-									            var pLName = "'playList1'"//sessionStorage.pLName;
-												
-									         $.ajax({ 
-									               url: '/next',
-									               type: 'POST',
-									               cache: false, 
-
-									               data: { uID: userID, vID:vidID, type:'challengerbin',pLName:pLName,genre:sessionStorage.filter  }, 
-									               success: function(data){
-									  
-									            	   
-									     			 	data1 = data['out1'];
-									    				 data2 = data['out2'];
-									      
-									    				
-									       				sessionStorage.fileLink = data1['fileLink'];
-									    				sessionStorage.vidID = data1['vID'];
-									    				sessionStorage.bandName = data1['bandName'];
-									    				sessionStorage.songName = data1['songName'];
-									    				//sessionStorage.country = data1['country'];
-									    				sessionStorage.artistLink = data1['artistLink'];
-									    				sessionStorage.votes = data1['votes'];
-													
-									       				sessionStorage.fileLink2 = data2['fileLink'];
-									    				sessionStorage.vidID2 = data2['vID'];
-									    				sessionStorage.bandName2 = data2['bandName'];
-									    				sessionStorage.songName2 = data2['songName'];
-									    				//sessionStorage.country = data1['country'];
-									    				sessionStorage.artistLink2 = data2['artistLink'];
-									    				sessionStorage.votes2 = data2['votes'];
-									    				
-									    				location.reload(true);
-									    				
-													//alert(sessionStorage.bandName);
-									               }
-									               , error: function(jqXHR, textStatus, err){
-									                   alert('text status '+textStatus+', err '+err)
-									               }
-									            })
-									       
-										}
-
-
-				                    
-				                    
-				                }
-
-				                function onActivate(e) {
-				                    kendoConsole.log("Activated: " + $(e.item).children(".k-link").text());
-				                    
-				                }
-
-				                function onDeactivate(e) {
-				                    kendoConsole.log("Deactivated: " + $(e.item).children(".k-link").text());
-				                }
-
-				                $("#menu").kendoMenu({
-				                    select: onSelect,
-				                    open: onOpen,
-				                    close: onClose,
-				                    activate: onActivate,
-				                    deactivate: onDeactivate,
-				                    
-				                });
-				            });
-						
-						
-							$(document).ready(function() {
-				
-								
-								
-								 
-								
-							
-								
-								
-								
-								$("#vertical").kendoSplitter({
-									orientation : "vertical",
-									panes : [ {
-										collapsible : true,
-										//size : "43%"
-									}
-
-									]
-								});
-
-						
-								
-								$("#horizontal").kendoSplitter({
-									panes : [ {
-										collapsible : false,
-										resizable: false,
-										size : "40%"
-									}, {
-										collapsible : false,
-										resizable: false,
-										size : "40%"
-									},
-									{
-										collapsible :false,
-										resizable: false,
-										size : "20%"
-									},
-
-									]
-								});
-								
-		
-								
-
-								$("#vertical2").kendoSplitter({
-									orientation : "vertical",
-									panes : [ {
-										collapsible : false,
-										resizable: false,
-										size : "31%"
-									},
-									{
-										collapsible : false,
-										size : "10%"
-									},{
-										collapsible : false
-									},
-
-									]
-								});
-
-							});
-						</script>
-
-
-
-
-				<style scoped type="text/css">
-#vertical {
-	height: 501px;
-	width: 90%;
-	margin: 0 auto;
-}
-
-.demo-section {
-	background-color: white;
-	border: none;
-}
-
-.demo-section2 {
-	border-style: solid;
-	border-width: 1px;
-	border-color: #D7D9D9;
-}
-
-#menu {
-	font-size: 2em;
-	text-transform: lowercase;
-	padding: 0px 0px;
-	background-color: white; //
-	border: none;
-	background: -webkit-linear-gradient(white, white, white);
-	/* For Safari */
-	background: -o-linear-gradient(white, white, white);
-	/* For Opera 11.1 to 12.0 */
-	background: -moz-linear-gradient(white, white, white);
-	/* For Firefox 3.6 to 15 */
-	background: linear-gradient(white, white, white); /* Standard syntax */
-}
-
-#menu h2 {
-	font-size: 1em;
-	text-transform: lowercase;
-	padding: 0px 0px;
-	background-color: white;
-}
-
-#menu li {
-	font-size: smaller; //
-	text-transform: uppercase;
-	padding: 0px 0px; //
-	border: none;
-	background-color: white;
-}
-
-#vertical2 {
-	height: 501px;
-	width: 100%;
-	margin: 0 auto;
-}
-
-.pane-content {
-	padding: 0 10px;
-}
+
+
+                      <div class="demo-section3">
+                        
+
+                        <img src="images/twitter.png" alt="hamster" width="30%"
+                          height="50px" style="display: visible; margin-left: 50px;">
+
+                          <img src="images/FB-f-Logo__blue_1024.png" alt="hamster" width="30%"
+                          height="50px" style="display: visible; margin-left: 5px;">
+
+                      </div>
+                    </div>
+
+                    <br>
+
+
+
+                    <div id="ytplayerwrapper">
+                      <div id="ytplayer" style="display: visible;"></div>
+
+                    </div>
+
+
+                    <div id="info1"></div>
+
+                    <script type="text/javascript">
+                      
+                   
+                      
+                      output = '<center><h3>'+sessionStorage.bandName+' '+sessionStorage.songName+'</h3>'+
+                      '<p>Visit at: '+sessionStorage.artistLink+'</p> '+
+                      '<p>Votes: '+sessionStorage.votes+'</p></center> ' 
+                  
+                      document.getElementById("info1").innerHTML = output;    
+            
+                      
+                        </script>
+
+                  </div>
+                </div>
+
+                <div id="center-pane">
+
+                  <div class="pane-content">
+                    <br>
+
+
+
+                    <div class="demo-section4">
+                      
+
+                      <div class="demo-section3">
+                        <button class="bin" type="button" name="next" id="next"
+                          style="display: none; margin-left: 1cm;">next
+                          battle</button>
+
+                        <button class="bin" type="button" name="challengerbin"
+                          id="challengerbin" style="display: visible; margin-left: 1cm;">vote</button>
+
+
+                        <br>
+
+
+                        <button class="keep" type="button" name="challengerkeep"
+                          id="challengerkeep" style="display: visible; margin-left: 1cm;">add
+                          to playlist</button>
+
+                      </div>
+
+
+
+                      <div class="demo-section3">
+                        
+
+                        <img src="images/twitter.png" alt="hamster" width="30%"
+                          height="50px" style="display: visible; margin-left: 50px;">
+
+                          <img src="images/FB-f-Logo__blue_1024.png" alt="hamster" width="30%"
+                          height="50px" style="display: visible; margin-left: 5px;">
+
+                      </div>
+                    </div>
+
+
+                    <br>
+                    <div id="ytplayer2" style="display: visible;"></div>
+
+                    <script type="text/javascript">
+                      jwplayer('ytplayer').setup({
+                      file: sessionStorage.ytvidID,
+                      width: '100%',
+                      aspectratio: '8:6',
+                      fallback: 'false',
+                      primary: 'flash'
+                      });
+                    </script>
+
+                    <script type="text/javascript">
+                      jwplayer('ytplayer2').setup({
+                      file: sessionStorage.ytvidID2,
+                      width: '100%',
+                      aspectratio: '8:6',
+                      fallback: 'false',
+                      primary: 'flash'
+                      });
+                    </script>
+
+                    <div id="info2"></div>
+
+                    <script type="text/javascript">
+                      
+                      output2 = '<center><h3>'+sessionStorage.bandName2+' '+sessionStorage.songName2+'</h3>'+
+                      '<p>Visit at: '+sessionStorage.artistLink2 +'</p> '+
+                      '<p>Votes: '+sessionStorage.votes2 +'</p></center> '
+
+                      document.getElementById("info2").innerHTML = output2; 
+                      
+                    </script>
+
+                  </div>
+
+                </div>
+
+                <div id="right-pane">
+
+                  <div id="vertical2">
+                    <div id="top-pane2">
+
+                      <div id="login" class="pane-content"></div>
+
+                      <div id="login2"></div>
+                      <script type="text/javascript">
+            
+                        
+                            if(sessionStorage.userID != 'noid'){
+                            //  if(false){
+                              formHTML = 
+                                
+                                '<center><h3>Hello ' + sessionStorage.userName + '</h3>'+
+                                '<p>click for your slamstr track of the day (COMING SOON)</p>' +
+                                '<br>'+
+                                '<button class=\"logout\" type=\"button\" name=\"logout\" id=\"logout\"'+
+                                'style=\"display: visible;\">logout</button>';
+
+                              
+                            }else{
+                            
+                              formHTML = 
+                                '<center><h3>Login</h3></center>'+
+                                '<div id=\"loginform\" class=\"k-content\"> '+
+  
+                              ' <div class=\"login\"> '+
+                              '   <form action=\"/#\" id = \"loginForm\" method=\"post\"> '+
+                              '     <center> '+
+                              '       <input placeholder=\"email\" name= \"username\" id=\"uname\" '+
+                              '         data-bind=\"value: userName\" style=\"width:90%;background-color:white\""/> <br> <input '+
+                              '         placeholder=\"password\" type="password" id=\"password\" name= \"password\"'+
+                              '         data-bind=\"value: pWord\" style=\"width:90%\" /> <br> <br/> '+
+                              
+  
+                              '     </center> '+
+                              '   </form> '+
+                              
+                          
+                              
+                              ' </div> '+
+                              '</div> '
+                              
+                              
+                            formHTML2 = '<center><a href="signup.html" onclick=\"return notRegistered(); return false;\">Not registered?</a>' +
+                              '<button id=\"loginButton\" style=\"display: float\">Login</button></center> ';
+              
+                              
+                            }
+                            
+                            
+                            document.getElementById("login").innerHTML = formHTML;
+                            document.getElementById("login2").innerHTML = formHTML2;
+                              
+                        
+                             function notRegistered() {
+                               var dialog = $("#window").data("kendoWindow");
+                                          dialog.center();
+                                          dialog.open();
+                                    // return true or false, depending on whether you want to allow the `href` property to follow through or not
+                                }
+                            
+                            </script>
+
+
+                    </div>
+
+
+
+                    <div id="bottom-pane2">
+
+
+
+                      <div class="pane-content" id="vidInfo">
+
+
+                        <!--                        <div id="mygraph" style="width: 100%; height: 30%;"></div>
+                        I'm thinking of creating a slamdex here. Some algo that
+                        takes into accout the number of votes, last vote, number of
+                        votes per hour, and anything else I can think of.
+                        </div> -->
+
+<div id="options">
+                         <h3>Your Music</h3>
+            <select id="playlistSelect">
+                <option>playlist 1</option>
+                <option>playlist 2</option>
+                <option>playlist 3</option>
+                <option>playlist 4</option>
+                <option>playlist 5</option>
+            </select>
+        </div>
+
+
+
+<div id="options2">
+                        <h3>Trending</h3>
+                            
+                          <div id="wordcloud"></div>
+                        
+                         </div>
+                         
+                      </div>
+
+
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+
+
+
+          <script type="text/javascript">
+
+             $(document).ready(function() {
+               
+                // create DropDownList from select HTML element
+                        $("#playlistSelect").kendoDropDownList();
+               
+               var tes = 1;
+               
+                        function onOpen(e) {
+                            kendoConsole.log("Opened: " + $(e.item).children(".k-link").text());
+                        
+                            
+                        }
+
+                        function onClose(e) {
+                            kendoConsole.log("Closed: " + $(e.item).children(".k-link").text());
+                        }
+
+                        function onSelect(e) {
+                            kendoConsole.log("Selected: " + $(e.item).children(".k-link").text());
+                              
+                  
+                            filterSelect = false;
+                            if($(e.item).children(".k-link").text()=='charts'){
+                              window.location.assign("/charts.html");
+                            }else if($(e.item).children(".k-link").text()=='playLists'){
+                              window.location.assign("/playlist.html");
+                            }else if($(e.item).children(".k-link").text()=='account'){
+                              window.location.assign("/account.html");
+                            }else if($(e.item).children(".k-link").text()=='about'){
+                              window.location.assign("/about.html");
+                            }else if($(e.item).children(".k-link").text()=='contact'){
+                              window.location.assign("/contact.html");
+                            }else if($(e.item).children(".k-link").text()=='upload'){
+                              window.location.assign("/upload.html");
+                            }else if($(e.item).children(".k-link").text()=='battle'){
+                              window.location.assign("/");
+                            }else if($(e.item).children(".k-link").text()=='All'){
+                      sessionStorage.filter='all';
+                      filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='Alternative & Indie'){
+                      sessionStorage.filter='indie';
+                      filterSelect = true;
+                  }else if($(e.item).children(".k-link").text()=='Blues'){
+                      sessionStorage.filter='blues';
+                      filterSelect = true;
+                  }else if($(e.item).children(".k-link").text()=='Classical'){
+                    sessionStorage.filter='classical';
+                      filterSelect = true;
+                  }else if($(e.item).children(".k-link").text()=='Country'){
+                    sessionStorage.filter='country';
+                    filterSelect = true;
+                  }else if($(e.item).children(".k-link").text()=='Dance & Electronic'){
+                    sessionStorage.filter='electronic';
+                    filterSelect = true;
+                  }else if($(e.item).children(".k-link").text()=='Easy Listening'){
+                    sessionStorage.filter='easy';
+                    filterSelect = true;
+                  }else if($(e.item).children(".k-link").text()=='Folk & Songwriter'){
+                    sessionStorage.filter='folk';
+                    filterSelect = true;
+                  }else if($(e.item).children(".k-link").text()=='Hard Rock & Metal'){
+                    sessionStorage.filter='metal';
+                    filterSelect = true;
+                  }else if($(e.item).children(".k-link").text()=='Jazz'){
+                    sessionStorage.filter='jazz';
+                    filterSelect = true;
+                  }else if($(e.item).children(".k-link").text()=='Miscellaneous'){
+                    sessionStorage.filter='misc';
+                    filterSelect = true;
+                  }else if($(e.item).children(".k-link").text()=='Pop'){
+                    sessionStorage.filter='pop';
+                    filterSelect = true;
+                  }else if($(e.item).children(".k-link").text()=='R&B & Soul'){
+                    sessionStorage.filter='r&b';
+                    filterSelect = true;
+                  }else if($(e.item).children(".k-link").text()=='Rap & Hip-Hop'){
+                    sessionStorage.filter='hiphop';
+                    filterSelect = true;
+                  }else if($(e.item).children(".k-link").text()=='Reggae'){
+                    sessionStorage.filter='reggae';
+                    filterSelect = true;
+                  }else if($(e.item).children(".k-link").text()=='Rock'){
+                    sessionStorage.filter='rock';
+                    filterSelect = true;
+                  }else if($(e.item).children(".k-link").text()=='Soundtracks & Musicals'){
+                    sessionStorage.filter='musical';
+                    filterSelect = true;
+                  }else if($(e.item).children(".k-link").text()=='World Music'){
+                    sessionStorage.filter='world';
+                    filterSelect = true;
+                  }
+
+                  if(filterSelect){
+                      var vidID = sessionStorage.vidID2 ;
+                              var userID = sessionStorage.userID; 
+                              var pLName = "'playList1'"//sessionStorage.pLName;
+                        
+                           $.ajax({ 
+                                 url: '/next',
+                                 type: 'POST',
+                                 cache: false, 
+
+                                 data: { uID: userID, vID:vidID, type:'challengerbin',pLName:pLName,genre:sessionStorage.filter  }, 
+                                 success: function(data){
+                    
+                                   
+                              data1 = data['out1'];
+                               data2 = data['out2'];
+                        
+                              
+                                sessionStorage.fileLink = data1['fileLink'];
+                              sessionStorage.vidID = data1['vID'];
+                              sessionStorage.bandName = data1['bandName'];
+                              sessionStorage.songName = data1['songName'];
+                              //sessionStorage.country = data1['country'];
+                              sessionStorage.artistLink = data1['artistLink'];
+                              sessionStorage.votes = data1['votes'];
+                          
+                                sessionStorage.fileLink2 = data2['fileLink'];
+                              sessionStorage.vidID2 = data2['vID'];
+                              sessionStorage.bandName2 = data2['bandName'];
+                              sessionStorage.songName2 = data2['songName'];
+                              //sessionStorage.country = data1['country'];
+                              sessionStorage.artistLink2 = data2['artistLink'];
+                              sessionStorage.votes2 = data2['votes'];
+                              
+                              location.reload(true);
+                              
+                          //alert(sessionStorage.bandName);
+                                 }
+                                 , error: function(jqXHR, textStatus, err){
+                                     alert('text status '+textStatus+', err '+err)
+                                 }
+                              })
+                         
+                    }
+
+
+                            
+                            
+                        }
+
+                        function onActivate(e) {
+                            kendoConsole.log("Activated: " + $(e.item).children(".k-link").text());
+                            
+                        }
+
+                        function onDeactivate(e) {
+                            kendoConsole.log("Deactivated: " + $(e.item).children(".k-link").text());
+                        }
+
+                        $("#menu").kendoMenu({
+                            select: onSelect,
+                            open: onOpen,
+                            close: onClose,
+                            activate: onActivate,
+                            deactivate: onDeactivate,
+                            
+                        });
+                    });
+            
+            
+              $(document).ready(function() {
+        
+                
+                
+                 
+                
+              
+                
+                
+                
+                $("#vertical").kendoSplitter({
+                  orientation : "vertical",
+                  panes : [ {
+                    collapsible : true,
+                    //size : "43%"
+                  }
+
+                  ]
+                });
+
+            
+                
+                $("#horizontal").kendoSplitter({
+                  panes : [ {
+                    collapsible : false,
+                    resizable: false,
+                    size : "40%"
+                  }, {
+                    collapsible : false,
+                    resizable: false,
+                    size : "40%"
+                  },
+                  {
+                    collapsible :false,
+                    resizable: false,
+                    size : "20%"
+                  },
+
+                  ]
+                });
+                
+    
+                
+
+                $("#vertical2").kendoSplitter({
+                  orientation : "vertical",
+                  panes : [ {
+                    collapsible : false,
+                    resizable: false,
+                    size : "31%"
+                  },
+                  {
+                    collapsible : false,
+                    size : "10%"
+                  },{
+                    collapsible : false
+                  },
+
+                  ]
+                });
+
+              });
+            </script>
+
+
+        </div>
+
+
+
+
+        <!-- <center>
+              <input class="bin" id="dontlike" name="notlike" type="button"
+                value="Bin It" /> <input class="keep" id="like" name="like"
+                type="button" value="Slam It" />
+            </center> -->
+
+
+        <br>
+
+        <div class="demo-section2">
+
+
+
+
+          <div align="center" id="options2">
+
+            <br> &nbsp &nbsp <img src="/images/HamsterRock.jpg"
+              alt="hamster" width="20px" height="15px"> &nbsp | &nbsp
+            &copy slamstr 2013-2014 &nbsp &nbsp | &nbsp &nbsp <a
+              href="/about.html" class="k-button2">about</a> &nbsp &nbsp |
+            &nbsp &nbsp <a href="/contact.html" class="k-button2">contact</a>
+            &nbsp &nbsp | &nbsp &nbsp <a href="/privacy.html"
+              class="k-button2">privacy</a> &nbsp &nbsp | &nbsp &nbsp <a
+              href="/tandc.html" class="k-button2">terms and conditions</a>
+            &nbsp &nbsp | &nbsp <img src="/images/HamsterRock.jpg"
+              alt="hamster" width="20px" height="15px">
+
+
+
+          </div>
+          <br>
+        </div>
+
+
+        <div></div>
+
+        <div>
+
+
+          <br>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+<style scoped type="text/css">
+
+
 </style>
-
-
-
-
-
-			</div>
-
-
-
-
-			<!-- <center>
-							<input class="bin" id="dontlike" name="notlike" type="button"
-								value="Bin It" /> <input class="keep" id="like" name="like"
-								type="button" value="Slam It" />
-						</center> -->
-
-
-
-
-			<div class="demo-section2">
-
-
-
-
-				<div align="center">
-
-					<br> &nbsp &nbsp <img src="/images/HamsterRock.jpg"
-						alt="hamster" width="20px" height="15px"> &nbsp | &nbsp
-					&copy slamstr 2013-2014 &nbsp &nbsp | &nbsp &nbsp <a
-						href="/about.html" class="k-button2">about</a> &nbsp &nbsp | &nbsp
-					&nbsp <a href="/contact.html" class="k-button2">contact</a> &nbsp
-					&nbsp | &nbsp &nbsp <a href="/privacy.html" class="k-button2">privacy</a>
-
-					&nbsp &nbsp | &nbsp &nbsp <a href="/tandc.html" class="k-button2">terms
-						and conditions</a> &nbsp &nbsp | &nbsp <img
-						src="/images/HamsterRock.jpg" alt="hamster" width="20px"
-						height="15px">
-
-
-
-				</div>
-				<br>
-			</div>
-
-
-			<div></div>
-
-			<div>
-
-
-				<br>
-
-
-				<style scoped type="text/css">
-button.keep,submit:visited {
-	background: #222 repeat-x;
-	display: inline-block;
-	padding: 5px 10px 6px;
-	color: #fff;
-	text-decoration: none;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 8px;
-	text-shadow: 0 -0px 0px rgba(0, 0, 0, 0.25);
-	border: 0px solid rgba(0, 0, 0, 0);
-	position: relative;
-	cursor: pointer;
-	background-color: #009612;
-	font-size: 10pt;
-	width: 190px;
-}
-
-button.bin,submit:visited {
-	background: #222 repeat-x;
-	display: inline-block;
-	padding: 5px 10px 6px;
-	color: #fff;
-	text-decoration: none;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 8px;
-	-moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
-	-webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
-	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0);
-	border: 0px solid rgba(0, 0, 0, 0);
-	position: relative;
-	cursor: pointer;
-	background-color: #730000;
-	font-size: 10pt;
-	width: 190px;
-}
-
-.k-button2,submit:visited {
-	background: #222 repeat-x;
-	display: inline-block;
-	padding: 5px 10px 6px;
-	color: black;
-	text-decoration: none;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 8px;
-	-moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
-	-webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
-	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0);
-	border: 0px solid rgba(0, 0, 0, 0);
-	position: relative;
-	cursor: pointer;
-	background-color: white;
-	font-size: 10pt;
-}
-
-button.feedbackBut {
-	background: #222 repeat-x;
-	display: inline-block;
-
-	color: grey;
-	text-decoration: none;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 8px;
-	-webkit-transform: rotate(-90deg); 
-    -moz-transform: rotate(-90deg); 
-	position: absolute;
-	cursor: pointer;
-	border: 1px solid #DBDBDB;
-	background-color: white;
-	font-size: 15pt;
-	width: 140px;
-	height: 30px;
-	margin-left: -66px;
-	margin-top: 70px;
-}
-
-::-webkit-input-placeholder { /* WebKit browsers */
-	color: #000;
-}
-</style>
-			</div>
+  
 </body>
+
+
 </html>

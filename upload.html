@@ -12,6 +12,7 @@
 <link href="styles/kendo.default.min.css" rel="stylesheet">
 <script src="js/kendo.all.min.js" type="text/javascript"></script>
 <link href="bbb.css" rel="stylesheet">
+<link href="slamstr.css" rel="stylesheet">
 
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="js/kendo.web.min.js" type="text/javascript"></script>
@@ -36,13 +37,13 @@ sessionStorage.signuptype="yt";
 
 	<div id="body" class="k-content">
 
-		<div id="forecast">
+		<div id="mainsection" class="demo-section">
 
 
 
 			<div align="right">
 				<centre> <img src="images/banner.jpg" alt="hamster"
-					width="50%" height="200px"> </centre>
+					width="100%" height="150px"> </centre>
 			</div>
 
 			<div>
@@ -88,14 +89,38 @@ sessionStorage.signuptype="yt";
 
 							<div id="bottom-pane">
 								<div id="horizontal" style="height: 100%; width: 100%;">
-									<div id="left-pane">
-										<div class="pane-content">
+									
+
+									<div id="right-pane">
+
+										<div id="vertical2">
+											<div id="top-pane2">
+												<div id=login class="pane-content">
+												
+												<center>
+												
+													<button class="mp4Button" id="mp4Button" name="mp4Button">MP4</button>
+													
+													<button class="mp3Button" id="mp3Button" name="mp3Button">MP3</button>
+
+													<button  class="ytButton" id="ytButton" name="ytButton">YouTube Link</button>
+
+												</center>
+												
+												</div>
+											</div>
 
 
-											
+
+											<div id="bottom-pane2">
 
 
-											<div id="register" class="k-content">
+
+												<div class="pane-content" id="vidInfo">
+												
+												
+																<div id="register" class="k-content">
+												
 												
 												<div id="signupMP3" name="signupMP3" style="display: none">
 
@@ -103,11 +128,14 @@ sessionStorage.signuptype="yt";
 
 													<div id="registration" class="registration">
 																<center>
-																	<div id ="name"><h2>MP3 - Coming Soon<h2></div>
+																	<div id ="name"><h2>MP3<h2></div>
 																</center>
 
+															
+															
 
-															<form action="/upload" method="post"  enctype="multipart/form-data" id ="registerMP3">
+
+															<form action="/uploadTest" method="post"  enctype="multipart/form-data" id ="registerMP3">
 															<ul>
 															
 															<input type="hidden" name="type" value="mp3">
@@ -116,13 +144,6 @@ sessionStorage.signuptype="yt";
 																document.write("<input type=\"hidden\" name=\"id\" value="+sessionStorage.userID +">");
 															</script>
 
-															<label for="files" class="required">mp3:</label>
-															<input type="file" name="files" required  multiple accept='music/*'>
-															<br>
-															
-															<label for="files2" class="required">jpeg:</label>
-															<input type="file" name="files2" required  multiple accept='picture/*'>
-															<br>
 															
 																<label for="artist" class="required">artist:</label>
 																<input type="text" id="artist" name="artist" data-bind="value: artist"
@@ -177,14 +198,26 @@ sessionStorage.signuptype="yt";
 &nbsp I have read the licence greement
 																<br>
 																<br>
-																<label for="reg">Enter the Ring</label>
-														<!-- 		<button data-bind="enabled: agreed" id="regFan" name="regFan"
-																	style="display: inline-block; width: 181px">Upload</button> -->
-
-
+															
 															</ul>
 														</form>
 
+
+<label for="files2" class="required">mp3:</label>
+															<input type="file" name="files2" id="files2"  required  multiple accept='music/*'>
+															
+															
+															
+															
+															<label for="files3" class="required">jpeg:</label>
+															<input type="file" name="files3" id="files3"  required  multiple accept='picture/*'>
+															
+															
+
+
+													<label for="reg">Enter the Ring</label>
+													<button data-bind="enabled: agreed" id="regFan" name="regFan"
+													style="display: inline-block; width: 181px" class="upButton">Upload</button > 
 
 						
 
@@ -206,16 +239,18 @@ sessionStorage.signuptype="yt";
 
 													<div id="registration2" class="registration">
 <center>
-																<div id ="name"><h2>MP4 - Coming Soon<h2></div>
+																<div id ="name"><h2>MP4<h2></div>
 </center>
 
 
-
-
+															
+															<label for="files" class="required">mp4:</label>
+															<input type="file" name="files" id="files"  required  multiple accept='video/*'>
+															
 								
 								
 
-														<form action="/upload" method="post"  enctype="multipart/form-data" id ="registerMP4">
+														<form action="/uploadTest" method="post"  enctype="multipart/form-data" id ="registerMP4">
 															<ul>
 															
 															<input type="hidden" name="type" value="mp4">
@@ -224,9 +259,7 @@ sessionStorage.signuptype="yt";
 																document.write("<input type=\"hidden\" name=\"id\" value="+sessionStorage.userID +">");
 															</script>
 
-															<label for="files" class="required">mp4:</label>
-															<input type="file" name="files" required  multiple accept='video/*'>
-															<br>
+															
 																<label for="artist" class="required">artist:</label>
 																<input type="text" id="artist" name="artist" data-bind="value: artist"
 																	 required  style="width: 181px"class="k-textbox" />
@@ -277,16 +310,19 @@ sessionStorage.signuptype="yt";
 																<label for="agree">please select</label>
 																<input type="checkbox" id="agree" name="agree"
 																	data-bind="checked: agreed" />
-&nbsp I have read the licence greement
+																	&nbsp I have read the licence greement
 																<br>
 																<br>
-																<label for="reg">Enter the Ring</label>
-															<!-- 	<button data-bind="enabled: agreed" id="regFan" name="regFan"
-																	style="display: inline-block; width: 181px">Upload</button> -->
-
+												
 
 															</ul>
 														</form>
+														
+																		<label for="reg">Enter the Ring</label>
+															 	<button data-bind="enabled: agreed" id="regFan" name="regFan"
+																	style="display: inline-block; width: 181px" class="upButton">Upload</button> 
+														
+														
 
 
 						
@@ -381,7 +417,7 @@ sessionStorage.signuptype="yt";
 																<br>
 																<label for="reg">Enter the Ring</label>
 																<button data-bind="enabled: agreed" id="regFan" name="regFan"
-																	style="display: inline-block; width: 181px">Upload</button>
+																	style="display: inline-block; width: 181px" class="upButton">Upload</button>
 
 
 															</ul>
@@ -401,41 +437,12 @@ sessionStorage.signuptype="yt";
 												
 												
 											</div>
-
-
-
-										</div>
-									</div>
-
-									<div id="right-pane">
-
-										<div id="vertical2">
-											<div id="top-pane2">
-												<div id=login class="pane-content">
 												
-												<center>
-												<h1>Upload a...</h1>
-													<button id="mp4Button" name="mp4Button"
-																	style="display: inline-block; width: 90%; height:80px">MP4</button>
-													
-													<button  id="mp3Button" name="mp3Button"
-																	style="display: inline-block; width: 90%; height:80px">MP3</button>
-
-													<button  id="ytButton" name="ytButton"
-																	style="display: inline-block; width: 90%; height:80px">YouTube Link</button>
-
-												</center>
+												
+												
+												
 												
 												</div>
-											</div>
-
-
-
-											<div id="bottom-pane2">
-
-
-
-												<div class="pane-content" id="vidInfo"></div>
 											</div>
 
 
@@ -640,10 +647,10 @@ sessionStorage.signuptype="yt";
 									panes : [ {
 										collapsible : false,
 										resizable : false,
-										size : "70%"
+										size : "20%"
 									}, {
 										collapsible : false,
-										size : "30%"
+										size : "80%"
 									}, {
 										collapsible : false
 									},
@@ -705,9 +712,96 @@ sessionStorage.signuptype="yt";
 	 });
 	 
 	 
+	 
  });
 
 	 </script>
+	 
+	 
+	  		<script id="fileTemplate" type="text/x-kendo-template">
+                <span class='k-progress'></span>
+                <div class='file-wrapper'>
+                    <span class='file-icon #=addExtensionClass(files[0].extension)#'></span>
+                    <h4 class='file-heading file-name-heading'>Name: #=name#</h4>
+                    <h4 class='file-heading file-size-heading'>Size: #=size# bytes</h4>
+                    <button type='button' class='k-upload-action'></button>
+                </div>
+            </script>
+
+            <script>
+                $(document).ready(function () {
+                	
+                    $("#files").kendoUpload({
+                        multiple: false,
+                        async: {
+                            saveUrl: "/uploadTest",
+                            removeUrl: "remove",
+                            autoUpload: false
+                        },
+                        upload: onUpload,
+
+
+                        template: kendo.template($('#fileTemplate').html())
+                    });
+                    
+                    $("#files2").kendoUpload({
+                        multiple: false,
+                        async: {
+                            saveUrl: "/uploadTest",
+                            removeUrl: "remove",
+                            autoUpload: false
+                        },
+                        upload: onUpload,
+
+
+                       template: kendo.template($('#fileTemplate').html())
+                    });
+                    
+                    $("#files3").kendoUpload({
+                        multiple: false,
+                        async: {
+                            saveUrl: "/uploadTest",
+                            removeUrl: "remove",
+                            autoUpload: false
+                        },
+                        upload: onUpload,
+
+
+                        template: kendo.template($('#fileTemplate').html())
+                    });
+                    
+                });
+
+  function onUpload(e) {
+        var test = $("#registerMP3 input[name='artist']").val();
+        alert(test)
+    }
+
+                function addExtensionClass(extension) {
+                    switch (extension) {
+                        case '.mp3':
+                            return "default-file";
+                        case '.jpg':
+                        case '.img':
+                        case '.png':
+                        case '.gif':
+                            return "img-file";
+                        case '.doc':
+                        case '.docx':
+                            return "doc-file";
+                        case '.xls':
+                        case '.xlsx':
+                            return "xls-file";
+                        case '.pdf':
+                            return "pdf-file";
+                        case '.zip':
+                        case '.rar':
+                            return "zip-file";
+                        default:
+                            return "default-file";
+                    }
+                }
+            </script>
 
 
 <style scoped type="text/css">
@@ -726,18 +820,26 @@ span.k-tooltip
 	display: inline-block;
 }
 
-#clientsDb {
-	width: 692px;
-	margin: 30px auto;
-	padding: 51px 4px 0 4px;
-}
-
-#vertical {
-	height: 501px;
-	width: 90%;
-	margin: 0 auto;
-}
-
+.k-button.k-upload-button
+  {
+  position: static;
+  background: #222 repeat-x;
+  display: inline-block;
+  padding: 5px 10px 6px;
+  margin: 5px 30px 6px;
+  color: #fff;
+  text-decoration: none;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 8px;
+  -moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0);
+  border: 0px solid rgba(0, 0, 0, 0);
+  cursor: pointer;
+  background-color: #4099FF;
+ 
+  width:150px;
+  }
 
 
 label {
@@ -748,53 +850,68 @@ label {
 	font-size: 14px;
 }
 
-#menu {
-	font-size: 2em;
-	text-transform: lowercase;
-	padding: 0px 0px;
-	background-color: white;
+    .file-icon
+                {
+                    display: inline-block;
+                    float: left;
+                    width: 48px;
+                    height: 48px;
+                    margin-left: 10px;
+                    margin-top: 13.5px;
+                }
 
-	background: -webkit-linear-gradient(white,white,white); /* For Safari */
-background: -o-linear-gradient(white,white,white); /* For Opera 11.1 to 12.0 */
-background: -moz-linear-gradient(white,white,white); /* For Firefox 3.6 to 15 */
-background: linear-gradient(white,white,white); /* Standard syntax */
+                .img-file { background-image: url(examples/content/web/upload/jpg.png) }
+                .doc-file { background-image: url(examples/content/web/upload/doc.png) }
+                .pdf-file { background-image: url(examples/content/web/upload/pdf.png) }
+                .xls-file { background-image: url(examples/content/web/upload/xls.png) }
+                .zip-file { background-image: url(examples/content/web/upload/zip.png) }
+                .default-file { background-image: url(examples/content/web/upload/default.png) }
+
+                #example .file-heading
+                {
+                    font-family: Arial;
+                    font-size: 1.1em;
+                    display: inline-block;
+                    float: left;
+                    width: 450px;
+                    margin: 0 0 0 20px;
+                    height: 25px;
+                    -ms-text-overflow: ellipsis;
+                    -o-text-overflow: ellipsis;
+                    text-overflow: ellipsis;
+                    overflow:hidden;
+                    white-space:nowrap;
+                }
+
+                    #example .file-name-heading
+                    {
+                        font-weight: bold;
+                    }
+
+                     #example .file-size-heading
+                    {
+                        font-weight: normal;
+                        font-style: italic;
+                    }
+
+                li.k-file .file-wrapper .k-upload-action
+                {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                }
+
+                li.k-file div.file-wrapper
+                {
+                    position: relative;
+                    height: 75px;
+                }
+                
+                ::-webkit-input-placeholder { /* WebKit browsers */
+	color: #000;
 }
 
-.demo-section {
-	background-color: white;
-	border: none;
-}
 
-.demo-section2 {
-	border-style: solid;
-	border-width: 1px;
-	border-color: #D7D9D9;
-}
-
-#menu h2 {
-	font-size: 1em;
-	text-transform: lowercase;
-	padding: 0px 0px;
-	background-color: white;
-}
-
-#menu li {
-	font-size: smaller; //
-	text-transform: uppercase;
-	padding: 0px 0px;
-
-	background-color: white;
-}
-
-#vertical2 {
-	height: 501px;
-	width: 100%;
-	margin: 0 auto;
-}
-
-.pane-content {
-	padding: 0 10px;
-}
 </style>
 
 
@@ -806,7 +923,7 @@ background: linear-gradient(white,white,white); /* Standard syntax */
 					<br>
 						<div class="demo-section2">
 
-				<div align="center">
+				<div align="center" id ="options2">
 
 					<br> &nbsp &nbsp <img src="/images/HamsterRock.jpg"
 						alt="hamster" width="20px" height="15px"> &nbsp | &nbsp
@@ -841,67 +958,6 @@ background: linear-gradient(white,white,white); /* Standard syntax */
 
 
 
-						<style scoped type="text/css">
-input.keep,submit:visited {
-	background: #222 repeat-x;
-	display: inline-block;
-	padding: 5px 10px 6px;
-	color: #fff;
-	text-decoration: none;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 8px;
-	text-shadow: 0 -0px 0px rgba(0, 0, 0, 0.25);
-	border: 0px solid rgba(0, 0, 0, 0);
-	position: relative;
-	cursor: pointer;
-	background-color: #009612;
-	font-size: 20pt;
-	width: 240px;
-}
-
-input.bin,submit:visited {
-	background: #222 repeat-x;
-	display: inline-block;
-	padding: 5px 10px 6px;
-	color: #fff;
-	text-decoration: none;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 8px;
-	-moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
-	-webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
-	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0);
-	border: 0px solid rgba(0, 0, 0, 0);
-	position: relative;
-	cursor: pointer;
-	background-color: #730000;
-	font-size: 14pt;
-	font-size: 20pt;
-	width: 240px;
-}
-
-.k-button2,submit:visited {
-	background: #222 repeat-x;
-	display: inline-block;
-	padding: 5px 10px 6px;
-	color: black;
-	text-decoration: none;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 8px;
-	-moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
-	-webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
-	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0);
-	border: 0px solid rgba(0, 0, 0, 0);
-	position: relative;
-	cursor: pointer;
-	background-color: white;
-	font-size: 10pt;
-}
-
-
-::-webkit-input-placeholder { /* WebKit browsers */
-	color: #000;
-}
-</style>
 					</div>
 </body>
 </html>

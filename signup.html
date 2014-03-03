@@ -16,7 +16,8 @@
 	type="text/javascript"></script>
 <script src="bbb.js" type="text/javascript"></script>
 
-<script src="examples/content/shared/js/people.js"></script>
+<script src="examples/content/shared/js/people.js"
+	type="text/javascript"></script>
 
 
 
@@ -26,9 +27,9 @@
 <body>
 
 
-<script>
-sessionStorage.signuptype="fan";
-</script>
+	<script type="text/javascript">
+		sessionStorage.signuptype = "fan";
+	</script>
 
 	<div id="body" class="k-content">
 
@@ -75,7 +76,7 @@ sessionStorage.signuptype="fan";
 					</div>
 
 
-					<div id="splitter" class=k-content>
+					<div id="splitter" class="k-content">
 
 						<br>
 
@@ -83,733 +84,42 @@ sessionStorage.signuptype="fan";
 						<div id="vertical">
 
 							<div id="bottom-pane">
-								<div id="horizontal" style="height: 100%; width: 100%;">
+								<div id="horizontal" style="height: 100%; width: 100%">
+
+
+
+
+
 									<div id="left-pane">
-										<div class="pane-content">
-
-
-											
-
-
-											<div id="register" class="k-content">
-												
-												<div id="signupArt" name="signupArt" style="display: none">
-
-
-													<div id="registration" class="registration">
-<center>
-																<div id ="name"><h2>Artist<h2></div>
-</center>
-
-
-														<form action="/register" method="post" id ="registerArt">
-															<ul>
-															
-																<input type="hidden" name="type" value="artist">
-															
-																<label for="email" class="required">email:</label>
-																<input type="email" id="email" name=email data-bind="value: email"
-																	 required style="width: 181px" class="k-textbox" />
-																	 
-																
-																<label for="uname" class="required">user name:</label>
-																<input type="text" id="uname" name=uname data-bind="value: uname"
-																	 data-bind="value: uname" style="width: 181px"
-																	class="k-textbox" type="text" pattern="[A-Za-z0-9]+"
-																	required validationMessage="Sorry only letters and numbers" />
-																
-																<br>
-																<label for="password" class="required">password:</label>
-																<input id="password" name=password
-																	data-bind="value: password" type="password"
-																	required validationMessage="Please enter a password" style="width: 181px" class="k-textbox" style="width: 181px" class="k-textbox" />
-																<span class="k-invalid-msg" data-for="password"></span>
-																<label for="cpassword" class="required">confirm:</label>
-																<input id="cpassword" name=cpassword
-																	data-bind="value: cpassword" type="password"
-																	required validationMessage="Please enter a password" style="width: 181px" class="k-textbox" style="width: 181px" class="k-textbox" />
-																<br>
-																<label for="firstname" class="required">firstname:</label>
-																<input id="firstname" name=firstname
-																	data-bind="value: firstName" style="width: 181px"
-																	class="k-textbox" type="text" pattern="[A-Za-z]+"
-																	required validationMessage="Sorry only letters and numbers" />
-																
-																<label for="lastname" class="required">lastname:</label>
-																<input id="lastname" name=lastname
-																	data-bind="value: lastName" style="width: 181px"
-																	class="k-textbox" type="text" pattern="[A-Za-z]+"
-																	required validationMessage="Sorry only letters and numbers" />
-																<br>
-
-																<label for="country" class="required">country:</label>
-																<select id="country" name="country" data-bind="value: country" required validationMessage="Please Select A Country"
-																	style="width: 181px">
-
-																	
-
-
-
-																<option> </option>
-																<option value="Afghanistan">Afghanistan</option>
-																<option value="Albania">Albania</option>
-																<option value="Algeria">Algeria</option>
-																<option value="Andorra">Andorra</option>
-																<option value="Angola">Angola</option>
-																<option value="Antarctica">Antarctica</option>
-																<option value="Antigua and Barbuda">Antigua and Barbuda</option>
-																<option value="Argentina">Argentina</option>
-																<option value="Armenia">Armenia</option>
-																<option value="Australia">Australia</option>
-																<option value="Austria">Austria</option>
-																<option value="Azerbaijan">Azerbaijan</option>
-																<option value="Bahamas">Bahamas</option>
-																<option value="Bahrain">Bahrain</option>
-																<option value="Bangladesh">Bangladesh</option>
-																<option value="Barbados">Barbados</option>
-																<option value="Belarus">Belarus</option>
-																<option value="Belgium">Belgium</option>
-																<option value="Belize">Belize</option>
-																<option value="Benin">Benin</option>
-																<option value="Bermuda">Bermuda</option>
-																<option value="Bhutan">Bhutan</option>
-																<option value="Bolivia">Bolivia</option>
-																<option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
-																<option value="Botswana">Botswana</option>
-																<option value="Brazil">Brazil</option>
-																<option value="Brunei">Brunei</option>
-																<option value="Bulgaria">Bulgaria</option>
-																<option value="Burkina Faso">Burkina Faso</option>
-																<option value="Burma">Burma</option>
-																<option value="Burundi">Burundi</option>
-																<option value="Cambodia">Cambodia</option>
-																<option value="Cameroon">Cameroon</option>
-																<option value="Canada">Canada</option>
-																<option value="Cape Verde">Cape Verde</option>
-																<option value="Central African Republic">Central African Republic</option>
-																<option value="Chad">Chad</option>
-																<option value="Chile">Chile</option>
-																<option value="China">China</option>
-																<option value="Colombia">Colombia</option>
-																<option value="Comoros">Comoros</option>
-																<option value="Congo, Democratic Republic">Congo, Democratic Republic</option>
-																<option value="Congo, Republic of the">Congo, Republic of the</option>
-																<option value="Costa Rica">Costa Rica</option>
-																<option value="Cote d'Ivoire">Cote d'Ivoire</option>
-																<option value="Croatia">Croatia</option>
-																<option value="Cuba">Cuba</option>
-																<option value="Cyprus">Cyprus</option>
-																<option value="Czech Republic">Czech Republic</option>
-																<option value="Denmark">Denmark</option>
-																<option value="Djibouti">Djibouti</option>
-																<option value="Dominica">Dominica</option>
-																<option value="Dominican Republic">Dominican Republic</option>
-																<option value="East Timor">East Timor</option>
-																<option value="Ecuador">Ecuador</option>
-																<option value="Egypt">Egypt</option>
-																<option value="El Salvador">El Salvador</option>
-																<option value="Equatorial Guinea">Equatorial Guinea</option>
-																<option value="Eritrea">Eritrea</option>
-																<option value="Estonia">Estonia</option>
-																<option value="Ethiopia">Ethiopia</option>
-																<option value="Fiji">Fiji</option>
-																<option value="Finland">Finland</option>
-																<option value="France">France</option>
-																<option value="Gabon">Gabon</option>
-																<option value="Gambia">Gambia</option>
-																<option value="Georgia">Georgia</option>
-																<option value="Germany">Germany</option>
-																<option value="Ghana">Ghana</option>
-																<option value="Greece">Greece</option>
-																<option value="Greenland">Greenland</option>
-																<option value="Grenada">Grenada</option>
-																<option value="Guatemala">Guatemala</option>
-																<option value="Guinea">Guinea</option>
-																<option value="Guinea-Bissau">Guinea-Bissau</option>
-																<option value="Guyana">Guyana</option>
-																<option value="Haiti">Haiti</option>
-																<option value="Honduras">Honduras</option>
-																<option value="Hong Kong">Hong Kong</option>
-																<option value="Hungary">Hungary</option>
-																<option value="Iceland">Iceland</option>
-																<option value="India">India</option>
-																<option value="Indonesia">Indonesia</option>
-																<option value="Iran">Iran</option>
-																<option value="Iraq">Iraq</option>
-																<option value="Ireland">Ireland</option>
-																<option value="Israel">Israel</option>
-																<option value="Italy">Italy</option>
-																<option value="Jamaica">Jamaica</option>
-																<option value="Japan">Japan</option>
-																<option value="Jordan">Jordan</option>
-																<option value="Kazakhstan">Kazakhstan</option>
-																<option value="Kenya">Kenya</option>
-																<option value="Kiribati">Kiribati</option>
-																<option value="Korea, North">Korea, North</option>
-																<option value="Korea, South">Korea, South</option>
-																<option value="Kuwait">Kuwait</option>
-																<option value="Kyrgyzstan">Kyrgyzstan</option>
-																<option value="Laos">Laos</option>
-																<option value="Latvia">Latvia</option>
-																<option value="Lebanon">Lebanon</option>
-																<option value="Lesotho">Lesotho</option>
-																<option value="Liberia">Liberia</option>
-																<option value="Libya">Libya</option>
-																<option value="Liechtenstein">Liechtenstein</option>
-																<option value="Lithuania">Lithuania</option>
-																<option value="Luxembourg">Luxembourg</option>
-																<option value="Macedonia">Macedonia</option>
-																<option value="Madagascar">Madagascar</option>
-																<option value="Malawi">Malawi</option>
-																<option value="Malaysia">Malaysia</option>
-																<option value="Maldives">Maldives</option>
-																<option value="Mali">Mali</option>
-																<option value="Malta">Malta</option>
-																<option value="Marshall Islands">Marshall Islands</option>
-																<option value="Mauritania">Mauritania</option>
-																<option value="Mauritius">Mauritius</option>
-																<option value="Mexico">Mexico</option>
-																<option value="Micronesia">Micronesia</option>
-																<option value="Moldova">Moldova</option>
-																<option value="Mongolia">Mongolia</option>
-																<option value="Morocco">Morocco</option>
-																<option value="Monaco">Monaco</option>
-																<option value="Mozambique">Mozambique</option>
-																<option value="Namibia">Namibia</option>
-																<option value="Nauru">Nauru</option>
-																<option value="Nepal">Nepal</option>
-																<option value="Netherlands">Netherlands</option>
-																<option value="New Zealand">New Zealand</option>
-																<option value="Nicaragua">Nicaragua</option>
-																<option value="Niger">Niger</option>
-																<option value="Nigeria">Nigeria</option>
-																<option value="Norway">Norway</option>
-																<option value="Oman">Oman</option>
-																<option value="Pakistan">Pakistan</option>
-																<option value="Panama">Panama</option>
-																<option value="Papua New Guinea">Papua New Guinea</option>
-																<option value="Paraguay">Paraguay</option>
-																<option value="Peru">Peru</option>
-																<option value="Philippines">Philippines</option>
-																<option value="Poland">Poland</option>
-																<option value="Portugal">Portugal</option>
-																<option value="Qatar">Qatar</option>
-																<option value="Romania">Romania</option>
-																<option value="Russia">Russia</option>
-																<option value="Rwanda">Rwanda</option>
-																<option value="Samoa">Samoa</option>
-																<option value="San Marino">San Marino</option>
-																<option value=" Sao Tome"> Sao Tome</option>
-																<option value="Saudi Arabia">Saudi Arabia</option>
-																<option value="Senegal">Senegal</option>
-																<option value="Serbia and Montenegro">Serbia and Montenegro</option>
-																<option value="Seychelles">Seychelles</option>
-																<option value="Sierra Leone">Sierra Leone</option>
-																<option value="Singapore">Singapore</option>
-																<option value="Slovakia">Slovakia</option>
-																<option value="Slovenia">Slovenia</option>
-																<option value="Solomon Islands">Solomon Islands</option>
-																<option value="Somalia">Somalia</option>
-																<option value="South Africa">South Africa</option>
-																<option value="Spain">Spain</option>
-																<option value="Sri Lanka">Sri Lanka</option>
-																<option value="Sudan">Sudan</option>
-																<option value="Suriname">Suriname</option>
-																<option value="Swaziland">Swaziland</option>
-																<option value="Sweden">Sweden</option>
-																<option value="Switzerland">Switzerland</option>
-																<option value="Syria">Syria</option>
-																<option value="Taiwan">Taiwan</option>
-																<option value="Tajikistan">Tajikistan</option>
-																<option value="Tanzania">Tanzania</option>
-																<option value="Thailand">Thailand</option>
-																<option value="Togo">Togo</option>
-																<option value="Tonga">Tonga</option>
-																<option value="Trinidad and Tobago">Trinidad and Tobago</option>
-																<option value="Tunisia">Tunisia</option>
-																<option value="Turkey">Turkey</option>
-																<option value="Turkmenistan">Turkmenistan</option>
-																<option value="Uganda">Uganda</option>
-																<option value="Ukraine">Ukraine</option>
-																<option value="United Arab Emirates">United Arab Emirates</option>
-																<option value="United Kingdom">United Kingdom</option>
-																<option value="United States">United States</option>
-																<option value="Uruguay">Uruguay</option>
-																<option value="Uzbekistan">Uzbekistan</option>
-																<option value="Vanuatu">Vanuatu</option>
-																<option value="Venezuela">Venezuela</option>
-																<option value="Vietnam">Vietnam</option>
-																<option value="Yemen">Yemen</option>
-																<option value="Zambia">Zambia</option>
-																<option value="Zimbabwe">Zimbabwe</option>
-																</select>
-
-																
-																<label for="city" class="required">city:</label>
-																<input id="city" name=city data-bind="value: city"
-																	style="width: 181px" class="k-textbox" 
-																	class="k-textbox" type="text" pattern="[A-Za-z]+"
-																	required validationMessage="Please enter a valid city" />
-																<br>
-																
-																<label for="age" class="required">age:</label>
-																<select id="age" name=age data-bind="value: age2" required validationMessage="Please Select Your Age"
-																	style="width: 181px">
-
-																	<option></option>
-																	<option>under 12</option>
-																	<option>12–17</option>
-																	<option>18–24</option>
-																	<option>25–34</option>
-																	<option>35–44</option>
-																	<option>45–54</option>
-																	<option>55–64</option>
-																	<option>65+</option>
-																	<option>Female</option>
-																</select>
-																
-																<label for="gender" class="required">gender:</label>
-																<select id="gender" name=gender required validationMessage="Please Select Your Sex"
-																	data-bind="value: gender" style="width: 181px">
-
-																	<option></option>
-																	<option>Male</option>
-																	<option>Female</option>
-																</select>
-
-
-																<br>
-
-																<label for="prefs2" class="required">i prefer:</label>
-																<select id="prefs2" multiple="multiple" name=prefs2 required validationMessage="Please Select Your preferences"
-																	data-bind="value: Preference" style="width: 181px">
-
-															<option>Alternative & Indie</option>
-															<option>Blues</option>
-															<option>Classical</option>
-															<option>Country</option>
-															<option>Dance & Electronic</option>
-															<option>Easy optionstening</option>
-															<option>Folk & Songwriter</option>
-															<option>Hard Rock & Metal</option>
-															<option>Jazz</option>
-															<option>Miscellaneous</option>
-															<option>Pop</option>
-															<option>R&B & Soul</option>
-															<option>Rap & Hip-Hop</option>
-															<option>Reggae</option>
-															<option>Rock</option>
-															<option>Soundtracks & Musicals</option>
-															<option>World Music</option>
-
-																</select>
-
-
-																<br>
-																<label for="agree">please select</label>
-																<input type="checkbox" id="agree" name="agree"
-																	data-bind="checked: agreed" />
-&nbsp I have read the licence greement
-																<br>
-																<br>
-																<label for="reg">Sign me up</label>
-																<button data-bind="enabled: agreed" id="regFan" name="regFan"
-																	style="display: inline-block; width: 181px">Register</button>
-
-
-															</ul>
-														</form>
-
-
-						
-
-
-
-													</div>
-
-
-												</div>
-												
-												
-												
-												
-												
-												
-												
-												<div id="signupFan" name="signupFan" style="display: visible">
-
-
-													<div id="registration2" class="registration">
-<center>
-																<div id ="name"><h2>Fan<h2></div>
-</center>
-
-														<form action="/register" method="post"  id ="registerFan">
-															<ul>
-															
-															<input type="hidden" name="type" value="fan">
-															
-																<label for="email" class="required">email:</label>
-																<input type="email" id="email" name=email data-bind="value: email"
-																	 required  style="width: 181px"class="k-textbox" />
-															
-																
-																<label for="uname" class="required">user name:</label>
-																<input type="text" id="uname" name=uname data-bind="value: uname"
-																	 data-bind="value: uname" style="width: 181px"
-																	class="k-textbox" type="text" pattern="[A-Za-z0-9]+"
-																	required validationMessage="Sorry only letters and numbers" />
-																	
-																<br>
-																<label for="password" class="required">password:</label>
-																<input id="password" name=password
-																	data-bind="value: password" type="password"
-																	required validationMessage="Please enter a password" style="width: 181px" class="k-textbox" style="width: 181px" class="k-textbox" />
-																<span class="k-invalid-msg" data-for="password"></span>
-																<label for="cpassword" class="required">confirm:</label>
-																<input id="cpassword" name=cpassword
-																	data-bind="value: cpassword" type="password"
-																	required validationMessage="Please enter a password" style="width: 181px" class="k-textbox" style="width: 181px" class="k-textbox" />
-																<br>
-																<label for="firstname" class="required">firstname:</label>
-																<input id="firstname" name=firstname
-																	data-bind="value: firstName" style="width: 181px"
-																	class="k-textbox" type="text" pattern="[A-Za-z]+"
-																	required validationMessage="Sorry only letters and numbers" />
-																
-																<label for="lastname" class="required">lastname:</label>
-																<input id="lastname" name=lastname
-																	data-bind="value: lastName" style="width: 181px"
-																	class="k-textbox" type="text" pattern="[A-Za-z]+"
-																	required validationMessage="Sorry only letters and numbers" />
-																<br>
-																
-
-
-																<label for="country2" class="required">country:</label>
-																<select id="country2" name="country2" data-bind="value: country2" required validationMessage="Please Select A Country"
-																	style="width: 181px">
-
-																	
-
-
-
-																<option> </option>
-																<option value="Afghanistan">Afghanistan</option>
-																<option value="Albania">Albania</option>
-																<option value="Algeria">Algeria</option>
-																<option value="Andorra">Andorra</option>
-																<option value="Angola">Angola</option>
-																<option value="Antarctica">Antarctica</option>
-																<option value="Antigua and Barbuda">Antigua and Barbuda</option>
-																<option value="Argentina">Argentina</option>
-																<option value="Armenia">Armenia</option>
-																<option value="Australia">Australia</option>
-																<option value="Austria">Austria</option>
-																<option value="Azerbaijan">Azerbaijan</option>
-																<option value="Bahamas">Bahamas</option>
-																<option value="Bahrain">Bahrain</option>
-																<option value="Bangladesh">Bangladesh</option>
-																<option value="Barbados">Barbados</option>
-																<option value="Belarus">Belarus</option>
-																<option value="Belgium">Belgium</option>
-																<option value="Belize">Belize</option>
-																<option value="Benin">Benin</option>
-																<option value="Bermuda">Bermuda</option>
-																<option value="Bhutan">Bhutan</option>
-																<option value="Bolivia">Bolivia</option>
-																<option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
-																<option value="Botswana">Botswana</option>
-																<option value="Brazil">Brazil</option>
-																<option value="Brunei">Brunei</option>
-																<option value="Bulgaria">Bulgaria</option>
-																<option value="Burkina Faso">Burkina Faso</option>
-																<option value="Burma">Burma</option>
-																<option value="Burundi">Burundi</option>
-																<option value="Cambodia">Cambodia</option>
-																<option value="Cameroon">Cameroon</option>
-																<option value="Canada">Canada</option>
-																<option value="Cape Verde">Cape Verde</option>
-																<option value="Central African Republic">Central African Republic</option>
-																<option value="Chad">Chad</option>
-																<option value="Chile">Chile</option>
-																<option value="China">China</option>
-																<option value="Colombia">Colombia</option>
-																<option value="Comoros">Comoros</option>
-																<option value="Congo, Democratic Republic">Congo, Democratic Republic</option>
-																<option value="Congo, Republic of the">Congo, Republic of the</option>
-																<option value="Costa Rica">Costa Rica</option>
-																<option value="Cote d'Ivoire">Cote d'Ivoire</option>
-																<option value="Croatia">Croatia</option>
-																<option value="Cuba">Cuba</option>
-																<option value="Cyprus">Cyprus</option>
-																<option value="Czech Republic">Czech Republic</option>
-																<option value="Denmark">Denmark</option>
-																<option value="Djibouti">Djibouti</option>
-																<option value="Dominica">Dominica</option>
-																<option value="Dominican Republic">Dominican Republic</option>
-																<option value="East Timor">East Timor</option>
-																<option value="Ecuador">Ecuador</option>
-																<option value="Egypt">Egypt</option>
-																<option value="El Salvador">El Salvador</option>
-																<option value="Equatorial Guinea">Equatorial Guinea</option>
-																<option value="Eritrea">Eritrea</option>
-																<option value="Estonia">Estonia</option>
-																<option value="Ethiopia">Ethiopia</option>
-																<option value="Fiji">Fiji</option>
-																<option value="Finland">Finland</option>
-																<option value="France">France</option>
-																<option value="Gabon">Gabon</option>
-																<option value="Gambia">Gambia</option>
-																<option value="Georgia">Georgia</option>
-																<option value="Germany">Germany</option>
-																<option value="Ghana">Ghana</option>
-																<option value="Greece">Greece</option>
-																<option value="Greenland">Greenland</option>
-																<option value="Grenada">Grenada</option>
-																<option value="Guatemala">Guatemala</option>
-																<option value="Guinea">Guinea</option>
-																<option value="Guinea-Bissau">Guinea-Bissau</option>
-																<option value="Guyana">Guyana</option>
-																<option value="Haiti">Haiti</option>
-																<option value="Honduras">Honduras</option>
-																<option value="Hong Kong">Hong Kong</option>
-																<option value="Hungary">Hungary</option>
-																<option value="Iceland">Iceland</option>
-																<option value="India">India</option>
-																<option value="Indonesia">Indonesia</option>
-																<option value="Iran">Iran</option>
-																<option value="Iraq">Iraq</option>
-																<option value="Ireland">Ireland</option>
-																<option value="Israel">Israel</option>
-																<option value="Italy">Italy</option>
-																<option value="Jamaica">Jamaica</option>
-																<option value="Japan">Japan</option>
-																<option value="Jordan">Jordan</option>
-																<option value="Kazakhstan">Kazakhstan</option>
-																<option value="Kenya">Kenya</option>
-																<option value="Kiribati">Kiribati</option>
-																<option value="Korea, North">Korea, North</option>
-																<option value="Korea, South">Korea, South</option>
-																<option value="Kuwait">Kuwait</option>
-																<option value="Kyrgyzstan">Kyrgyzstan</option>
-																<option value="Laos">Laos</option>
-																<option value="Latvia">Latvia</option>
-																<option value="Lebanon">Lebanon</option>
-																<option value="Lesotho">Lesotho</option>
-																<option value="Liberia">Liberia</option>
-																<option value="Libya">Libya</option>
-																<option value="Liechtenstein">Liechtenstein</option>
-																<option value="Lithuania">Lithuania</option>
-																<option value="Luxembourg">Luxembourg</option>
-																<option value="Macedonia">Macedonia</option>
-																<option value="Madagascar">Madagascar</option>
-																<option value="Malawi">Malawi</option>
-																<option value="Malaysia">Malaysia</option>
-																<option value="Maldives">Maldives</option>
-																<option value="Mali">Mali</option>
-																<option value="Malta">Malta</option>
-																<option value="Marshall Islands">Marshall Islands</option>
-																<option value="Mauritania">Mauritania</option>
-																<option value="Mauritius">Mauritius</option>
-																<option value="Mexico">Mexico</option>
-																<option value="Micronesia">Micronesia</option>
-																<option value="Moldova">Moldova</option>
-																<option value="Mongolia">Mongolia</option>
-																<option value="Morocco">Morocco</option>
-																<option value="Monaco">Monaco</option>
-																<option value="Mozambique">Mozambique</option>
-																<option value="Namibia">Namibia</option>
-																<option value="Nauru">Nauru</option>
-																<option value="Nepal">Nepal</option>
-																<option value="Netherlands">Netherlands</option>
-																<option value="New Zealand">New Zealand</option>
-																<option value="Nicaragua">Nicaragua</option>
-																<option value="Niger">Niger</option>
-																<option value="Nigeria">Nigeria</option>
-																<option value="Norway">Norway</option>
-																<option value="Oman">Oman</option>
-																<option value="Pakistan">Pakistan</option>
-																<option value="Panama">Panama</option>
-																<option value="Papua New Guinea">Papua New Guinea</option>
-																<option value="Paraguay">Paraguay</option>
-																<option value="Peru">Peru</option>
-																<option value="Philippines">Philippines</option>
-																<option value="Poland">Poland</option>
-																<option value="Portugal">Portugal</option>
-																<option value="Qatar">Qatar</option>
-																<option value="Romania">Romania</option>
-																<option value="Russia">Russia</option>
-																<option value="Rwanda">Rwanda</option>
-																<option value="Samoa">Samoa</option>
-																<option value="San Marino">San Marino</option>
-																<option value=" Sao Tome"> Sao Tome</option>
-																<option value="Saudi Arabia">Saudi Arabia</option>
-																<option value="Senegal">Senegal</option>
-																<option value="Serbia and Montenegro">Serbia and Montenegro</option>
-																<option value="Seychelles">Seychelles</option>
-																<option value="Sierra Leone">Sierra Leone</option>
-																<option value="Singapore">Singapore</option>
-																<option value="Slovakia">Slovakia</option>
-																<option value="Slovenia">Slovenia</option>
-																<option value="Solomon Islands">Solomon Islands</option>
-																<option value="Somalia">Somalia</option>
-																<option value="South Africa">South Africa</option>
-																<option value="Spain">Spain</option>
-																<option value="Sri Lanka">Sri Lanka</option>
-																<option value="Sudan">Sudan</option>
-																<option value="Suriname">Suriname</option>
-																<option value="Swaziland">Swaziland</option>
-																<option value="Sweden">Sweden</option>
-																<option value="Switzerland">Switzerland</option>
-																<option value="Syria">Syria</option>
-																<option value="Taiwan">Taiwan</option>
-																<option value="Tajikistan">Tajikistan</option>
-																<option value="Tanzania">Tanzania</option>
-																<option value="Thailand">Thailand</option>
-																<option value="Togo">Togo</option>
-																<option value="Tonga">Tonga</option>
-																<option value="Trinidad and Tobago">Trinidad and Tobago</option>
-																<option value="Tunisia">Tunisia</option>
-																<option value="Turkey">Turkey</option>
-																<option value="Turkmenistan">Turkmenistan</option>
-																<option value="Uganda">Uganda</option>
-																<option value="Ukraine">Ukraine</option>
-																<option value="United Arab Emirates">United Arab Emirates</option>
-																<option value="United Kingdom">United Kingdom</option>
-																<option value="United States">United States</option>
-																<option value="Uruguay">Uruguay</option>
-																<option value="Uzbekistan">Uzbekistan</option>
-																<option value="Vanuatu">Vanuatu</option>
-																<option value="Venezuela">Venezuela</option>
-																<option value="Vietnam">Vietnam</option>
-																<option value="Yemen">Yemen</option>
-																<option value="Zambia">Zambia</option>
-																<option value="Zimbabwe">Zimbabwe</option>
-																</select>
-
-																
-																<label for="city" class="required">city:</label>
-																<input id="city" name=city data-bind="value: city"
-																	style="width: 181px" class="k-textbox" 
-																	class="k-textbox" type="text" pattern="[A-Za-z]+"
-																	required validationMessage="Please enter a valid city" />
-																<br>
-																
-																<label for="age2" class="required">age:</label>
-																<select id="age2" name=age2 data-bind="value: age2" required validationMessage="Please Select Your Age"
-																	style="width: 181px">
-
-																	<option></option>
-																	<option>under 12</option>
-																	<option>12–17</option>
-																	<option>18–24</option>
-																	<option>25–34</option>
-																	<option>35–44</option>
-																	<option>45–54</option>
-																	<option>55–64</option>
-																	<option>65+</option>
-																	<option>Female</option>
-																</select>
-																
-																<label for="gender2" class="required">gender:</label>
-																<select id="gender2" name=gender2 required validationMessage="Please Select Your Sex"
-																	data-bind="value: gender" style="width: 181px">
-
-																	<option></option>
-																	<option>Male</option>
-																	<option>Female</option>
-																</select>
-
-
-																<br>
-
-																<label for="prefs3" class="required">i prefer:</label>
-																<select id="prefs3" multiple="multiple" name=prefs3 required validationMessage="Please Select Your Sex"
-																	data-bind="value: Preference" style="width: 181px">
-
-									<option>Alternative & Indie</option>
-									<option>Blues</option>
-									<option>Classical</option>
-									<option>Country</option>
-									<option>Dance & Electronic</option>
-									<option>Easy optionstening</option>
-									<option>Folk & Songwriter</option>
-									<option>Hard Rock & Metal</option>
-									<option>Jazz</option>
-									<option>Miscellaneous</option>
-									<option>Pop</option>
-									<option>R&B & Soul</option>
-									<option>Rap & Hip-Hop</option>
-									<option>Reggae</option>
-									<option>Rock</option>
-									<option>Soundtracks & Musicals</option>
-									<option>World Music</option>
-
-																</select>
-
-
-																<br>
-																<label for="agree">please select</label>
-																<input type="checkbox" id="agree" name="agree"
-																	data-bind="checked: agreed" />
-&nbsp I have read the licence greement
-																<br>
-																<br>
-																<label for="reg">Sign me up</label>
-																<button data-bind="enabled: agreed" id="regFan" name="regFan"
-																	style="display: inline-block; width: 181px">Register</button>
-
-
-															</ul>
-														</form>
-
-
-						
-
-
-
-													</div>
-
-
-												</div>
-												
-												
-												
-												
-												
-												
-											</div>
-
-
-
-										</div>
-									</div>
-
-									<div id="right-pane">
 
 										<div id="vertical2">
 											<div id="top-pane2">
-												<div id=login class="pane-content">
-												
-												<center>
-												<h1>SIGN ME UP AS A</h1>
-																									<button id="fanButton" name="fanButton"
-																	style="display: inline-block; width: 90%; height:100px">Fan</button>
-													
-													<button  id="artButton" name="artButton"
-																	style="display: inline-block; width: 90%; height:100px">Artist</button>
+												<div id="login" class="pane-content">
 
-												</center>
-												
+													<center>
+														<h1>SIGN ME UP AS A</h1>
+														<button id="fanButton" name="fanButton"
+															style="display: inline-block; width: 90%; height: 100px">Fan</button>
+
+														<button id="artButton" name="artButton"
+															style="display: inline-block; width: 90%; height: 100px">Artist</button>
+
+													</center>
+
 												</div>
 											</div>
 
 
 
 											<div id="bottom-pane2">
+												<center>
+													<h2>Why sign up?</h2>
 
-
+													<p>Vote on (a lot) of tracks</p>
+													<p>Battle your own music</p>
+													<p>Create personlised play lists</p>
+													<p>Free hug (depending on availability)</p>
+												</center>
 
 												<div class="pane-content" id="vidInfo"></div>
 											</div>
@@ -818,6 +128,391 @@ sessionStorage.signuptype="fan";
 										</div>
 
 									</div>
+
+
+
+
+									<div id="right-pane">
+										<div class="pane-content">
+
+
+
+
+											<div id="register" class="signupForm">
+
+												<div id="signupArt" name="signupArt" style="display: none;">
+
+
+													<div id="registration" class="registration">
+														<center>
+															<div id="name">
+																<h2>
+																	Artist
+																	<h2></h2>
+																</h2>
+															</div>
+														</center>
+
+
+														<form action="/register" method="post" id="registerArt">
+															<ul>
+
+																<input type="hidden" name="type" value="artist">
+
+																<label for="email" class="required">email:</label>
+																<input type="email" id="email" name="email"
+																	data-bind="value: email" required
+																	style="width: 181px; overflow: hidden"
+																	class="k-textbox"
+																	validationMessage="email: please enter a valid email" />
+
+
+																<label for="uname" class="required">user name:</label>
+																<input type="text" id="uname" name="uname"
+																	data-bind="value: uname"
+																	style="width: 181px; overflow: hidden"
+																	class="k-textbox" type="text" required
+																	validationMessage="user name: please enter a user name"
+																	maxlength="20" />
+
+																<center>
+																	<span class="k-invalid-msg" data-for="email"></span> <span
+																		class="k-invalid-msg" data-for="uname"></span>
+																</center>
+
+																<br>
+																<label for="password" class="required">password:</label>
+																<input id="password" name="password"
+																	data-bind="value: password" type="password" required
+																	validationMessage="password: please enter a password"
+																	style="width: 181px; overflow: hidden"
+																	" class="k-textbox"
+																	style="width: 181px;position:static" class="k-textbox" />
+
+
+																<label for="cpassword" class="required">confirm:</label>
+																<input id="cpassword" name="cpassword"
+																	data-bind="value: cpassword" type="password" required
+																	validationMessage="confirm: please re-enter the password"
+																	style="width: 181px; overflow: hidden"
+																	" class="k-textbox"
+																	style="width: 181px;position:static" class="k-textbox" />
+
+																<center>
+																	<span class="k-invalid-msg" data-for="password"></span>
+																	<span class="k-invalid-msg" data-for="cpassword"></span>
+																</center>
+
+																<br>
+
+																<label for="firstname" class="required">firstname:</label>
+																<input id="firstname" name="firstname"
+																	data-bind="value: firstName" style="width: 181px"
+																	class="k-textbox" type="text" required
+																	validationMessage="first name:please enter your first name" />
+
+																<label for="lastname" class="required">lastname:</label>
+																<input id="lastname" name="lastname"
+																	data-bind="value: lastName" style="width: 181px"
+																	class="k-textbox" type="text" required
+																	validationMessage="last name:please enter your last name" />
+
+
+																<center>
+																	<span class="k-invalid-msg" data-for="firstname"></span>
+																	<span class="k-invalid-msg" data-for="lastname"></span>
+																</center>
+
+																<br>
+
+																<label for="age" class="required">age:</label>
+																<select id="age" name="age" data-bind="value: age2"
+																	required
+																	validationMessage="age: please select your Age"
+																	style="width: 181px">
+
+																	<option></option>
+																	<option>under 12</option>
+																	<option>12–17</option>
+																	<option>18–24</option>
+																	<option>25–34</option>
+																	<option>35–44</option>
+																	<option>45–54</option>
+																	<option>55–64</option>
+																	<option>65+</option>
+																	<option>Female</option>
+																</select>
+
+																<label for="gender" class="required">gender:</label>
+																<select id="gender" name="gender" required
+																	validationMessage="gender: please select your gender"
+																	data-bind="value: gender" style="width: 181px">
+																	<option></option>
+																	<option>Male</option>
+																	<option>Female</option>
+																</select>
+
+																<br>
+																<center>
+
+																	<span class="k-invalid-msg" data-for="age"></span> <span
+																		class="k-invalid-msg" data-for="gender"></span>
+																</center>
+
+																<br>
+
+																<label for="prefs2" class="required">i prefer:</label>
+																<select id="prefs2" multiple="multiple" name="prefs2"
+																	required
+																	validationMessage="preferences: please select your preferences"
+																	data-bind="value: Preference" style="width: 181px">
+
+																	<option>Alternative & Indie</option>
+																	<option>Blues</option>
+																	<option>Classical</option>
+																	<option>Country</option>
+																	<option>Dance & Electronic</option>
+																	<option>Easy optionstening</option>
+																	<option>Folk & Songwriter</option>
+																	<option>Hard Rock & Metal</option>
+																	<option>Jazz</option>
+																	<option>Miscellaneous</option>
+																	<option>Pop</option>
+																	<option>R&B & Soul</option>
+																	<option>Rap & Hip-Hop</option>
+																	<option>Reggae</option>
+																	<option>Rock</option>
+																	<option>Soundtracks & Musicals</option>
+																	<option>World Music</option>
+
+																</select>
+
+																<br>
+
+																<center>
+																	<span class="k-invalid-msg" data-for="prefs2"></span>
+
+																</center>
+
+																<br>
+																<label for="agree">please select</label>
+																<input type="checkbox" id="agree" name="agree"
+																	data-bind="checked: agreed" /> &nbsp I have read the
+																licence greement
+																<br>
+																<br>
+																<label for="reg">Sign me up</label>
+																<button data-bind="enabled: agreed" id="regFan"
+																	name="regFan"
+																	style="display: inline-block; width: 181px">Register</button>
+
+
+															</ul>
+														</form>
+
+
+
+
+
+
+													</div>
+
+
+												</div>
+
+
+
+
+
+
+
+												<div id="signupFan" name="signupFan"
+													style="display: visible">
+
+
+													<div id="registration2" class="registration">
+														<center>
+															<div id="name">
+																<h2>
+																	Fan
+																	<h2></h2>
+																</h2>
+															</div>
+														</center>
+
+														<form action="/register" method="post" id="registerFan">
+															<ul>
+
+																<input type="hidden" name="type" value="fan">
+
+																<label for="email" class="required">email:</label>
+																<input type="email" id="email" name="email"
+																	data-bind="value: email" required
+																	style="width: 181px; overflow: hidden"
+																	class="k-textbox"
+																	validationMessage="email: please enter a valid email" />
+
+
+																<label for="uname" class="required">user name:</label>
+																<input type="text" id="uname" name="uname"
+																	data-bind="value: uname"
+																	style="width: 181px; overflow: hidden"
+																	class="k-textbox" type="text" required
+																	validationMessage="user name: please enter a user name"
+																	maxlength="20" />
+
+																<center>
+																	<span class="k-invalid-msg" data-for="email"></span> <span
+																		class="k-invalid-msg" data-for="uname"></span>
+																</center>
+
+																<br>
+																<label for="password" class="required">password:</label>
+																<input id="password" name="password"
+																	data-bind="value: password" type="password" required
+																	validationMessage="password: please enter a password"
+																	style="width: 181px" class="k-textbox"
+																	style="width: 181px;position:static" class="k-textbox" />
+
+
+																<label for="cpassword" class="required">confirm:</label>
+																<input id="cpassword" name="cpassword"
+																	data-bind="value: cpassword" type="password" required
+																	validationMessage="confirm: please re-enter the password"
+																	style="width: 181px" class="k-textbox"
+																	style="width: 181px;position:static" class="k-textbox" />
+
+																<center>
+																	<span class="k-invalid-msg" data-for="password"></span>
+																	<span class="k-invalid-msg" data-for="cpassword"></span>
+																</center>
+
+																<br>
+
+																<label for="firstname" class="required">firstname:</label>
+																<input id="firstname" name="firstname"
+																	data-bind="value: firstName" style="width: 181px"
+																	class="k-textbox" type="text" required
+																	validationMessage="first name:please enter your first name" />
+
+																<label for="lastname" class="required">lastname:</label>
+																<input id="lastname" name="lastname"
+																	data-bind="value: lastName" style="width: 181px"
+																	class="k-textbox" type="text" required
+																	validationMessage="last name:please enter your last name" />
+
+
+																<center>
+																	<span class="k-invalid-msg" data-for="firstname"></span>
+																	<span class="k-invalid-msg" data-for="lastname"></span>
+																</center>
+
+																<br>
+
+																<label for="age2" class="required">age:</label>
+																<select id="age2" name="age2" data-bind="value: age2"
+																	required
+																	validationMessage="age: please select your Age"
+																	style="width: 181px">
+
+																	<option></option>
+																	<option>under 12</option>
+																	<option>12–17</option>
+																	<option>18–24</option>
+																	<option>25–34</option>
+																	<option>35–44</option>
+																	<option>45–54</option>
+																	<option>55–64</option>
+																	<option>65+</option>
+																	<option>Female</option>
+																</select>
+
+																<label for="gender2" class="required">gender:</label>
+																<select id="gender2" name="gender2" required
+																	validationMessage="gender: please select your gender"
+																	data-bind="value: gender2" style="width: 181px">
+																	<option></option>
+																	<option>Male</option>
+																	<option>Female</option>
+																</select>
+
+																<br>
+																<center>
+																	<span class="k-invalid-msg" data-for="age2"></span> <span
+																		class="k-invalid-msg" data-for="gender2"></span>
+																</center>
+
+																<br>
+
+																<label for="prefs3" class="required">i prefer:</label>
+																<select id="prefs3" multiple="multiple" name="prefs3"
+																	required
+																	validationMessage="preferences: please select your preferences"
+																	data-bind="value: Preference" style="width: 181px">
+
+																	<option>Alternative & Indie</option>
+																	<option>Blues</option>
+																	<option>Classical</option>
+																	<option>Country</option>
+																	<option>Dance & Electronic</option>
+																	<option>Easy optionstening</option>
+																	<option>Folk & Songwriter</option>
+																	<option>Hard Rock & Metal</option>
+																	<option>Jazz</option>
+																	<option>Miscellaneous</option>
+																	<option>Pop</option>
+																	<option>R&B & Soul</option>
+																	<option>Rap & Hip-Hop</option>
+																	<option>Reggae</option>
+																	<option>Rock</option>
+																	<option>Soundtracks & Musicals</option>
+																	<option>World Music</option>
+
+																</select>
+																<br>
+																<center>
+																	<span class="k-invalid-msg" data-for="prefs3"></span>
+																</center>
+
+																<br>
+																<label for="agree">please select</label>
+																<input type="checkbox" id="agree" name="agree"
+																	data-bind="checked: agreed" /> &nbsp I have read the
+																licence greement
+																<br>
+																<br>
+																<label for="reg">Sign me up</label>
+																<button data-bind="enabled: agreed" id="regFan"
+																	name="regFan"
+																	style="display: inline-block; width: 181px">Register</button>
+
+
+															</ul>
+														</form>
+
+
+
+
+
+
+													</div>
+
+
+												</div>
+
+
+
+
+
+
+											</div>
+
+
+
+										</div>
+									</div>
+
+
 								</div>
 
 							</div>
@@ -827,96 +522,117 @@ sessionStorage.signuptype="fan";
 
 
 						<script type="text/javascript">
-							$(document).ready(
-									function() {
-										var viewModel = kendo.observable({
-											firstName : "",
-											lastName : "",
-											country : "",
-											city : "",
-											age : "",
-											gender : "",
-											agreed : false,
-											confirmed : false,
-											register : function(e) {
-												e.preventDefault();
+							$(document)
+									.ready(
+											function() {
+												var viewModel = kendo
+														.observable({
+															firstName : "",
+															lastName : "",
+															country : "",
+															city : "",
+															age : "",
+															gender : "",
+															agreed : false,
+															confirmed : false,
+															register : function(
+																	e) {
+																e
+																		.preventDefault();
 
-												this.set("confirmed", true);
-											},
-											register2 : function(e) {
-												e.preventDefault();
+																this
+																		.set(
+																				"confirmed",
+																				true);
+															},
+															register2 : function(
+																	e) {
+																e
+																		.preventDefault();
 
-												this.set("confirmed", true);
-											},
+																this
+																		.set(
+																				"confirmed",
+																				true);
+															},
 
-										});
+														});
 
-										$("#gender").kendoDropDownList({
-											
-											dataTextField : "text",
-											dataValueField : "value",
-											index : 0,
-										});
+												$("#gender")
+														.kendoDropDownList(
+																{
 
-										$("#age").kendoDropDownList({
-											dataTextField : "text",
-											dataValueField : "value",
-											index : 0,
-										});
+																	dataTextField : "text",
+																	dataValueField : "value",
+																	index : 0,
+																});
 
-										$("#country").kendoDropDownList({
-											dataTextField : "text",
-											dataValueField : "value",
-											index : 0,
-										});
+												$("#age").kendoDropDownList({
+													dataTextField : "text",
+													dataValueField : "value",
+													index : 0,
+												});
 
-										$("#country2").kendoDropDownList({
-											dataTextField : "text",
-											dataValueField : "value",
-											index : 0,
-										});
+												$("#country")
+														.kendoDropDownList(
+																{
+																	dataTextField : "text",
+																	dataValueField : "value",
+																	index : 0,
+																});
 
-										var required = $("#prefs2")
-												.kendoMultiSelect().data(
-														"kendoMultiSelect");
+												$("#country2")
+														.kendoDropDownList(
+																{
+																	dataTextField : "text",
+																	dataValueField : "value",
+																	index : 0,
+																});
 
-										kendo.bind($("#registration"),
-												viewModel, required);
-										
+												var required = $("#prefs2")
+														.kendoMultiSelect()
+														.data(
+																"kendoMultiSelect");
 
-										kendo.bind($("#registration2"),
-												viewModel, required);
-										
-										
-										$("#gender2").kendoDropDownList({
-											dataTextField : "text",
-											dataValueField : "value",
-											index : 0,
-										});
+												kendo.bind($("#registration"),
+														viewModel, required);
 
-										$("#age2").kendoDropDownList({
-											dataTextField : "text",
-											dataValueField : "value",
-											index : 0,
-										});
+												kendo.bind($("#registration2"),
+														viewModel, required);
 
-										var required = $("#prefs3")
-												.kendoMultiSelect().data(
-														"kendoMultiSelect");
+												$("#gender2")
+														.kendoDropDownList(
+																{
+																	dataTextField : "text",
+																	dataValueField : "value",
+																	index : 0,
+																});
 
-//										kendo.bind($("#registration2"),
-//												viewModel, required);
-										
-									       var validator = $("#registerArt").kendoValidator().data("kendoValidator"),
-						                    status = $(".status");
-									       
-									       var validator = $("#registerFan").kendoValidator().data("kendoValidator"),
-						                    status = $(".status");
+												$("#age2").kendoDropDownList({
+													dataTextField : "text",
+													dataValueField : "value",
+													index : 0,
+												});
 
-						   
-										
+												var required = $("#prefs3")
+														.kendoMultiSelect()
+														.data(
+																"kendoMultiSelect");
 
-									});
+												//										kendo.bind($("#registration2"),
+												//												viewModel, required);
+
+												var validator = $(
+														"#registerArt")
+														.kendoValidator()
+														.data("kendoValidator"), status = $(".status");
+
+												var validator = $(
+														"#registerFan")
+														.kendoValidator()
+														.data("kendoValidator"), status = $(".status");
+
+											});
 						</script>
 
 
@@ -955,21 +671,41 @@ sessionStorage.signuptype="fan";
 																					".k-link")
 																			.text());
 
-				                    if($(e.item).children(".k-link").text()=='charts'){
-				                    	window.location.assign("/charts.html");
-				                    }else if($(e.item).children(".k-link").text()=='playLists'){
-				                    	window.location.assign("/playlist.html");
-				                    }else if($(e.item).children(".k-link").text()=='account'){
-				                    	window.location.assign("/account.html");
-				                    }else if($(e.item).children(".k-link").text()=='about'){
-				                    	window.location.assign("/about.html");
-				                    }else if($(e.item).children(".k-link").text()=='contact'){
-				                    	window.location.assign("/contact.html");
-				                    }else if($(e.item).children(".k-link").text()=='upload'){
-				                    	window.location.assign("/upload.html");
-				                    }else if($(e.item).children(".k-link").text()=='battle'){
-				                    	window.location.assign("/");
-				                    }
+													if ($(e.item).children(
+															".k-link").text() == 'charts') {
+														window.location
+																.assign("/charts.html");
+													} else if ($(e.item)
+															.children(".k-link")
+															.text() == 'playLists') {
+														window.location
+																.assign("/playlist.html");
+													} else if ($(e.item)
+															.children(".k-link")
+															.text() == 'account') {
+														window.location
+																.assign("/account.html");
+													} else if ($(e.item)
+															.children(".k-link")
+															.text() == 'about') {
+														window.location
+																.assign("/about.html");
+													} else if ($(e.item)
+															.children(".k-link")
+															.text() == 'contact') {
+														window.location
+																.assign("/contact.html");
+													} else if ($(e.item)
+															.children(".k-link")
+															.text() == 'upload') {
+														window.location
+																.assign("/upload.html");
+													} else if ($(e.item)
+															.children(".k-link")
+															.text() == 'battle') {
+														window.location
+																.assign("/");
+													}
 
 												}
 
@@ -1007,7 +743,7 @@ sessionStorage.signuptype="fan";
 								$("#vertical").kendoSplitter({
 									orientation : "vertical",
 									panes : [ {
-										collapsible : true,
+										collapsible : false,
 										size : "7%"
 									}, {
 										collapsible : false,
@@ -1031,9 +767,9 @@ sessionStorage.signuptype="fan";
 									panes : [ {
 										collapsible : false,
 										resizable : false,
-										size : "70%"
+										size : "30%"
 									}, {
-										collapsible : true,
+										collapsible : false,
 										resizable : false,
 									},
 
@@ -1045,10 +781,10 @@ sessionStorage.signuptype="fan";
 									panes : [ {
 										collapsible : false,
 										resizable : false,
-										size : "70%"
+										size : "60%"
 									}, {
 										collapsible : false,
-										size : "30%"
+										size : "40%"
 									}, {
 										collapsible : false
 									},
@@ -1061,49 +797,52 @@ sessionStorage.signuptype="fan";
 
 
 
-<script type="text/javascript">
- $(document).ready(function() {
-	 
-	 $('#fanButton').click(function(){ 
-		 
-		 if(sessionStorage.signuptype=="artist"){
-		 	$("#signupFan").toggle();
-		 	$("#signupArt").toggle();
-		 	sessionStorage.signuptype="fan";
-		 }
-		 
-		 
-	 });
-	 
-	 $('#artButton').click(function(){ 
-		 if(sessionStorage.signuptype=="fan"){
-			 	$("#signupFan").toggle();
-			 	$("#signupArt").toggle();
-			 	sessionStorage.signuptype="artist";
-			 }
-		 
-	 });
-	 
-	 
- });
+						<script type="text/javascript">
+							$(document).ready(function() {
 
-	 </script>
+								$('#fanButton').click(function() {
+
+									if (sessionStorage.signuptype == "artist") {
+										$("#signupFan").toggle();
+										$("#signupArt").toggle();
+										sessionStorage.signuptype = "fan";
+									}
+
+								});
+
+								$('#artButton').click(function() {
+									if (sessionStorage.signuptype == "fan") {
+										$("#signupFan").toggle();
+										$("#signupArt").toggle();
+										sessionStorage.signuptype = "artist";
+									}
+
+								});
+
+							});
+						</script>
 
 
-<style scoped type="text/css">
-
-span.k-tooltip
-{
-    position: static;
-    display: inline-block;
-    border-width: 1px;
-   padding: 6px 5px 1px 6px;
+						<style scoped type="text/css">
+span.k-tooltip {
+	position: static;
+	display: inline-block;
+	border-width: 1px;
+	padding: 6px 5px 1px 6px;
 }
 
 .k-widget.k-multiselect {
 	width: 400px;
 	vertical-align: middle;
 	display: inline-block;
+}
+
+.k-invalid-msg {
+	width: 340px;
+	padding: 5px 5px 5px 5px;
+	border: none;
+	background-color: grey;
+	font-size: 14px;
 }
 
 #clientsDb {
@@ -1118,8 +857,6 @@ span.k-tooltip
 	margin: 0 auto;
 }
 
-
-
 label {
 	display: inline-block;
 	width: 70px;
@@ -1133,11 +870,13 @@ label {
 	text-transform: lowercase;
 	padding: 0px 0px;
 	background-color: white;
-
-	background: -webkit-linear-gradient(white,white,white); /* For Safari */
-background: -o-linear-gradient(white,white,white); /* For Opera 11.1 to 12.0 */
-background: -moz-linear-gradient(white,white,white); /* For Firefox 3.6 to 15 */
-background: linear-gradient(white,white,white); /* Standard syntax */
+	background: -webkit-linear-gradient(white, white, white);
+	/* For Safari */
+	background: -o-linear-gradient(white, white, white);
+	/* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(white, white, white);
+	/* For Firefox 3.6 to 15 */
+	background: linear-gradient(white, white, white); /* Standard syntax */
 }
 
 .demo-section {
@@ -1151,6 +890,15 @@ background: linear-gradient(white,white,white); /* Standard syntax */
 	border-color: #D7D9D9;
 }
 
+.signupForm {
+	width: 600px;
+	display: inline-block;
+	overflow: none;
+	clear: both;
+	background-color: white;
+	border: none;
+}
+
 #menu h2 {
 	font-size: 1em;
 	text-transform: lowercase;
@@ -1162,7 +910,6 @@ background: linear-gradient(white,white,white); /* Standard syntax */
 	font-size: smaller; //
 	text-transform: uppercase;
 	padding: 0px 0px;
-
 	background-color: white;
 }
 
@@ -1184,27 +931,26 @@ background: linear-gradient(white,white,white); /* Standard syntax */
 					</div>
 
 					<br>
-						<div class="demo-section2">
+					<div class="demo-section2">
 
-				<div align="center">
+						<div align="center">
 
-					<br> &nbsp &nbsp <img src="/images/HamsterRock.jpg"
-						alt="hamster" width="20px" height="15px"> &nbsp | &nbsp
-					&copy slamstr 2013-2014 &nbsp &nbsp | &nbsp &nbsp <a
-						href="/about.html" class="k-button2">about</a> &nbsp &nbsp | &nbsp
-					&nbsp <a href="/contact.html" class="k-button2">contact</a> &nbsp
-					&nbsp | &nbsp &nbsp <a href="/privacy.html" class="k-button2">privacy</a>
-
-					&nbsp &nbsp | &nbsp &nbsp <a href="/tandc.html" class="k-button2">terms
-						and conditions</a> &nbsp &nbsp | &nbsp <img
-						src="/images/HamsterRock.jpg" alt="hamster" width="20px"
-						height="15px">
-
+							<br> &nbsp &nbsp <img src="/images/HamsterRock.jpg"
+								alt="hamster" width="20px" height="15px"> &nbsp | &nbsp
+							&copy slamstr 2013-2014 &nbsp &nbsp | &nbsp &nbsp <a
+								href="/about.html" class="k-button2">about</a> &nbsp &nbsp |
+							&nbsp &nbsp <a href="/contact.html" class="k-button2">contact</a>
+							&nbsp &nbsp | &nbsp &nbsp <a href="/privacy.html"
+								class="k-button2">privacy</a> &nbsp &nbsp | &nbsp &nbsp <a
+								href="/tandc.html" class="k-button2">terms and conditions</a>
+							&nbsp &nbsp | &nbsp <img src="/images/HamsterRock.jpg"
+								alt="hamster" width="20px" height="15px">
 
 
-				</div>
-				<br>
-			</div>
+
+						</div>
+						<br>
+					</div>
 
 
 					<div></div>
@@ -1277,11 +1023,233 @@ input.bin,submit:visited {
 	font-size: 10pt;
 }
 
-
 ::-webkit-input-placeholder { /* WebKit browsers */
 	color: #000;
 }
+
+/*input:valid {
+    border-color:#0f0;
+}
+input:invalid {
+    border-color:#f00;
+}*/
 </style>
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
+
+
+<!-- <label for="country" class="required">country:</label>
+																<select id="country" name="country" data-bind="value: country" required validationMessage="Please Select A Country"
+																	style="width: 181px">
+
+
+																<option> </option>
+																<option value="Afghanistan">Afghanistan</option>
+																<option value="Albania">Albania</option>
+																<option value="Algeria">Algeria</option>
+																<option value="Andorra">Andorra</option>
+																<option value="Angola">Angola</option>
+																<option value="Antarctica">Antarctica</option>
+																<option value="Antigua and Barbuda">Antigua and Barbuda</option>
+																<option value="Argentina">Argentina</option>
+																<option value="Armenia">Armenia</option>
+																<option value="Australia">Australia</option>
+																<option value="Austria">Austria</option>
+																<option value="Azerbaijan">Azerbaijan</option>
+																<option value="Bahamas">Bahamas</option>
+																<option value="Bahrain">Bahrain</option>
+																<option value="Bangladesh">Bangladesh</option>
+																<option value="Barbados">Barbados</option>
+																<option value="Belarus">Belarus</option>
+																<option value="Belgium">Belgium</option>
+																<option value="Belize">Belize</option>
+																<option value="Benin">Benin</option>
+																<option value="Bermuda">Bermuda</option>
+																<option value="Bhutan">Bhutan</option>
+																<option value="Bolivia">Bolivia</option>
+																<option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+																<option value="Botswana">Botswana</option>
+																<option value="Brazil">Brazil</option>
+																<option value="Brunei">Brunei</option>
+																<option value="Bulgaria">Bulgaria</option>
+																<option value="Burkina Faso">Burkina Faso</option>
+																<option value="Burma">Burma</option>
+																<option value="Burundi">Burundi</option>
+																<option value="Cambodia">Cambodia</option>
+																<option value="Cameroon">Cameroon</option>
+																<option value="Canada">Canada</option>
+																<option value="Cape Verde">Cape Verde</option>
+																<option value="Central African Republic">Central African Republic</option>
+																<option value="Chad">Chad</option>
+																<option value="Chile">Chile</option>
+																<option value="China">China</option>
+																<option value="Colombia">Colombia</option>
+																<option value="Comoros">Comoros</option>
+																<option value="Congo, Democratic Republic">Congo, Democratic Republic</option>
+																<option value="Congo, Republic of the">Congo, Republic of the</option>
+																<option value="Costa Rica">Costa Rica</option>
+																<option value="Cote d'Ivoire">Cote d'Ivoire</option>
+																<option value="Croatia">Croatia</option>
+																<option value="Cuba">Cuba</option>
+																<option value="Cyprus">Cyprus</option>
+																<option value="Czech Republic">Czech Republic</option>
+																<option value="Denmark">Denmark</option>
+																<option value="Djibouti">Djibouti</option>
+																<option value="Dominica">Dominica</option>
+																<option value="Dominican Republic">Dominican Republic</option>
+																<option value="East Timor">East Timor</option>
+																<option value="Ecuador">Ecuador</option>
+																<option value="Egypt">Egypt</option>
+																<option value="El Salvador">El Salvador</option>
+																<option value="Equatorial Guinea">Equatorial Guinea</option>
+																<option value="Eritrea">Eritrea</option>
+																<option value="Estonia">Estonia</option>
+																<option value="Ethiopia">Ethiopia</option>
+																<option value="Fiji">Fiji</option>
+																<option value="Finland">Finland</option>
+																<option value="France">France</option>
+																<option value="Gabon">Gabon</option>
+																<option value="Gambia">Gambia</option>
+																<option value="Georgia">Georgia</option>
+																<option value="Germany">Germany</option>
+																<option value="Ghana">Ghana</option>
+																<option value="Greece">Greece</option>
+																<option value="Greenland">Greenland</option>
+																<option value="Grenada">Grenada</option>
+																<option value="Guatemala">Guatemala</option>
+																<option value="Guinea">Guinea</option>
+																<option value="Guinea-Bissau">Guinea-Bissau</option>
+																<option value="Guyana">Guyana</option>
+																<option value="Haiti">Haiti</option>
+																<option value="Honduras">Honduras</option>
+																<option value="Hong Kong">Hong Kong</option>
+																<option value="Hungary">Hungary</option>
+																<option value="Iceland">Iceland</option>
+																<option value="India">India</option>
+																<option value="Indonesia">Indonesia</option>
+																<option value="Iran">Iran</option>
+																<option value="Iraq">Iraq</option>
+																<option value="Ireland">Ireland</option>
+																<option value="Israel">Israel</option>
+																<option value="Italy">Italy</option>
+																<option value="Jamaica">Jamaica</option>
+																<option value="Japan">Japan</option>
+																<option value="Jordan">Jordan</option>
+																<option value="Kazakhstan">Kazakhstan</option>
+																<option value="Kenya">Kenya</option>
+																<option value="Kiribati">Kiribati</option>
+																<option value="Korea, North">Korea, North</option>
+																<option value="Korea, South">Korea, South</option>
+																<option value="Kuwait">Kuwait</option>
+																<option value="Kyrgyzstan">Kyrgyzstan</option>
+																<option value="Laos">Laos</option>
+																<option value="Latvia">Latvia</option>
+																<option value="Lebanon">Lebanon</option>
+																<option value="Lesotho">Lesotho</option>
+																<option value="Liberia">Liberia</option>
+																<option value="Libya">Libya</option>
+																<option value="Liechtenstein">Liechtenstein</option>
+																<option value="Lithuania">Lithuania</option>
+																<option value="Luxembourg">Luxembourg</option>
+																<option value="Macedonia">Macedonia</option>
+																<option value="Madagascar">Madagascar</option>
+																<option value="Malawi">Malawi</option>
+																<option value="Malaysia">Malaysia</option>
+																<option value="Maldives">Maldives</option>
+																<option value="Mali">Mali</option>
+																<option value="Malta">Malta</option>
+																<option value="Marshall Islands">Marshall Islands</option>
+																<option value="Mauritania">Mauritania</option>
+																<option value="Mauritius">Mauritius</option>
+																<option value="Mexico">Mexico</option>
+																<option value="Micronesia">Micronesia</option>
+																<option value="Moldova">Moldova</option>
+																<option value="Mongolia">Mongolia</option>
+																<option value="Morocco">Morocco</option>
+																<option value="Monaco">Monaco</option>
+																<option value="Mozambique">Mozambique</option>
+																<option value="Namibia">Namibia</option>
+																<option value="Nauru">Nauru</option>
+																<option value="Nepal">Nepal</option>
+																<option value="Netherlands">Netherlands</option>
+																<option value="New Zealand">New Zealand</option>
+																<option value="Nicaragua">Nicaragua</option>
+																<option value="Niger">Niger</option>
+																<option value="Nigeria">Nigeria</option>
+																<option value="Norway">Norway</option>
+																<option value="Oman">Oman</option>
+																<option value="Pakistan">Pakistan</option>
+																<option value="Panama">Panama</option>
+																<option value="Papua New Guinea">Papua New Guinea</option>
+																<option value="Paraguay">Paraguay</option>
+																<option value="Peru">Peru</option>
+																<option value="Philippines">Philippines</option>
+																<option value="Poland">Poland</option>
+																<option value="Portugal">Portugal</option>
+																<option value="Qatar">Qatar</option>
+																<option value="Romania">Romania</option>
+																<option value="Russia">Russia</option>
+																<option value="Rwanda">Rwanda</option>
+																<option value="Samoa">Samoa</option>
+																<option value="San Marino">San Marino</option>
+																<option value=" Sao Tome"> Sao Tome</option>
+																<option value="Saudi Arabia">Saudi Arabia</option>
+																<option value="Senegal">Senegal</option>
+																<option value="Serbia and Montenegro">Serbia and Montenegro</option>
+																<option value="Seychelles">Seychelles</option>
+																<option value="Sierra Leone">Sierra Leone</option>
+																<option value="Singapore">Singapore</option>
+																<option value="Slovakia">Slovakia</option>
+																<option value="Slovenia">Slovenia</option>
+																<option value="Solomon Islands">Solomon Islands</option>
+																<option value="Somalia">Somalia</option>
+																<option value="South Africa">South Africa</option>
+																<option value="Spain">Spain</option>
+																<option value="Sri Lanka">Sri Lanka</option>
+																<option value="Sudan">Sudan</option>
+																<option value="Suriname">Suriname</option>
+																<option value="Swaziland">Swaziland</option>
+																<option value="Sweden">Sweden</option>
+																<option value="Switzerland">Switzerland</option>
+																<option value="Syria">Syria</option>
+																<option value="Taiwan">Taiwan</option>
+																<option value="Tajikistan">Tajikistan</option>
+																<option value="Tanzania">Tanzania</option>
+																<option value="Thailand">Thailand</option>
+																<option value="Togo">Togo</option>
+																<option value="Tonga">Tonga</option>
+																<option value="Trinidad and Tobago">Trinidad and Tobago</option>
+																<option value="Tunisia">Tunisia</option>
+																<option value="Turkey">Turkey</option>
+																<option value="Turkmenistan">Turkmenistan</option>
+																<option value="Uganda">Uganda</option>
+																<option value="Ukraine">Ukraine</option>
+																<option value="United Arab Emirates">United Arab Emirates</option>
+																<option value="United Kingdom">United Kingdom</option>
+																<option value="United States">United States</option>
+																<option value="Uruguay">Uruguay</option>
+																<option value="Uzbekistan">Uzbekistan</option>
+																<option value="Vanuatu">Vanuatu</option>
+																<option value="Venezuela">Venezuela</option>
+																<option value="Vietnam">Vietnam</option>
+																<option value="Yemen">Yemen</option>
+																<option value="Zambia">Zambia</option>
+																<option value="Zimbabwe">Zimbabwe</option>
+																</select>
+
+																
+																<label for="city" class="required">city:</label>
+																<input id="city" name=city data-bind="value: city"
+																	style="width: 181px" class="k-textbox" 
+																	class="k-textbox" type="text" pattern="[A-Za-z]+"
+																	required validationMessage="Please enter a valid city" /> -->
+
+
 </html>
+
+
+

@@ -1,0 +1,434 @@
+#vertical {
+  height: 501px;
+  width: 92%;
+  margin: 0 auto;
+}
+
+.demo-section {
+  background-color: white;
+  border: none;
+  background: -webkit-linear-gradient(white, white, white);
+  /* For Safari */
+  background: -o-linear-gradient(white, white, white);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(white, white, white);
+  /* For Firefox 3.6 to 15 */
+  background: linear-gradient(white, white, white); /* Standard syntax */
+}
+
+.demo-section3 {
+  background-color: white;
+  border-width: 1px;
+  border: none;
+  background: -webkit-linear-gradient(white, white, white);
+  /* For Safari */
+  background: -o-linear-gradient(white, white, white);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(white, white, white);
+  /* For Firefox 3.6 to 15 */
+  background: linear-gradient(white, white, white); /* Standard syntax */
+  width: 45%;
+  float: left;
+}
+
+
+
+.demo-section4 {
+  background-color: white;
+  border-width: 1px;
+  border: none;
+  background: -webkit-linear-gradient(white, white, white);
+  /* For Safari */
+  background: -o-linear-gradient(white, white, white);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(white, white, white);
+  /* For Firefox 3.6 to 15 */
+  background: linear-gradient(white, white, white); /* Standard syntax */
+  width: 100%;
+  overflow: hidden;
+}
+
+.demo-section2 {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #D7D9D9;
+  background: -webkit-linear-gradient(white, white, white);
+  /* For Safari */
+  background: -o-linear-gradient(white, white, white);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(white, white, white);
+  /* For Firefox 3.6 to 15 */
+  background: linear-gradient(white, white, white); /* Standard syntax */
+}
+
+#menu {
+  font-size: 2em;
+  text-transform: lowercase;
+  padding: 0px 0px;
+  background-color: white; //
+  border: none;
+  background: -webkit-linear-gradient(white, white, white);
+  /* For Safari */
+  background: -o-linear-gradient(white, white, white);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(white, white, white);
+  /* For Firefox 3.6 to 15 */
+  background: linear-gradient(white, white, white); /* Standard syntax */
+}
+
+#menu h2 {
+  font-size: 1em;
+  text-transform: lowercase;
+  padding: 0px 0px;
+  background-color: white;
+}
+
+#menu li {
+  font-size: smaller; //
+  text-transform: uppercase;
+  padding: 0px 0px; //
+  border: none;
+  background-color: white;
+  color: #4099FF;
+}
+
+#vertical2 {
+  height: 501px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.pane-content {
+  padding: 0 10px;
+}
+
+button.keep,submit:visited {
+  background: #222 repeat-x;
+  display: inline-block;
+  padding: 5px 10px 6px;
+  color: #fff;
+  text-decoration: none;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 8px;
+  text-shadow: 0 -0px 0px rgba(0, 0, 0, 0.25);
+  border: 0px solid rgba(0, 0, 0, 0);
+  position: relative;
+  cursor: pointer;
+  background-color: #3B5998;
+  font-size: 10pt;
+  width: 80%;
+}
+
+button.upButton,submit:visited {
+  background: #222 repeat-x;
+  display: inline-block;
+  padding: 5px 10px 6px;
+  color: #fff;
+  text-decoration: none;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 8px;
+  text-shadow: 0 -0px 0px rgba(0, 0, 0, 0.25);
+  border: 0px solid rgba(0, 0, 0, 0);
+  position: relative;
+  cursor: pointer;
+  background-color: #4099FF;
+  font-size: 10pt;
+  //width: 80%;
+}
+
+button.mp3Button,button.mp4Button,button.ytButton,submit:visited {
+  background: #222 repeat-x;
+  display: inline-block;
+  padding: 5px 10px 6px;
+  margin-bottom: 5px;
+  margin-top: 20px;
+  color: #fff;
+  text-decoration: none;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 8px;
+  text-shadow: 0 -0px 0px rgba(0, 0, 0, 0.25);
+  border: 0px solid rgba(0, 0, 0, 0);
+  position: relative;
+  cursor: pointer;
+  background-color: #4099FF;
+  font-size: 10pt;
+  width: 150px;
+  height:50px;
+}
+
+button.bin,submit:visited {
+  background: #222 repeat-x;
+  display: inline-block;
+  padding: 5px 10px 6px;
+  color: #fff;
+  text-decoration: none;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 8px;
+  -moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0);
+  border: 0px solid rgba(0, 0, 0, 0);
+  position: relative;
+  cursor: pointer;
+  background-color: #4099FF;
+  font-size: 10pt;
+  width: 80%;
+}
+
+.k-button2,submit:visited {
+  background: #222 repeat-x;
+  display: inline-block;
+  padding: 5px 10px 6px;
+  color: black;
+  text-decoration: none;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 8px;
+  -moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0);
+  border: 0px solid rgba(0, 0, 0, 0);
+  position: relative;
+  cursor: pointer;
+  background-color: white;
+  font-size: 10pt;
+  color: #4099FF;
+}
+
+button.feedbackBut {
+  background: #222 repeat-x;
+  display: inline-block;
+  color: grey;
+  text-decoration: none;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 8px;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  position: absolute;
+  cursor: pointer;
+  border: 1px solid #DBDBDB;
+  background-color: white;
+  font-size: 15pt;
+  width: 140px;
+  height: 30px;
+  margin-left: -66px;
+  margin-top: 70px;
+  text-decoration: none;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 8px;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  color: #4099FF;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+  color: #000;
+}
+
+ p{
+                color: #3B5998;
+          }
+
+ #options {
+                padding: 1px 0 3px 3px;
+                color: #4099FF;
+          }
+
+ h3,h2{
+                color: #4099FF;
+          }
+
+ #options2 {
+                padding: 1px 0 3px 3px;
+                color: #4099FF;
+          }
+          
+          
+           #wordcloud {
+                margin-left: 0px;
+                margin-top: 10px;
+               
+          }
+          
+            #options h3 {
+                font-size: 15pt;
+                font-weight: bold;
+                margin: 20px 0 13px 0;
+            }
+            
+                        #options2 h3 {
+                font-size: 15pt;
+                font-weight: bold;
+                margin: 17px 0 8px 0;
+            }
+            
+            #get {
+                margin-top: 25px;
+            }
+          
+span.k-tooltip
+{
+    position: static;
+    display: inline-block;
+    border-width: 1px;
+   padding: 6px 5px 1px 6px;
+}
+
+.k-widget.k-multiselect {
+  width: 400px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+
+label {
+  display: inline-block;
+  width: 70px;
+  text-align: right;
+  padding: 8px 4px 0 4px;
+  font-size: 14px;
+  color: #4099FF;
+}
+
+#ytplayerchart {
+  border-style: none;
+  padding-top:20px;
+}
+
+
+
+
+
+
+    #panel input,
+    #panel textarea {
+        font: inherit;
+        width: 310px;
+        margin: 0;
+        padding: 2px 0.3em;
+    }
+
+
+      #example2 ul h3 {
+        margin-bottom: 0.6em;
+        padding: 0;
+    }
+
+    #example2 ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    #example2 ul label {
+        display: inline-block;
+        vertical-align: top;
+        line-height: 26px;
+        width: 80px;
+        padding: 0 3px;
+        text-align: right;
+    }
+
+    #feedback {
+        margin-left: 92px;
+        height: 26px;
+        width: 148px;
+    }
+    
+
+
+    #bug {
+        margin-left: 92px;
+        height: 26px;
+        width: 148px;
+    }
+
+    #example2 li {
+        margin: 0.4em ;
+    }
+
+    #example2 h3.k-header {
+        margin: 1.4em 0 1em;
+        padding: .4em 1.4em;
+        font-size: 1.4em;
+        border-radius: 2px;
+    }
+
+    #feedback-content {
+        height: 100px;
+    }
+
+    #bug-content {
+        height: 100px;
+    }
+
+
+
+
+    .demo-section6 {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #D7D9D9;
+  display: inline-block;
+  padding: 10px 10px 10px;
+  margin:5px 5px 2px;
+  width:90%;
+  text-decoration: none;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 8px;
+  -moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0);
+  position: relative;
+  cursor: pointer;
+  background-color: white;
+  font-size: 10pt;  
+}
+
+.demo-section5 {
+
+  border-color: #D7D9D9;
+  display: inline-block;
+  padding: 0px 0px 0px;
+  margin:10px 5px 00px;
+  width:90%;
+  text-decoration: none;
+
+  position: relative;
+  cursor: pointer;
+  background-color: white;
+  font-size: 9pt; 
+  color:#3B5998;
+}
+
+    #contact ul h3 {
+        margin-bottom: 0.6em;
+        padding: 0;
+    }
+
+    #contact ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    #contact ul label {
+        display: inline-block;
+        vertical-align: top;
+        line-height: 26px;
+        width: 80px;
+        padding: 0 3px;
+        text-align: right;
+    }
+    
+        #contact li {
+        margin: 0.4em ;
+    }
+
+    #contact h3.k-header {
+        margin: 1.4em 0 1em;
+        padding: .4em 1.4em;
+        font-size: 1.4em;
+        border-radius: 2px;
+    }

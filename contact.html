@@ -9,6 +9,7 @@
 <link href="styles/kendo.default.min.css" rel="stylesheet">
 <script src="js/kendo.all.min.js" type="text/javascript"></script>
 <link href="bbb.css" rel="stylesheet">
+<link href="slamstr.css" rel="stylesheet">
 
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="js/kendo.web.min.js" type="text/javascript"></script>
@@ -29,6 +30,10 @@
 
 $(document).ready(function() {
 
+	
+	
+	
+	
  $('#feedback').click(function(){
 		    //e.PreventDefault();
 		 
@@ -66,6 +71,8 @@ $(document).ready(function() {
 	title = ($('#bug-title').val());
 	content = ($('#bug-content').val());
 
+
+
 	 dataIn = {uID:userID,title:title,content:content};
 	 
 	       $.ajax({ 
@@ -96,13 +103,13 @@ $(document).ready(function() {
 
 	<div id="body" class="k-content">
 
-		<div id="forecast">
+		<div id="mainsection" class="demo-section">
 
 
 
 			<div align="right">
 				<centre> <img src="images/banner.jpg" alt="hamster"
-					width="50%" height="200px"> </centre>
+					width="100%" height="150px"> </centre>
 			</div>
 
 			<div>
@@ -161,6 +168,9 @@ $(document).ready(function() {
 									<div class="pane-content">
 
 
+
+
+
 <div id="example2">
  <div id="panel"  >
 <h2>Feedback:</h2>
@@ -181,7 +191,10 @@ $(document).ready(function() {
             </li>
         </ul>
 
-        <button id="feedback" name="feedback" class="k-button">Submit</button>
+
+
+<div id="submitspace"></div>
+        
 
 
 
@@ -202,8 +215,26 @@ $(document).ready(function() {
                 <textarea id="bug-content" rows="4" cols="60" class="k-textbox">Sort it out</textarea>
             </li>
         </ul>
+        
+        <div id="submitspace2"></div>
+        
 
-        <button id="bug" class="k-button">Submit</button>
+<script>
+userID = sessionStorage.userID;
+if(userID != 'noid') {
+	$("#submitspace").html("<button class=\"bin\" id=\"feedback\" name=\"feedback\" class=\"k-button\">Submit</button>");
+}else{
+	$("#submitspace").html("<a id=\"login\" href=\"\\\">please log in to submit</a></>");
+}
+
+
+if(userID != 'noid') {
+	$("#submitspace2").html("<button class=\"bin\" id=\"bug\" name=\"bug\" class=\"k-button\">Submit</button>");
+}else{
+	
+	$("#submitspace2").html("<a id=\"login\" href=\"\\\">please log in to submit</a></>");
+}
+</script>
 
 </div>
 </div>
@@ -220,17 +251,16 @@ $(document).ready(function() {
 
 									<div id="vertical2">
 										<div id="top-pane2">
-											<div id=login class="pane-content">
+											<div id=feedbackPanel class="pane-content">
 
 
-												list of feedback
-
+												<h2>User Feedback</h2>
+												
+												<div id="fbData" name="fbData"></div>
 
 
 											</div>
 										</div>
-
-
 
 										<div id="bottom-pane2">
 
@@ -238,7 +268,9 @@ $(document).ready(function() {
 
 											<div class="pane-content" id="vidInfo">
 
-													list of bugs
+													<h2>User Bugs</h2>
+													
+													<div id="bugsData" name="bugsData"></div>
 
 											</div>
 										</div>
@@ -260,7 +292,77 @@ $(document).ready(function() {
 
 						 $(document).ready(function() {
 							 
-							
+
+
+
+
+									
+									
+									
+									$.ajax({
+									    type: "GET",
+									    dataType: "json",
+									    url: "/getFB"				    
+									}).done(function(data){
+										
+
+
+										datames = data['fb'];
+										datadate = data['date'];
+										datauser = data['user'];
+
+
+									$.ajax({
+								    type: "GET",
+								    dataType: "json",
+								    url: "/getBugs"	
+
+
+									}).done(function(data){
+										
+										datames2 = data['bug'];
+										datadate2 = data['date'];
+										datauser2 = data['user'];
+										
+										
+
+									tempVar = ''
+									for(var i = 0;i<datames.length;i++){
+										tempVar = tempVar +  '<div class=\"demo-section5\">submitted on '+datadate[i].substring(0,10)+' by '+datauser[i]+'</div><div class=\"demo-section4\">'+datames[i]+'</div>'
+									}
+									
+									
+									$("#fbData").html(tempVar);
+									
+									
+									tempVar = ''
+									for(var i = 0;i<datames2.length;i++){
+										tempVar = tempVar +  '<div class=\"demo-section5\">submitted on '+datadate2[i].substring(0,10)+' by '+datauser2[i]+'</div><div class=\"demo-section4\">'+datames2[i]+'</div>'
+									}
+									
+									
+									$("#bugsData").html(tempVar);
+
+									});
+
+
+									});
+									
+
+									
+									
+									//datames = ['test1','tset2','test3'];
+									//datadate = ['12-01-2014','12-01-2014','12-01-2014'];
+									//datauser = ['slam','str','me'];
+									
+									//datames2 = ['test1','tset2','test3'];
+									//datadate2 = ['12-01-2014','12-01-2014','12-01-2014'];
+									//datauser2 = ['slam','str','me'];
+									
+									
+
+								
+							 
 							 
 							 var tes = 1;
 							 
@@ -318,18 +420,12 @@ $(document).ready(function() {
 						
 							$(document).ready(function() {
 				
-								
-								
-								 
-								
-							
-								
-								
+
 								
 								$("#vertical").kendoSplitter({
 									orientation : "vertical",
 									panes : [ {
-										collapsible : true,
+										collapsible : false,
 										size : "7%"
 									},{
 										collapsible : false,
@@ -355,7 +451,7 @@ $(document).ready(function() {
 										resizable: false,
 										size : "60%"
 									}, {
-										collapsible : true,
+										collapsible : false,
 										resizable: false,
 									},
 
@@ -414,6 +510,41 @@ $(document).ready(function() {
 	border-color: #D7D9D9;
 }
 
+.demo-section4 {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #D7D9D9;
+	display: inline-block;
+	padding: 10px 10px 10px;
+	margin:5px 5px 2px;
+	width:90%;
+	text-decoration: none;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 8px;
+	-moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+	-webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0);
+	position: relative;
+	cursor: pointer;
+	background-color: white;
+	font-size: 10pt;	
+}
+
+.demo-section5 {
+
+	border-color: #D7D9D9;
+	display: inline-block;
+	padding: 0px 0px 0px;
+	margin:10px 5px 00px;
+	width:90%;
+	text-decoration: none;
+
+	position: relative;
+	cursor: pointer;
+	background-color: white;
+	font-size: 9pt;	
+}
+
 #menu {
 	font-size: 2em;
 	text-transform: lowercase;
@@ -457,15 +588,11 @@ $(document).ready(function() {
 }
 </style>
 
-
-
-
-
 			</div>
 
-<br>
+				<br>
 
-						<div class="demo-section2">
+			<div class="demo-section2" id="options2">
 
 				<div align="center">
 
@@ -490,179 +617,20 @@ $(document).ready(function() {
 
 			<div></div>
 
-
-
-
-
-
 			<div>
-
 
 				<br>
 
 
 
 				<style scoped type="text/css">
-input.keep,submit:visited {
-	background: #222 repeat-x;
-	display: inline-block;
-	padding: 5px 10px 6px;
-	color: #fff;
-	text-decoration: none;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 8px;
-	text-shadow: 0 -0px 0px rgba(0, 0, 0, 0.25);
-	border: 0px solid rgba(0, 0, 0, 0);
-	position: relative;
-	cursor: pointer;
-	background-color: #009612;
-	font-size: 20pt;
-	width: 240px;
-}
-
-input.bin,submit:visited {
-	background: #222 repeat-x;
-	display: inline-block;
-	padding: 5px 10px 6px;
-	color: #fff;
-	text-decoration: none;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 8px;
-	-moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
-	-webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
-	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0);
-	border: 0px solid rgba(0, 0, 0, 0);
-	position: relative;
-	cursor: pointer;
-	background-color: #730000;
-	font-size: 14pt;
-	font-size: 20pt;
-	width: 240px;
-}
-
-.k-button2,submit:visited {
-	background: #222 repeat-x;
-	display: inline-block;
-	padding: 5px 10px 6px;
-	color: black;
-	text-decoration: none;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 8px;
-	-moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
-	-webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
-	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0);
-	border: 0px solid rgba(0, 0, 0, 0);
-	position: relative;
-	cursor: pointer;
-	background-color: white;
-	font-size: 10pt;
-}
 
 
-<style scoped>
-    #panel, #blog-preview {
-        display: inline-block;
-        vertical-align: top;
-        width: 310px;
-        margin: 10px;
-        padding: 30px 15px 20px 15px;
-        min-height: 200px;
-    }
-    
-    #blog-preview {
-        width: 310px;
-    }
 
-    #panel input,
-    #panel textarea {
-        font: inherit;
-        width: 310px;
-        margin: 0;
-        padding: 2px 0.3em;
-    }
 
-    #example2 ul h3 {
-        margin-bottom: 0.6em;
-        padding: 0;
-    }
 
-    #example2 ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-    }
 
-    #example2 ul label {
-        display: inline-block;
-        vertical-align: top;
-        line-height: 26px;
-        width: 80px;
-        padding: 0 3px;
-        text-align: right;
-    }
 
-    #feedback {
-        margin-left: 92px;
-        height: 26px;
-        width: 148px;
-    }
-
-    #bug {
-        margin-left: 92px;
-        height: 26px;
-        width: 148px;
-    }
-
-    #example2 li {
-        margin: 0.4em ;
-    }
-
-    #example2 h3.k-header {
-        margin: 1.4em 0 1em;
-        padding: .4em 1.4em;
-        font-size: 1.4em;
-        border-radius: 2px;
-    }
-
-    #feedback-content {
-        height: 100px;
-    }
-
-    #bug-content {
-        height: 100px;
-    }
-
-    #blog-preview img {
-        float: left;
-        margin: 0 14px 0 0;
-        border: 3px solid #dedede;
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px;
-        border-radius: 3px;
-    }
-
-    #blog-preview h4 {
-        font-size: 9px;
-        font-weight: normal;
-        text-transform: uppercase;
-        color: #8d8d8d;
-        margin-top: 3px;
-        width: 100%;
-    }
-
-    #blog-preview h4 strong {
-        color: #ed662e;
-    }
-
-    #blog-preview p {
-        margin-left: 93px;
-    }
-</style>
-
-::-webkit-input-placeholder { /* WebKit browsers */
-	color: #000;
-}
 </style>
 			</div>
 </body>
