@@ -4,7 +4,7 @@ var express    = require('express');
 var fs = require('fs');
 var pg = require('pg'); 
 var request = require('request');
-var AWS = require('aws-sdk');
+//var AWS = require('aws-sdk');
 //var jade = require('jade');
 
 var testVar = '';
@@ -1665,12 +1665,12 @@ var accessKeyId =  process.env.AWS_ACCESS_KEY || "AKIAIIYW5AHAINUAAWCQ";
 var secretAccessKey = process.env.AWS_SECRET_KEY || "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";
 
 
-AWS.config.update({
-	accessKeyId: accessKeyId,
-	secretAccessKey: secretAccessKey
-});
+// AWS.config.update({
+// 	accessKeyId: accessKeyId,
+// 	secretAccessKey: secretAccessKey
+// });
 
-var s3 = new AWS.S3();
+// var s3 = new AWS.S3();
 
 app.post('/uploadTest', function(req, res){
 
