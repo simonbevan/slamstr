@@ -54,91 +54,8 @@ $("#tweet").html(twit);
 
 <div class="fb-share-button" data-href="http://www.slamstr.com" data-type="button_count"></div>
 
-<form action="/uploadTest" method="post"  enctype="multipart/form-data" id ="registerMP3" name="registerMP3">
-                                                            <ul>
-                                                            
-                                                            <input type="hidden" name="type" value="mp3">
-                                                            
-                                                            <script>
-                                                                document.write("<input type=\"hidden\" name=\"id\" value="+sessionStorage.userID +">");
-                                                            </script>
 
-                                                            <label for="files" class="required">mp3:</label>
-                                                            <input type="file" name="files" required  multiple accept='music/*'>
-                                                            <br>
-                                                            
-                                                            <label for="files2" class="required">jpeg:</label>
-                                                            <input type="file" name="files2" required  multiple accept='picture/*'>
-                                                            <br>
-                                                            
-                                                                <label for="artist" class="required">artist:</label>
-                                                                <input type="text" id="artist" name="artist" data-bind="value: artist"
-                                                                     required  style="width: 181px"class="k-textbox" />
-                                                            
-                                                                
-                                                                <label for="title" class="required">title:</label>
-                                                                <input type="text" id="title" name="title" data-bind="value: title"
-                                                                     data-bind="value: title" style="width: 181px"
-                                                                    class="k-textbox" type="text" pattern="[A-Za-z0-9]+"
-                                                                    required validationMessage="Sorry only letters and numbers" />
-                                                                    
-                                                                <br>
-                                                                <label for="city" class="required">city:</label>
-                                                                <input id="city" name="city"
-                                                                    data-bind="value: city" type="text"
-                                                                    required validationMessage="Please enter a city" style="width: 181px" class="k-textbox" style="width: 181px" class="k-textbox" />
-                                                                
-                                                                <label for="country" class="required">country:</label>
-                                                                <input id="country" name="country"
-                                                                    data-bind="value: country" type="text"
-                                                                    required validationMessage="Please enter a country" style="width: 181px" class="k-textbox" style="width: 181px" class="k-textbox" />
-                                                                <br>
-                                                                
-                                                                <label for="genre2" class="required">genre:</label>
-                                                                <select id="genre2" multiple="multiple" name="genre2" required validationMessage="Please Select Your Genre"
-                                                                    data-bind="value: Genre2" style="width: 181px">
-
-                                                            <option>Alternative & Indie</option>
-                                                            <option>Blues</option>
-                                                            <option>Classical</option>
-                                                            <option>Country</option>
-                                                            <option>Dance & Electronic</option>
-                                                            <option>Easy optionstening</option>
-                                                            <option>Folk & Songwriter</option>
-                                                            <option>Hard Rock & Metal</option>
-                                                            <option>Jazz</option>
-                                                            <option>Miscellaneous</option>
-                                                            <option>Pop</option>
-                                                            <option>R&B & Soul</option>
-                                                            <option>Rap & Hip-Hop</option>
-                                                            <option>Reggae</option>
-                                                            <option>Rock</option>
-                                                            <option>Soundtracks & Musicals</option>
-                                                            <option>World Music</option>
-
-                                                                </select>
-                                                                
-                                                                <label for="agree">please select</label>
-                                                                <input type="checkbox" id="agree" name="agree"
-                                                                    data-bind="checked: agreed" />
-&nbsp I have read the licence greement
-                                                                <br>
-                                                                <br>
-                                                                <label for="reg">Enter the Ring</label>
-                                                             
-
-                                                            </ul>
-                                                        </form>
-
-            <script id="fileTemplate" type="text/x-kendo-template">
-                <span class='k-progress'></span>
-                <div class='file-wrapper'>
-                    <span class='file-icon #=addExtensionClass(files[0].extension)#'></span>
-                    <h4 class='file-heading file-name-heading'>Name: #=name#</h4>
-                    <h4 class='file-heading file-size-heading'>Size: #=size# bytes</h4>
-                    <button type='button' class='k-upload-action'></button>
-                </div>
-            </script>
+         
 
             <script>
                 $(document).ready(function () {
@@ -152,7 +69,7 @@ $("#tweet").html(twit);
                         upload: onUpload,
 
 
-                        template: kendo.template($('#fileTemplate').html())
+                        
                     });
                 });
 
@@ -244,6 +161,10 @@ $("#tweet").html(twit);
                     position: relative;
                     height: 75px;
                 }
+
+
+
+                
             </style>
         </div>
 
