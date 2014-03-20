@@ -5,7 +5,7 @@ var fs = require('fs');
 var pg = require('pg'); 
 var request = require('request');
 var AWS = require('aws-sdk');
-//var jade = require('jade');
+var bcrypt = require('bcrypt-nodejs');
 
 var testVar = '';
 
@@ -47,12 +47,12 @@ app.post('/addToDB', express.bodyParser(), function (req, res){
 	sqlStr2 = "INSERT INTO BATTLE (VIDID,VIEWS,STATUS,VOTE,GENRE,PRIORITY) VALUES ("+sqlString2+")" 
 
 	//console.log(sqlStr2)
-var DBHost =  process.env.DBHost;
-var DBUser =  process.env.DBUser;
-var DBPassword =  process.env.DBPassword;
-var DB =  process.env.DB;
+	var DBHost =  process.env.DBHost;
+	var DBUser =  process.env.DBUser;
+	var DBPassword =  process.env.DBPassword;
+	var DB =  process.env.DB;
 
-	
+
 	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 	var client = new pg.Client(params);
 	client.connect(function(err) {
@@ -87,12 +87,12 @@ app.get('/initialOpen', function(req, res) {
 
 
 
-var DBHost =  process.env.DBHost;
-var DBUser =  process.env.DBUser;
-var DBPassword =  process.env.DBPassword;
-var DB =  process.env.DB;
+	var DBHost =  process.env.DBHost;
+	var DBUser =  process.env.DBUser;
+	var DBPassword =  process.env.DBPassword;
+	var DB =  process.env.DB;
 
-	
+
 	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 	var client = new pg.Client(params);
 
@@ -276,11 +276,11 @@ app.post('/feedback', function(req, res) {
 
 
 	var DBHost =  process.env.DBHost;
-var DBUser =  process.env.DBUser;
-var DBPassword =  process.env.DBPassword;
-var DB =  process.env.DB;
+	var DBUser =  process.env.DBUser;
+	var DBPassword =  process.env.DBPassword;
+	var DB =  process.env.DB;
 
-	
+
 	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 	var client = new pg.Client(params);
 	client.connect(function(err) {
@@ -330,11 +330,11 @@ app.post('/bug', function(req, res) {
 
 
 	var DBHost =  process.env.DBHost;
-var DBUser =  process.env.DBUser;
-var DBPassword =  process.env.DBPassword;
-var DB =  process.env.DB;
+	var DBUser =  process.env.DBUser;
+	var DBPassword =  process.env.DBPassword;
+	var DB =  process.env.DB;
 
-	
+
 	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 	var client = new pg.Client(params);
 	client.connect(function(err) {
@@ -372,11 +372,11 @@ var DB =  process.env.DB;
 app.get('/getbugs', function(req, res) {
 
 	var DBHost =  process.env.DBHost;
-var DBUser =  process.env.DBUser;
-var DBPassword =  process.env.DBPassword;
-var DB =  process.env.DB;
+	var DBUser =  process.env.DBUser;
+	var DBPassword =  process.env.DBPassword;
+	var DB =  process.env.DB;
 
-	
+
 	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 	var client = new pg.Client(params);
 	client.connect(function(err) {
@@ -422,11 +422,11 @@ app.get('/getfb', function(req, res) {
 
 
 	var DBHost =  process.env.DBHost;
-var DBUser =  process.env.DBUser;
-var DBPassword =  process.env.DBPassword;
-var DB =  process.env.DB;
+	var DBUser =  process.env.DBUser;
+	var DBPassword =  process.env.DBPassword;
+	var DB =  process.env.DB;
 
-	
+
 	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 	var client = new pg.Client(params);
 	client.connect(function(err) {
@@ -476,11 +476,11 @@ app.post('/next', function(req, res) {
 	var genre = "'" +  req.body.genre +"'" ;
 
 	var DBHost =  process.env.DBHost;
-var DBUser =  process.env.DBUser;
-var DBPassword =  process.env.DBPassword;
-var DB =  process.env.DB;
+	var DBUser =  process.env.DBUser;
+	var DBPassword =  process.env.DBPassword;
+	var DB =  process.env.DB;
 
-	
+
 	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 
 	var output2 = 1;
@@ -492,7 +492,7 @@ var DB =  process.env.DB;
 		data = 0;
 
 		if(genre=="'all'"){
-			sqlString = "SELECT VIDID,VOTE FROM BATTLE WHERE STATUS = 0 ORDER BY VOTE DESC LIMIT 1"	;
+			sqlString = "SELECT VIDID,VOTE FROM BATTLE WHERE STATUS = 0 ORDER BY RANDOM() LIMIT 1"	;
 		}else{
 			sqlString = "SELECT VIDID,VOTE FROM BATTLE WHERE STATUS = 0 AND GENRE = "+genre+" ORDER BY VOTE DESC LIMIT 1"	;
 		}
@@ -569,14 +569,14 @@ var DB =  process.env.DB;
 				"WHERE VIDID NOT IN " +
 				"(SELECT VIDID FROM VOTES WHERE " +
 				"USERNAME = "+ userID +") AND STATUS = 0 " +
-				"ORDER BY RANDOM() LIMIT 1"	; 
+				"ORDER BY VOTE DESC LIMIT 1"	; 
 			}else{
 				sqlStr2 = "SELECT VIDID,VOTE,VIEWS FROM BATTLE " +
 				"WHERE VIDID NOT IN " +
 				"(SELECT VIDID FROM VOTES WHERE " +
 				"USERNAME = "+ userID +") AND STATUS = 0 " +
 				"AND GENRE="+ genre + " " +
-				"ORDER BY RANDOM() LIMIT 1"	; 
+				"ORDER BY PRIORITY DESC LIMIT 1"	; 
 			}
 
 
@@ -606,14 +606,14 @@ var DB =  process.env.DB;
 						"WHERE VIDID NOT IN " +
 						"(SELECT VIDID FROM VOTES WHERE " +
 						"USERNAME = "+ userID +") AND STATUS = 1 " +
-						"ORDER BY RANDOM() LIMIT 1"	; 
+						"ORDER BY VOTE DESC LIMIT 1"	; 
 					}else{
 						sqlStr4 = "SELECT VIDID,VOTE,VIEWS FROM BATTLE " +
 						"WHERE VIDID NOT IN " +
 						"(SELECT VIDID FROM VOTES WHERE " +
 						"USERNAME = "+ userID +") AND STATUS = 1 " +
 						"AND GENRE="+ genre + " " +
-						"ORDER BY RANDOM() LIMIT 1"	; 
+						"ORDER BY PRIORITY DESC LIMIT 1"	; 
 					}
 
 					client.query(sqlStr4, function(err, result4) {
@@ -657,6 +657,7 @@ app.post('/like', function(req, res) {
 
 	var userID = req.body.uID   ;
 	var vidID = "'" + req.body.vID+"'";
+	var vidID2 = "'" + req.body.vID2+"'";
 	var type =  req.body.type ;
 	var playlistName = req.body.pLName ;
 
@@ -664,11 +665,11 @@ app.post('/like', function(req, res) {
 	// 		var uuid = JSON.stringify(guid());
 
 	var DBHost =  process.env.DBHost;
-var DBUser =  process.env.DBUser;
-var DBPassword =  process.env.DBPassword;
-var DB =  process.env.DB;
+	var DBUser =  process.env.DBUser;
+	var DBPassword =  process.env.DBPassword;
+	var DB =  process.env.DB;
 
-	
+
 	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 	if(userID=="noid"){
 
@@ -686,6 +687,7 @@ var DB =  process.env.DB;
 			d = new Date();
 			timestamp = "'"+d.yyyymmdd() +"'";
 			var uuid = "'"+guid() +"'";
+			var uuid2 = "'"+guid() +"'";
 
 
 
@@ -699,7 +701,7 @@ var DB =  process.env.DB;
 					if(err) {
 						return console.error('error running query', err);
 					}
-					
+
 					//console.log(result.rows);
 
 					if(result.rows.length>0){
@@ -712,7 +714,7 @@ var DB =  process.env.DB;
 						sqlStr1 = "INSERT INTO VOTES (ID,VIDID,USERNAME,VOTE,DATE) VALUES ("+uuid+","+vidID+","+userID+",1,"+timestamp+" )" 
 						sqlStr2 = "UPDATE BATTLE set VOTE = VOTE+1 where VIDID="+vidID
 
-
+						sqlStr3 = "INSERT INTO VOTES (ID,VIDID,USERNAME,VOTE,DATE) VALUES ("+uuid2+","+vidID2+","+userID+",0,"+timestamp+" )" 
 
 						client.query(sqlStr1, function(err, result) {
 							if(err) {
@@ -722,8 +724,14 @@ var DB =  process.env.DB;
 								if(err) {
 									return //console.error('error running query', err);
 								}
-								client.end();
-								res.json('submitted')		
+
+								client.query(sqlStr3, function(err, result) {
+									if(err) {
+										return //console.error('error running query', err);
+									}
+									client.end();
+									res.json('submitted')		
+								});	
 							});	
 						});
 
@@ -789,6 +797,8 @@ var DB =  process.env.DB;
 						sqlStr1 = "INSERT INTO VOTES (ID,VIDID,USERNAME,VOTE,DATE) VALUES ("+uuid+","+vidID+","+userID+",1,"+timestamp+" )" 
 						sqlStr2 = "UPDATE BATTLE set VOTE = VOTE+1 where VIDID="+vidID
 
+						sqlStr1 = "INSERT INTO VOTES (ID,VIDID,USERNAME,VOTE,DATE) VALUES ("+uuid2+","+vidID2+","+userID+",0,"+timestamp+" )" 
+
 						client.query(sqlStr1, function(err, result) {
 							if(err) {
 								return //console.error('error running query', err);
@@ -797,8 +807,14 @@ var DB =  process.env.DB;
 								if(err) {
 									return //console.error('error running query', err);
 								}
-								client.end();
-								res.json('submitted')		
+								client.query(sqlStr3, function(err, result) {
+									if(err) {
+										return //console.error('error running query', err);
+									}
+									client.end();
+									res.json('submitted')		
+								});	
+
 							});	
 						});
 
@@ -853,105 +869,131 @@ app.post('/login', function (req, res) {
 
 
 	var email =   "'"+req.body.username+"'" ;
-	var password =   "'"+req.body.password +"'" ;
+	var password =   req.body.password ;
 	var userID =  email ;
 
 
 
-var DBHost =  process.env.DBHost;
-var DBUser =  process.env.DBUser;
-var DBPassword =  process.env.DBPassword;
-var DB =  process.env.DB;
+	var DBHost =  process.env.DBHost;
+	var DBUser =  process.env.DBUser;
+	var DBPassword =  process.env.DBPassword;
+	var DB =  process.env.DB;
 
-	
+
 	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
-
-	var output2 = 1;
-	sqlStr1 = "SELECT EMAIL,FIRSTNAME,PLAYLISTS from PROFILE WHERE EMAIL="+email+" AND PASSWORD ="+password
 
 	var client = new pg.Client(params);
 	client.connect(function(err) {
 		if(err) {
-			return console.error('could not connect to postgres', err);
+			return //console.error('could not connect to postgres', err);
 		}
-		client.query(sqlStr1, function(err, result) {
+
+		sqlStr = "SELECT PASSWORD from PROFILE WHERE EMAIL="+email
+
+
+
+		client.query(sqlStr, function(err, result) {
 			if(err) {
 				return //console.error('error running query', err);
 			}
 
 
-			if(result.rows.length>0){
-
-				userName = result.rows[0].firstname;
-				loggedIn  = 1;
-				pLName = result.rows[0].playlists;
-				output3 = {'userName':userName,'userID':userID,'loggedIn':loggedIn,'plName':pLName};
+			if(bcrypt.compareSync(password, result.rows[0].password)){
 
 
-				sqlStr2 = "SELECT VIDID,VOTE,VIEWS FROM BATTLE " +
-				"WHERE VIDID NOT IN " +
-				"(SELECT VIDID FROM VOTES WHERE " +
-				"USERNAME = "+ userID +") AND STATUS = 0 " +
-				"ORDER BY RANDOM() LIMIT 1"	; 
 
-				client.query(sqlStr2, function(err, result2) {
+				var output2 = 1;
+				sqlStr1 = "SELECT EMAIL,FIRSTNAME,PLAYLISTS from PROFILE WHERE EMAIL="+email //+" AND PASSWORD ="+password
+
+
+				client.query(sqlStr1, function(err, result) {
 					if(err) {
-						//return console.error('error running query', err);
+						return //console.error('error running query', err);
 					}
 
-					//console.log(sqlStr2 )
-					vidID2 = result2.rows[0].vidid;
-					votes2 = result2.rows[0].vote;
-					views2 = result2.rows[0].views;
 
-					sqlStr3 = "SELECT FILELINK,TITLE,ARTIST,LINK,USERNAME FROM CONTENT WHERE VIDID ='" + vidID2 +"'";	
+					if(result.rows.length>0){
+
+						userName = result.rows[0].firstname;
+						loggedIn  = 1;
+						pLName = result.rows[0].playlists;
+						output3 = {'userName':userName,'userID':userID,'loggedIn':loggedIn,'plName':pLName};
 
 
-					client.query(sqlStr3, function(err, result3) {
-						if(err) {
-							//return console.error('error running query', err);
-						}
-
-						output1 = {'vID':vidID2,'fileLink':result3.rows[0].filelink,'songName':result3.rows[0].title,'bandName':result3.rows[0].artist,'artistLink':result3.rows[0].link,'votes':votes2};
-
-						sqlStr4 = "SELECT VIDID,VOTE,VIEWS FROM BATTLE " +
+						sqlStr2 = "SELECT VIDID,VOTE,VIEWS FROM BATTLE " +
 						"WHERE VIDID NOT IN " +
 						"(SELECT VIDID FROM VOTES WHERE " +
-						"USERNAME = "+ userID +") AND STATUS = 1 " +
-						"ORDER BY RANDOM() LIMIT 1"	; 
+						"USERNAME = "+ userID +") AND STATUS = 0 " +
+						"ORDER BY VOTE DESC LIMIT 1"	; 
 
-						client.query(sqlStr4, function(err, result4) {
+						client.query(sqlStr2, function(err, result2) {
 							if(err) {
 								//return console.error('error running query', err);
 							}
 
-							vidID2 = result4.rows[0].vidid;
-							votes2 = result4.rows[0].vote;
-							views2 = result4.rows[0].views;
+							//console.log(sqlStr2 )
+							vidID2 = result2.rows[0].vidid;
+							votes2 = result2.rows[0].vote;
+							views2 = result2.rows[0].views;
 
-							sqlStr5 = "SELECT FILELINK,TITLE,ARTIST,LINK,USERNAME FROM CONTENT WHERE VIDID ='" + vidID2 +"'";	
+							sqlStr3 = "SELECT FILELINK,TITLE,ARTIST,LINK,USERNAME FROM CONTENT WHERE VIDID ='" + vidID2 +"'";	
 
-							client.query(sqlStr5, function(err, result5) {
+
+							client.query(sqlStr3, function(err, result3) {
 								if(err) {
 									//return console.error('error running query', err);
 								}
 
-								client.end();
-								output2 = {'vID':vidID2,'fileLink':result5.rows[0].filelink,'songName':result5.rows[0].title,'bandName':result5.rows[0].artist,'artistLink':result5.rows[0].link,'votes':votes2};
-								res.json({'out1':output1,'out2':output2,'out3':output3});
+								output1 = {'vID':vidID2,'fileLink':result3.rows[0].filelink,'songName':result3.rows[0].title,'bandName':result3.rows[0].artist,'artistLink':result3.rows[0].link,'votes':votes2};
 
+								sqlStr4 = "SELECT VIDID,VOTE,VIEWS FROM BATTLE " +
+								"WHERE VIDID NOT IN " +
+								"(SELECT VIDID FROM VOTES WHERE " +
+								"USERNAME = "+ userID +") AND STATUS = 1 " +
+								"ORDER BY PRIORITY DESC  LIMIT 1"	; 
+
+								client.query(sqlStr4, function(err, result4) {
+									if(err) {
+										//return console.error('error running query', err);
+									}
+
+									vidID2 = result4.rows[0].vidid;
+									votes2 = result4.rows[0].vote;
+									views2 = result4.rows[0].views;
+
+									sqlStr5 = "SELECT FILELINK,TITLE,ARTIST,LINK,USERNAME FROM CONTENT WHERE VIDID ='" + vidID2 +"'";	
+
+									client.query(sqlStr5, function(err, result5) {
+										if(err) {
+											//return console.error('error running query', err);
+										}
+
+										client.end();
+										output2 = {'vID':vidID2,'fileLink':result5.rows[0].filelink,'songName':result5.rows[0].title,'bandName':result5.rows[0].artist,'artistLink':result5.rows[0].link,'votes':votes2};
+										res.json({'out1':output1,'out2':output2,'out3':output3});
+
+									});
+								});
 							});
+
 						});
-					});
+
+					}else{
+						client.end();
+						res.json({'out1':'invalid login'})
+					}
 
 				});
 
 			}else{
+
 				client.end();
-				res.json({'out1':'invalidID'})
+				res.json({'out1':'invalid login'})
+
 			}
 
 		});
+
 	});
 });
 
@@ -1011,6 +1053,8 @@ app.post('/register', function (req, res) {
 			firstname = req.body.firstname;
 			surname  = req.body.lastname;
 			password =  req.body.password ;
+			password = bcrypt.hashSync(password);
+
 			country= "'" +countryIP+"'" ;
 			city =  "'" +cityIP+"'" ;
 			birthday = "'" +req.body.age2+"'" ;
@@ -1056,6 +1100,7 @@ app.post('/register', function (req, res) {
 			firstname = req.body.firstname;
 			surname  = req.body.lastname;
 			password =  req.body.password ;
+			password = bcrypt.hashSync(password);
 			country= "'" +countryIP+"'" ;
 			city =  "'" +cityIP+"'" ;
 			birthday = "'" +req.body.age+"'" ;
@@ -1091,12 +1136,12 @@ app.post('/register', function (req, res) {
 		//console.log(insertString)
 
 		var DBHost =  process.env.DBHost;
-var DBUser =  process.env.DBUser;
-var DBPassword =  process.env.DBPassword;
-var DB =  process.env.DB;
+		var DBUser =  process.env.DBUser;
+		var DBPassword =  process.env.DBPassword;
+		var DB =  process.env.DB;
 
-	
-	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
+
+		var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 		var client = new pg.Client(params);
 
 
@@ -1177,11 +1222,11 @@ app.post('/createTable', function (req, res) {
 
 
 	var DBHost =  process.env.DBHost;
-var DBUser =  process.env.DBUser;
-var DBPassword =  process.env.DBPassword;
-var DB =  process.env.DB;
+	var DBUser =  process.env.DBUser;
+	var DBPassword =  process.env.DBPassword;
+	var DB =  process.env.DB;
 
-	
+
 	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 
 	if(genre=="'all'"){
@@ -1249,16 +1294,16 @@ app.get('/getTop', function (req, res) {
 
 	output = [];
 	var DBHost =  process.env.DBHost;
-var DBUser =  process.env.DBUser;
-var DBPassword =  process.env.DBPassword;
-var DB =  process.env.DB;
+	var DBUser =  process.env.DBUser;
+	var DBPassword =  process.env.DBPassword;
+	var DB =  process.env.DB;
 
-	
+
 	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 
 	var sqlStr1 = "SELECT VIDID,VOTE FROM BATTLE ORDER BY VOTE DESC LIMIT 1"
 
-	var client = new pg.Client(params);
+		var client = new pg.Client(params);
 	client.connect(function(err) {
 		if(err) {
 			return console.error('could not connect to postgres', err);
@@ -1299,10 +1344,10 @@ var DB =  process.env.DB;
 					output.push({'vidID':result2.rows[0].vidid,'artist':result2.rows[0].artist,'fileLink':result2.rows[0].filelink,'genre':result2.rows[0].genre,'title':result2.rows[0].title,'votes':result2.rows[0].vote});
 
 					//if(artistsA.length==vidID.length){
-						//console.log({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA})
-						//res.json({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA});
-						client.end();
-						res.json(output);
+					//console.log({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA})
+					//res.json({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA});
+					client.end();
+					res.json(output);
 					//}
 
 				});
@@ -1329,12 +1374,12 @@ app.post('/getPlaylist', function (req, res) {
 	}else{
 
 		var DBHost =  process.env.DBHost;
-var DBUser =  process.env.DBUser;
-var DBPassword =  process.env.DBPassword;
-var DB =  process.env.DB;
+		var DBUser =  process.env.DBUser;
+		var DBPassword =  process.env.DBPassword;
+		var DB =  process.env.DB;
 
-	
-	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
+
+		var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 		var sqlStr1 = "SELECT VIDID,PLAYS,DATE from PLAYLIST WHERE USERNAME="+userID+" ORDER BY plays"
 		var client = new pg.Client(params);
 		client.connect(function(err) {
@@ -1357,7 +1402,7 @@ var DB =  process.env.DB;
 
 				for (var i=0;i<vidID.length;i++){
 
-					sqlStr = "SELECT CONTENT.ARTIST,CONTENT.FILELINK,CONTENT.GENRE,CONTENT.TITLE,CONTENT.LINK,PLAYLIST.PLAYS,PLAYLIST.DATE "+
+					sqlStr = "SELECT CONTENT.VIDID,CONTENT.ARTIST,CONTENT.FILELINK,CONTENT.GENRE,CONTENT.TITLE,CONTENT.LINK,PLAYLIST.PLAYS,PLAYLIST.DATE "+
 					"from CONTENT JOIN PLAYLIST ON PLAYLIST.VIDID = CONTENT.VIDID "+
 					"WHERE CONTENT.VIDID="+vidID[i] 
 					"AND PLAYLIST.USERNAME="+userID;
@@ -1370,7 +1415,7 @@ var DB =  process.env.DB;
 
 						artistsA.push(result2.rows[0].artist);
 
-						output.push({'playlist':'playlist1','artist':result2.rows[0].artist,'fileLink':result2.rows[0].filelink,'genre':result2.rows[0].genre,'title':result2.rows[0].title,'plays':result2.rows[0].plays,'dates':result2.rows[0].dates});
+						output.push({'vidid':result2.rows[0].vidid,'playlist':'playlist1','artist':result2.rows[0].artist,'fileLink':result2.rows[0].filelink,'genre':result2.rows[0].genre,'title':result2.rows[0].title,'plays':result2.rows[0].plays,'dates':result2.rows[0].dates});
 						//output.push({'artist':rows2.ARTIST,'fileLink':rows2.FILELINK,'genre':rows2.GENRE,'title':rows2.TITLE,'plays':rows2.PLAYS,'dates':rows2.DATES});
 
 						if(artistsA.length==vidID.length){
@@ -1407,12 +1452,12 @@ app.post('/getAccount', function (req, res) {
 	}else{
 
 		var DBHost =  process.env.DBHost;
-var DBUser =  process.env.DBUser;
-var DBPassword =  process.env.DBPassword;
-var DB =  process.env.DB;
+		var DBUser =  process.env.DBUser;
+		var DBPassword =  process.env.DBPassword;
+		var DB =  process.env.DB;
 
-	
-	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
+
+		var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 		//var sqlStr1 = "SELECT VIDID,VOTE FROM BATTLE ORDER BY VOTE DESC"
 		var sqlStr1 = "SELECT TYPE, EMAIL, USERNAME, FIRSTNAME, SURNAME, COUNTRY, CITY, AGE, GENDER, PREFERENCES, LINK FROM PROFILE WHERE EMAIL="+userID; 
 		var client = new pg.Client(params);
@@ -1444,248 +1489,209 @@ var DB =  process.env.DB;
 })
 
 
-app.post('/upload', function(req, res) {
+app.post('/uploadToAwaiting', function(req, res) {
 
+	output = {"result":"upload"}
 
-	var uuid = guid() ;
-	var type =  req.body.type  ;
-
-	//console.log(type)
-
-	if(type == "mp4"){
-		type =   "'" +type+"'"  ;
-
-		var tmp_path = req.files.files.path;
-		var target_path = './public/video/' + uuid;
-
-		var id =   "'" +req.body.id+"'" ;
-		d = new Date();
-		timeStamp = d.yyyymmdd();
-		created = "'" +timeStamp+"'" ;
-		artist = "'" +req.body.artist+"'" ;
-		title = "'" +req.body.title+"'" ;
-		country= "'" +req.body.country+"'" ;
-		city =  "'" +req.body.city+"'" ;
-		genre  = "'" +req.body.genre2 +"'" ;
-		link =  "'slamstr.com '" ;
-
-		insertString = "'"+uuid+"'" + "," + "'none'"+ ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
-		//console.log(insertString)
-
-
-		fs.rename(tmp_path, target_path, function(err) {
-			if (err) throw err;
-			// delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-			fs.unlink(tmp_path, function() {
-				if (err) throw err;
-
-				fs.rename(tmp_path2, target_path2, function(err) {
-					if (err) throw err;
-					// delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-					fs.unlink(tmp_path2, function() {
-						if (err) throw err;
+	var options = {
+			host: 'http://api.hostip.info',
+			path: '/get_json.php'
+	};
 
 
 
-						sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
+	request("http://api.hostip.info/get_json.php", function(error, response, body) {
 
-						//console.log(sqlStr2)
-						var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
-						var client = new pg.Client(params);
-						client.connect(function(err) {
-							if(err) {
-								return console.error('could not connect to postgres', err);
-							}
-							client.query(sqlStr1, function(err, result) {
-								if(err) {
-									return //console.error('error running query', err);
-								}
-								client.end();
-							});
-						});
+		body = JSON.parse(body)
+		var countryIP = body["country_name"];
+		var cityIP = body["city"]; 
+		var country= "'" +countryIP+"'" ;
+		var city =  "'" +cityIP+"'" ;
+		var uuid = req.body.uuid  ;
+		var type =  req.body.type  ;
+		var id =   req.body.userID ;
 
+		if(type == "mp4"){
+			type =   "'" +type+"'"  ;
 
-						output = "<!DOCTYPE html>"+
-						"<html>"+
-						"<head>"+
-						"<title>slamstr</title>"+
-						"<script src=\"js/jquery.min.js\" type=\"text/javascript\"></script>"+
-						"</head>"+
-						"<body>"+
+			var tmp_path = req.files.files.path;
+			var target_path = './public/video/' + uuid;
 
-						"<script type=\"text/javascript\">"+
-						"$(document).ready(function() {"+
+			
+			d = new Date();
+			timeStamp = d.yyyymmdd();
+			created = "'" + timeStamp +"'" ;
+			artist = "'" + req.body.artist +"'" ;
+			title = "'" + req.body.title +"'" ;
+			
+			
+			genre  = "'" +req.body.genre +"'" ;
+			link =  "'slamstr.com '" ;
 
-						"	 window.location.replace(\"/upload.html\");"+
-
-						"});"+
-						" </script>"
-						"<h3>Redirecting</h3>"+
-						"</body>"+
-						"</html>";
-
-						res.send(output);
-
-					});
-				});
-			});
-		});
+			insertString = uuid + "," + "'none'"+ ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
+			//console.log(insertString)
 
 
-	}else if(type == "mp3"){
-		type =   "'" +type+"'"  ;
+//			fs.rename(tmp_path, target_path, function(err) {
+//			if (err) throw err;
+//			// delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+//			fs.unlink(tmp_path, function() {
+//			if (err) throw err;
 
-
-		var tmp_path = req.files.files.path;
-		var target_path = './public/music/' + uuid;
-		var tmp_path2 = req.files.files2.path;
-		var target_path2 = './public/picture/' + uuid;
-
-		var id =   "'" +req.body.id+"'" ;
-		d = new Date();
-		timeStamp = d.yyyymmdd();
-		created = "'" +timeStamp+"'" ;
-		artist = "'" +req.body.artist+"'" ;
-		title = "'" +req.body.title+"'" ;
-		country= "'" +req.body.country+"'" ;
-		city =  "'" +req.body.city+"'" ;
-		genre  = "'" +req.body.genre2 +"'" ;
-		link =  "'slamstr.com '" ;
-
-		insertString = "'"+uuid+"'" + "," + "'none'"+ ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
-		//console.log(insertString)
-
-
-		fs.rename(tmp_path, target_path, function(err) {
-			if (err) throw err;
-			// delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-			fs.unlink(tmp_path, function() {
-				if (err) throw err;
-
-				fs.rename(tmp_path2, target_path2, function(err) {
-					if (err) throw err;
-					// delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-					fs.unlink(tmp_path2, function() {
-						if (err) throw err;
-
-						sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
-						//console.log(sqlStr1)	
-
-						//console.log(sqlStr2)
-						var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
-						var client = new pg.Client(params);
-						client.connect(function(err) {
-							if(err) {
-								return console.error('could not connect to postgres', err);
-							}
-							client.query(sqlStr1, function(err, result) {
-								if(err) {
-									return //console.error('error running query', err);
-								}
-								client.end();
-							});
-						});
-
-
-						output = "<!DOCTYPE html>"+
-						"<html>"+
-						"<head>"+
-						"<title>slamstr</title>"+
-						"<script src=\"js/jquery.min.js\" type=\"text/javascript\"></script>"+
-						"</head>"+
-						"<body>"+
-
-						"<script type=\"text/javascript\">"+
-						"$(document).ready(function() {"+
-
-						"	 window.location.replace(\"/upload.html\");"+
-
-						"});"+
-						" </script>"
-						"<h3>Redirecting</h3>"+
-						"</body>"+
-						"</html>";
-
-						res.send(output);
-
-					});
-				});
-			});
-		});
-
-
-	}else if(type == "yt"){
-		type =   "'" +type+"'"  ;
+//			fs.rename(tmp_path2, target_path2, function(err) {
+//			if (err) throw err;
+//			// delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+//			fs.unlink(tmp_path2, function() {
+//			if (err) throw err;
 
 
 
-		var id =   "'" +req.body.id+"'" ;
-		d = new Date();
-		timeStamp = d.yyyymmdd();
-		created = "'" +timeStamp+"'" ;
-		artist = "'" +req.body.artist+"'" ;
-		title = "'" +req.body.title+"'" ;
-		country= "'" +req.body.country+"'" ;
-		city =  "'" +req.body.city+"'" ;
-		genre  = "'" +req.body.genre2 +"'" ;
-		ytLink  = "'" +req.body.link +"'" ;
-		link =  "'slamstr.com '" ;
+			sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
 
-		insertString = "'"+uuid+"'" + "," + ytLink + ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
-		//console.log(insertString)
-
-		sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
+			//console.log(sqlStr2)
+					var DBHost =  process.env.DBHost;
+		var DBUser =  process.env.DBUser;
+		var DBPassword =  process.env.DBPassword;
+		var DB =  process.env.DB;
 
 
-		//console.log(sqlStr2)
-		var DBHost =  process.env.DBHost;
-var DBUser =  process.env.DBUser;
-var DBPassword =  process.env.DBPassword;
-var DB =  process.env.DB;
-
-	
-	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
-
-		var client = new pg.Client(params);
-		client.connect(function(err) {
-			if(err) {
-				return console.error('could not connect to postgres', err);
-			}
-			client.query(sqlStr1, function(err, result) {
+		var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
+			var client = new pg.Client(params);
+			client.connect(function(err) {
 				if(err) {
-					return //console.error('error running query', err);
+					return console.error('could not connect to postgres', err);
 				}
-				client.end();
+				client.query(sqlStr1, function(err, result) {
+					if(err) {
+						return //console.error('error running query', err);
+					}
+					client.end();
+					res.send(output);
+				});
 			});
-		});
-
-		output = "<!DOCTYPE html>"+
-		"<html>"+
-		"<head>"+
-		"<title>slamstr</title>"+
-		"<script src=\"js/jquery.min.js\" type=\"text/javascript\"></script>"+
-		"</head>"+
-		"<body>"+
-
-		"<script type=\"text/javascript\">"+
-		"$(document).ready(function() {"+
-
-		"	 window.location.replace(\"/upload.html\");"+
-
-		"});"+
-		" </script>"
-		"<h3>Redirecting</h3>"+
-		"</body>"+
-		"</html>";
-
-		res.send(output);
 
 
-	}
+//			output = "<!DOCTYPE html>"+
+//			"<html>"+
+//			"<head>"+
+//			"<title>slamstr</title>"+
+//			"<script src=\"js/jquery.min.js\" type=\"text/javascript\"></script>"+
+//			"</head>"+
+//			"<body>"+
+
+//			"<script type=\"text/javascript\">"+
+//			"$(document).ready(function() {"+
+
+//			"	 window.location.replace(\"/upload.html\");"+
+
+//			"});"+
+//			" </script>"
+//			"<h3>Redirecting</h3>"+
+//			"</body>"+
+//			"</html>";
+
+			res.send(output);
+
+//			});
+//			});
+//			});
+//			});
+
+
+		}else if(type == "mp3"){
+			type =   "'" +type+"'"  ;
+
+
+			d = new Date();
+			timeStamp = d.yyyymmdd();
+			created = "'" +timeStamp+"'" ;
+			artist = "'" +req.body.artist+"'" ;
+			title = "'" +req.body.title+"'" ;
+
+			genre  = "'" +req.body.genre +"'" ;
+			link =  "'slamstr.com '" ;
+
+			insertString = uuid + "," + "'none'"+ ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
+			
+
+
+			sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
+			
+			//console.log(sqlStr2)
+			var DBHost =  process.env.DBHost;
+		var DBUser =  process.env.DBUser;
+		var DBPassword =  process.env.DBPassword;
+		var DB =  process.env.DB;
+
+
+		var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
+			var client = new pg.Client(params);
+			client.connect(function(err) {
+				if(err) {
+					return console.error('could not connect to postgres', err);
+				}
+				client.query(sqlStr1, function(err, result) {
+					if(err) {
+						return //console.error('error running query', err);
+					}
+					client.end();
+					res.send(output);
+				});
+			});
 
 
 
 
+		}else if(type == "yt"){
+			type =   "'" +type+"'"  ;
+
+
+			d = new Date();
+			timeStamp = d.yyyymmdd();
+			created = "'" +timeStamp+"'" ;
+			artist = "'" +req.body.artist+"'" ;
+			title = "'" +req.body.title+"'" ;
+
+			genre  = "'" +req.body.genre +"'" ;
+			ytLink  = "'" +req.body.link +"'" ;
+			link =  "'slamstr.com '" ;
+
+			insertString = uuid + "," + ytLink + ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
+			//console.log(insertString)
+
+			sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
+
+
+			//console.log(sqlStr2)
+			var DBHost =  process.env.DBHost;
+			var DBUser =  process.env.DBUser;
+			var DBPassword =  process.env.DBPassword;
+			var DB =  process.env.DB;
+
+
+			var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
+
+			var client = new pg.Client(params);
+			client.connect(function(err) {
+				if(err) {
+					return console.error('could not connect to postgres', err);
+				}
+				client.query(sqlStr1, function(err, result) {
+					if(err) {
+						return //console.error('error running query', err);
+					}
+					client.end();
+					res.send(output);
+				});
+			});
+
+		}else{
+			res.send(output);
+		}
+
+
+
+	});
 
 });
 
@@ -1707,11 +1713,11 @@ app.get('/getAllTracks', function (req, res) {
 
 
 	var DBHost =  process.env.DBHost;
-var DBUser =  process.env.DBUser;
-var DBPassword =  process.env.DBPassword;
-var DB =  process.env.DB;
+	var DBUser =  process.env.DBUser;
+	var DBPassword =  process.env.DBPassword;
+	var DB =  process.env.DB;
 
-	
+
 	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 
 	var sqlStr1 = "SELECT VIDID,ARTIST,TITLE FROM CONTENT"
@@ -1751,9 +1757,54 @@ var DB =  process.env.DB;
 });
 
 
+app.post('/getUploads', function (req, res) {
+
+	var userID = req.body.uID ;
+	d = new Date();
+	timestamp = "'"+d.yyyymmdd() +"'";
+	var output = []
+
+
+	var DBHost =  process.env.DBHost;
+	var DBUser =  process.env.DBUser;
+	var DBPassword =  process.env.DBPassword;
+	var DB =  process.env.DB;
+
+
+	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
+
+	var sqlStr1 = "SELECT VIDID FROM AWAITINGAPPROVAL WHERE CREATED="+timestamp+" AND USERNAME="+userID
+
+	var client = new pg.Client(params);
+	client.connect(function(err) {
+		if(err) {
+			return console.error('could not connect to postgres', err);
+		}
+		client.query(sqlStr1, function(err, result) {
+			if(err) {
+				return //console.error('error running query', err);
+			}
+			//console.log(sqlStr1);
+
+
+
+			if(result.rows.length>5){
+
+				output = {'upload':0};
+				res.json(output);
+			}else{
+				output = {'upload':1};
+				res.json(output);
+			}
+
+		});
+	});
+});
+
+
 AWS.config.update({
 	//accessKeyId:: process.env.AWS_ACCESS_KEY_ID,
-    //secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+	//secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 	//accessKeyId: accessKeyId,
 	//secretAccessKey: secretAccessKey
 });
@@ -1768,7 +1819,7 @@ app.post('/uploadTest', function(req, res){
 	fs.readFile(path, function(err, file_buffer){
 		var params = {
 				Bucket: 'slamstr',
-				Key: 'myKey1234.png',
+				Key: req.files.files.path,
 				Body: file_buffer
 		};
 

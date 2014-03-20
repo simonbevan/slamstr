@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,8 +20,21 @@
 <script src="examples/content/shared/js/people.js"
 	type="text/javascript"></script>
 
+<script>
+function s4() {
+	return Math.floor((1 + Math.random()) * 0x10000)
+	.toString(16)
+	.substring(1);
+};
+
+function guid() {
+	return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+	s4() + '-' + s4() + s4() + s4();
+}
+sessionStorage.uuid = "'"+guid() +"'";
 
 
+</script>
 
 
 </head>
@@ -166,20 +177,7 @@ sessionStorage.signuptype="yt";
 																			validationMessage="Sorry only letters and numbers" />
 
 																		<br>
-																		<label for="city" class="required">city:</label>
-																		<input id="city" name="city" data-bind="value: city"
-																			type="text" required
-																			validationMessage="Please enter a city"
-																			style="width: 181px" class="k-textbox"
-																			style="width: 181px" class="k-textbox" />
 
-																		<label for="country" class="required">country:</label>
-																		<input id="country" name="country"
-																			data-bind="value: country" type="text" required
-																			validationMessage="Please enter a country"
-																			style="width: 181px" class="k-textbox"
-																			style="width: 181px" class="k-textbox" />
-																		<br>
 
 																		<label for="genre2" class="required">genre:</label>
 																		<select id="genre2" multiple="multiple" name="genre2"
@@ -224,7 +222,7 @@ sessionStorage.signuptype="yt";
 																<div style="display: inline-block; margin-left: 40px;">
 																	<label for="files2" class="required">mp3:</label>
 																</div>
-																<div style="display: inline-block; margin-left: -40px;">
+																<div style="display: inline-block; margin-left: -40px;" id="filesDiv2">
 																	<input type="file" name="files2" id="files2" required
 																		multiple accept='music/*'>
 																</div>
@@ -310,20 +308,7 @@ sessionStorage.signuptype="yt";
 																			validationMessage="Sorry only letters and numbers" />
 
 																		<br>
-																		<label for="city" class="required">city:</label>
-																		<input id="city" name="city" data-bind="value: city"
-																			type="text" required
-																			validationMessage="Please enter a city"
-																			style="width: 181px" class="k-textbox"
-																			style="width: 181px" class="k-textbox" />
-
-																		<label for="country" class="required">country:</label>
-																		<input id="country" name="country"
-																			data-bind="value: country" type="text" required
-																			validationMessage="Please enter a country"
-																			style="width: 181px" class="k-textbox"
-																			style="width: 181px" class="k-textbox" />
-																		<br>
+						
 
 																		<label for="genre" class="required">genre:</label>
 																		<select id="genre" multiple="multiple" name="genre"
@@ -372,8 +357,8 @@ sessionStorage.signuptype="yt";
 																	<div style="display: inline-block; margin-left: 40px;">
 																	<label for="files3" class="required">mp4:</label>
 																	</div>
-																	<div style="display: inline-block; margin-left: -40px;">
-																	<input type="file" name="files3" id="files" required
+																	<div style="display: inline-block; margin-left: -40px;style="visibility: visible" id="filesDiv3" >
+																	<input type="file" name="files3" id="files3" required
 																		multiple accept='video/*'>
 																</div> 
 
@@ -404,7 +389,7 @@ sessionStorage.signuptype="yt";
 																</center>
 
 
-																<form action="/upload" method="post"
+																<form action="/uploadToAwaiting" method="post"
 																	enctype="multipart/form-data" id="registerYT">
 																	<ul>
 
@@ -434,20 +419,7 @@ sessionStorage.signuptype="yt";
 																			validationMessage="Sorry only letters and numbers" />
 
 																		<br>
-																		<label for="city" class="required">city:</label>
-																		<input id="city" name="city" data-bind="value: city"
-																			type="text" required
-																			validationMessage="Please enter a city"
-																			style="width: 181px" class="k-textbox"
-																			style="width: 181px" class="k-textbox" />
-
-																		<label for="country" class="required">country:</label>
-																		<input id="country" name="country"
-																			data-bind="value: country" type="text" required
-																			validationMessage="Please enter a country"
-																			style="width: 181px" class="k-textbox"
-																			style="width: 181px" class="k-textbox" />
-																		<br>
+															
 
 																		<label for="genre3" class="required">genre:</label>
 																		<select id="genre3" multiple="multiple" name="genre2"
@@ -478,13 +450,18 @@ sessionStorage.signuptype="yt";
 																		<input type="checkbox" id="agree" name="agree"
 																			data-bind="checked: agreed" /> &nbsp I have read the
 																		licence greement
+
 																		<br>
+																		
 																		<br>
+																		<div id="filesDiv">
 																		<label for="reg">youtube:</label>
+																		
 																		<button data-bind="enabled: agreed" id="regFan"
 																			name="regFan"
 																			style="display: inline-block; width: 181px"
 																			class="upButton">Upload</button>
+																		</div>
 
 
 																	</ul>
@@ -794,17 +771,7 @@ sessionStorage.signuptype="yt";
 						//<button type='button' class='k-upload-action'></button>
                 $(document).ready(function () {
                 	
-                    $("#files").kendoUpload({
-                        multiple: false,
-                        async: {
-                            saveUrl: "/uploadTest10",
-                            removeUrl: "remove",
-                            autoUpload: false
-                        },
-                        upload: onUpload,
-                       
-
-                    });
+                	
                     
                     $("#files2").kendoUpload({
                         multiple: false,
@@ -814,6 +781,7 @@ sessionStorage.signuptype="yt";
                             autoUpload: false
                         },
                         upload: onUpload,
+                        select: onSelect,
                       
                        
                      
@@ -827,16 +795,110 @@ sessionStorage.signuptype="yt";
                             autoUpload: false
                         },
                         upload: onUpload,
+                        select: onSelect,
                       
                       
                     });
                     
                 });
 
-  function onUpload(e) {
-        var test = $("#registerMP3 input[name='artist']").val();
-        alert(test)
+userID = sessionStorage.userID;
+//alert(userID)
+  if(userID=='noid'){
+    		
+    		//var upload = $("#files3").data("kendoUpload");
+		    // disables the upload
+		    //upload.disable();
+		    //alert("sdfds")
+		    $('#filesDiv3').html("<div style='display: inline-block; margin-left: 50px;'> <h1>Please log in to upload</h1></div>");
+		    $('#filesDiv2').html("<div style='display: inline-block; margin-left: 50px;'> <h1>Please log in to upload</h1></div>");
+		    $('#filesDiv').html("<div style='display: inline-block; margin-left: 100px;'> <h1>Please log in to upload</h1></div>");
+		    //$('#filesDiv2').hide();
+		    //$('#regFan').hide();
+
+						   };
+
+
+   function onUpload(e) {
+	   
+					userID = sessionStorage.userID;
+					var artist = "";
+					var title = "";
+					var genre = "";
+					var type = "";
+					
+					 if(sessionStorage.signuptype=="mp3" ){	
+						var artist = $("#registerMP3 input[name='artist']").val();
+						var title = $("#registerMP3 input[name='title']").val();
+						var genre = $("#registerMP3 input[name='genre']").val();
+						var type = "mp3";
+					 }else if(sessionStorage.signuptype=="mp4"){
+						var artist = $("#registerMP4 input[name='artist']").val();
+						var title = $("#registerMP4 input[name='title']").val();
+						var genre = $("#registerMP4 input[name='genre']").val();
+						var type = "mp4";
+					 }else if(sessionStorage.signuptype=="yt"){
+						var artist = $("#registerYT input[name='artist']").val();
+						var title = $("#registerYT input[name='title']").val();
+						var genre = $("#registerYT input[name='genre']").val();
+						var type = "yt";
+					 }
+				
+					 var uuid = guid();
+					 $.ajax({
+         			    type: "POST",
+         			    dataType: "json",
+         	            cache: false, 
+         			    url: "/uploadToAwaiting"	,
+         			    data: { type:type, userID: userID, artist:artist, title:title, genre:genre,uuid:sessionStorage.uuid }, 			    
+         			}).done(function(data){
+         			
+         								
+         			});
+
+	   sessionStorage.uuid = "'"+guid() +"'";
     }
+  
+  function onSelect(e) {
+	  
+	  e.files[0]['name'] = sessionStorage.uuid;
+	  
+	  if(e.files[0]['size']>50000000){
+		  alert('file too big. Please limit to 50mb')
+		  e.preventDefault();
+  	}else{
+
+	userID = sessionStorage.userID;
+	
+	
+	
+ $.ajax({ 
+               url: "/getUploads",	
+               type: 'POST',
+               cache: false, 
+              data: { uID: userID }, 
+               success: function(data){
+
+				if(data['upload']==1){
+				
+
+					 
+					 
+				}else{
+				 alert('sorry - already 5 uploads awaiting approval, please bear with us whilst we work through them')
+						  e.preventDefault();
+				
+				}
+     }
+     , error: function(jqXHR, textStatus, err){
+         //alert('text status '+textStatus+', err '+err)
+     }
+  });
+
+
+		}
+
+  }
 
                 function addExtensionClass(extension) {
                     switch (extension) {
@@ -1015,16 +1077,17 @@ label {
 
 						<div align="center" id="options2">
 
-							<br> &nbsp &nbsp <img src="/images/HamsterRock.jpg"
-								alt="hamster" width="20px" height="15px"> &nbsp | &nbsp
-							&copy slamstr 2013-2014 &nbsp &nbsp | &nbsp &nbsp <a
-								href="/about.html" class="k-button2">about</a> &nbsp &nbsp |
-							&nbsp &nbsp <a href="/contact.html" class="k-button2">contact</a>
-							&nbsp &nbsp | &nbsp &nbsp <a href="/privacy.html"
-								class="k-button2">privacy</a> &nbsp &nbsp | &nbsp &nbsp <a
-								href="/tandc.html" class="k-button2">terms and conditions</a>
-							&nbsp &nbsp | &nbsp <img src="/images/HamsterRock.jpg"
-								alt="hamster" width="20px" height="15px">
+								<br> &nbsp &nbsp <img src="/images/HamsterRock.jpg"
+						alt="hamster" width="20px" height="15px"> &nbsp | &nbsp
+					&copy slamstr 2013-2014 &nbsp &nbsp | &nbsp &nbsp <a
+						href="/about.html" class="k-button2">about</a> &nbsp &nbsp | &nbsp
+					&nbsp <a href="/contact.html" class="k-button2">contact</a> &nbsp
+					&nbsp | &nbsp &nbsp <a href="/slamstrPrivacyPolicy.pdf" class="k-button2">privacy</a>
+
+					&nbsp &nbsp | &nbsp &nbsp <a href="/slamstrTandC.pdf" class="k-button2">terms
+						and conditions</a> &nbsp &nbsp | &nbsp <img
+						src="/images/HamsterRock.jpg" alt="hamster" width="20px"
+						height="15px">
 
 
 

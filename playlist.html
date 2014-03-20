@@ -33,18 +33,31 @@ alert("sdfsd")
 
 <script type="text/javascript">
 
-$(document).ready(function() {
-function playSong(myFile,myImage) { 
 
-	alert(myFile)
-    jwplayer('ytplayerchart').load([{
-      file: myFile,
-      //image: myImage
-    }]);
-    jwplayer().play();
-  };
 
-});
+function playSong(myFile,bandName,songName,artistLink,vidid,myImage) { 
+
+
+		sessionStorage.vidID = vidid;
+		sessionStorage.bandName = bandName;
+		sessionStorage.songName = songName;
+		sessionStorage.artistLink = 'www.slamster.com';
+
+
+		output = '<center><h3>'+sessionStorage.bandName+' '+sessionStorage.songName+'</h3>'+
+															'<p>Visit at: '+sessionStorage.artistLink+'</p> '+
+															'</center> ' 
+													
+															$("#info1").html(output);
+
+
+
+	    jwplayer('ytplayerpl').load([{
+	      file: myFile,
+	      //image: myImage
+	    }]);
+	    jwplayer().play();
+	  };
 
 </script>
 
@@ -52,7 +65,40 @@ function playSong(myFile,myImage) {
 <body>
 
 
+	<script>
 
+         $.ajax({
+		    type: "GET",
+		    dataType: "json",
+		    
+		    url: "/getTop"				    
+		}).done(function(data){
+			
+			
+			data = data[0];
+			sessionStorage.vidID = data['vidID']
+			sessionStorage.fileLink = data['fileLink']
+			sessionStorage.songName = data['title']
+			sessionStorage.bandName = data['artist']
+
+
+	jwplayer('ytplayerpl').setup({
+												file: sessionStorage.fileLink,
+												width: '100%',
+												aspectratio: '8:6',
+												fallback: 'false',
+												primary: 'flash'
+											});
+
+	output = '<center><h3>'+sessionStorage.bandName+' '+sessionStorage.songName+'</h3>'+
+													'<p>Visit at: '+sessionStorage.artistLink+'</p> '+
+													'</center> ' 
+											
+													$("#info1").html(output);
+
+		});
+
+	</script>
 
 
 	<div id="body" class="k-content">
@@ -282,26 +328,26 @@ function playSong(myFile,myImage) {
 							                	                                 //   ui: cityFilter
 							                	                                //}
 							                	                                 filterable: false
-							                	                            }, {
-							                	                                width: 50,
-							                	                                field: "dates",
-							                	                                title: "Date Added",
-							                	                                filterable: false
-							                	                            }, {
+							                	                            },  {
 							                	                                width: 50,
 							                	                                field: "plays",
 							                	                                title: "Plays",
 							                	                                filterable: false
-							                	                            },  
+							                	                            },{
+                            	hidden: true,
+                                width: 50,
+                                field: "vidid",
+                                title: "vidid",
+                                filterable: false
+                            },  
 							                	                              {
-															                                width: 50,
-															                                field: "link",
-															                                title: "play",
-															                                // template: "<button onclick=\"playSong('${ title }')\">${ title }</button> " 
-
-															                                template: "<button onclick=\"playSong('${ title }')\">play</button> " 
-
-
+															                       width: 50,
+															                       field: "fileLink",
+															                       title: "Play",
+															                            
+							                             template: "<button class=\"k-icon k-i-arrow-e\" onclick=\"playSong('${ fileLink}','${artist}','${title}','www.slamstr.com','${vidid}')\">play</button> " 
+								//template: "<button onclick={alert(\"HERE\")}>Click me</button>"
+                                
 															                                //"<button  onclick=\"playSong();\" />", 
 															                                //style='background-image:url(test.png)' 
 															                            }
@@ -365,18 +411,30 @@ function playSong(myFile,myImage) {
 
 										<br>
 										<center>
-											<img src="images/twitter.png" alt="twitter" width="50px"
-												height="50px" style="display: visible; margin-left: 0px;">
+																							<script type="text/javascript">
+var twtTitle  = "check this out @";
+var twtUrl    = location.href;
+var maxLength = 140 - (twtUrl.length + 1);
+if (twtTitle.length > maxLength) {
+twtTitle = twtTitle.substr(0, (maxLength - 3))+'...';
+}
+
+var twitterText = "Loving " + sessionStorage.songName + " by " + sessionStorage.bandName + " @ www.slamstr.com"
+
+
+var twtLink = 'http://twitter.com/home?status='+encodeURIComponent(twitterText);
+document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitter.png"  width ="50px" height= "50px" alt="hamster" style="margin-left:50px"/'+'><'+'/a>');
+</script>
 
 											<img src="images/FB-f-Logo__blue_1024.png" alt="facebook"
 												width="50px" height="50px"
-												style="display: visible; margin-left: 5px;">
+												style="display: visible; margin-left: 5px;" onclick="alert('coming soon')" >
 										</center>
 										<br>
 
-										<div style="margin-left: 5px; margin-right: 5px">
-											<div id="ytplayerchart" style="display: visible"></div>
-										</div>
+										<div style="margin-left:5px;margin-right:5px">
+									<div id="ytplayerpl" style="display: visible"></div>
+									</div>
 										<br>
 										<div id="info1"></div>
 
@@ -579,16 +637,17 @@ function playSong(myFile,myImage) {
 
 					<div align="center" class="options2">
 
-						<br> &nbsp &nbsp <img src="/images/HamsterRock.jpg"
-							alt="hamster" width="20px" height="15px"> &nbsp | &nbsp
-						&copy slamstr 2013-2014 &nbsp &nbsp | &nbsp &nbsp <a
-							href="/about.html" class="k-button2">about</a> &nbsp &nbsp |
-						&nbsp &nbsp <a href="/contact.html" class="k-button2">contact</a>
-						&nbsp &nbsp | &nbsp &nbsp <a href="/privacy.html"
-							class="k-button2">privacy</a> &nbsp &nbsp | &nbsp &nbsp <a
-							href="/tandc.html" class="k-button2">terms and conditions</a>
-						&nbsp &nbsp | &nbsp <img src="/images/HamsterRock.jpg"
-							alt="hamster" width="20px" height="15px">
+							<br> &nbsp &nbsp <img src="/images/HamsterRock.jpg"
+						alt="hamster" width="20px" height="15px"> &nbsp | &nbsp
+					&copy slamstr 2013-2014 &nbsp &nbsp | &nbsp &nbsp <a
+						href="/about.html" class="k-button2">about</a> &nbsp &nbsp | &nbsp
+					&nbsp <a href="/contact.html" class="k-button2">contact</a> &nbsp
+					&nbsp | &nbsp &nbsp <a href="/slamstrPrivacyPolicy.pdf" class="k-button2">privacy</a>
+
+					&nbsp &nbsp | &nbsp &nbsp <a href="/slamstrTandC.pdf" class="k-button2">terms
+						and conditions</a> &nbsp &nbsp | &nbsp <img
+						src="/images/HamsterRock.jpg" alt="hamster" width="20px"
+						height="15px">
 
 
 

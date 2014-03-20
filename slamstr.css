@@ -136,6 +136,28 @@ button.upButton,submit:visited {
   //width: 80%;
 }
 
+
+
+button.uploadType,submit:visited {
+  background: #222 repeat-x;
+  display: inline-block;
+  padding: 5px 10px 6px;
+  margin-bottom: 1px;
+  margin-top: 1px;
+  color: #fff;
+  text-decoration: none;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 8px;
+  text-shadow: 0 -0px 0px rgba(0, 0, 0, 0.25);
+  border: 0px solid rgba(0, 0, 0, 0);
+  position: relative;
+  cursor: pointer;
+  background-color: #4099FF;
+  font-size: 10pt;
+  width: 90%;
+  height:100px;
+}
+
 button.mp3Button,button.mp4Button,button.ytButton,submit:visited {
   background: #222 repeat-x;
   display: inline-block;

@@ -87,30 +87,30 @@ sessionStorage.chartfilter='all';
 
 
 
-							     function playSong(myFile,bandName,songName,artistLink,vidid,myImage) { 
+function playSong(myFile,bandName,songName,artistLink,vidid,myImage) { 
 
 
-sessionStorage.vidID = vidid;
-sessionStorage.bandName = bandName;
-sessionStorage.songName = songName;
-sessionStorage.artistLink = 'www.slamster.com';
-
-
-
-output = '<center><h3>'+sessionStorage.bandName+' '+sessionStorage.songName+'</h3>'+
-													'<p>Visit at: '+sessionStorage.artistLink+'</p> '+
-													'</center> ' 
-											
-													$("#info1").html(output);
+		sessionStorage.vidID = vidid;
+		sessionStorage.bandName = bandName;
+		sessionStorage.songName = songName;
+		sessionStorage.artistLink = 'www.slamster.com';
 
 
 
-		    jwplayer('ytplayerchart').load([{
-		      file: myFile,
-		      //image: myImage
-		    }]);
-		    jwplayer().play();
-		  };
+		output = '<center><h3>'+sessionStorage.bandName+' '+sessionStorage.songName+'</h3>'+
+															'<p>Visit at: '+sessionStorage.artistLink+'</p> '+
+															'</center> ' 
+													
+															$("#info1").html(output);
+
+
+
+	    jwplayer('ytplayerchart').load([{
+	      file: myFile,
+	      //image: myImage
+	    }]);
+	    jwplayer().play();
+	  };
 
 
  </script>
@@ -392,11 +392,23 @@ output = '<center><h3>'+sessionStorage.bandName+' '+sessionStorage.songName+'</h
 											<div class="demo-section3" style="margin-bottom:20px;">
 												
 
-												<img src="images/twitter.png" alt="twitter" width="30%"
-													height="50px" style="display: visible; margin-left: 50px;">
+												<script type="text/javascript">
+var twtTitle  = "check this out @";
+var twtUrl    = location.href;
+var maxLength = 140 - (twtUrl.length + 1);
+if (twtTitle.length > maxLength) {
+twtTitle = twtTitle.substr(0, (maxLength - 3))+'...';
+}
+
+var twitterText = "Loving " + sessionStorage.songName + " by " + sessionStorage.bandName + " @ www.slamstr.com"
+
+
+var twtLink = 'http://twitter.com/home?status='+encodeURIComponent(twitterText);
+document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitter.png"  width ="30%" height= "50px" alt="hamster" style="margin-left:50px"/'+'><'+'/a>');
+</script>
 
 													<img src="images/FB-f-Logo__blue_1024.png" alt="facebook" width="30%"
-													height="50px" style="display: visible; margin-left: 5px;">
+													height="50px" style="display: visible; margin-left: 5px;" onclick="alert('coming soon')">
 
 											</div>
 
@@ -757,9 +769,9 @@ output = '<center><h3>'+sessionStorage.bandName+' '+sessionStorage.songName+'</h
 					&copy slamstr 2013-2014 &nbsp &nbsp | &nbsp &nbsp <a
 						href="/about.html" class="k-button2">about</a> &nbsp &nbsp | &nbsp
 					&nbsp <a href="/contact.html" class="k-button2">contact</a> &nbsp
-					&nbsp | &nbsp &nbsp <a href="/privacy.html" class="k-button2">privacy</a>
+					&nbsp | &nbsp &nbsp <a href="/slamstrPrivacyPolicy.pdf" class="k-button2">privacy</a>
 
-					&nbsp &nbsp | &nbsp &nbsp <a href="/tandc.html" class="k-button2">terms
+					&nbsp &nbsp | &nbsp &nbsp <a href="/slamstrTandC.pdf" class="k-button2">terms
 						and conditions</a> &nbsp &nbsp | &nbsp <img
 						src="/images/HamsterRock.jpg" alt="hamster" width="20px"
 						height="15px">

@@ -200,7 +200,7 @@
           
                }
                , error: function(jqXHR, textStatus, err){
-                   alert('text status '+textStatus+', err '+err)
+                   alert('invalid user name or password')
                }
             });
 
@@ -234,6 +234,13 @@
           document.getElementById("info2").innerHTML = output2; 
    }
   
+  
+  $("#password").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#loginButton").click();
+    }
+  });
+  
      $('#next').click(function(){  
 
   
@@ -241,6 +248,16 @@
             var userID = sessionStorage.userID; 
             var pLName = "'playList1'"//sessionStorage.pLName;
       
+
+
+            $('#next').hide();
+            $('#next2').hide();
+            $('#legendbin').show();
+            $('#challengerbin').show();
+                        $('#legendkeep').show();
+            $('#challengerkeep').show();
+
+
          $.ajax({ 
                url: '/next',
                type: 'POST',
@@ -254,7 +271,7 @@
              data2 = data['out2'];
       
             
-              sessionStorage.fileLink = data1['fileLink'];
+            sessionStorage.fileLink = data1['fileLink'];
             sessionStorage.vidID = data1['vID'];
             sessionStorage.bandName = data1['bandName'];
             sessionStorage.songName = data1['songName'];
@@ -262,7 +279,7 @@
             sessionStorage.artistLink = data1['artistLink'];
             sessionStorage.votes = data1['votes'];
         
-              sessionStorage.fileLink2 = data2['fileLink'];
+            sessionStorage.fileLink2 = data2['fileLink'];
             sessionStorage.vidID2 = data2['vID'];
             sessionStorage.bandName2 = data2['bandName'];
             sessionStorage.songName2 = data2['songName'];
@@ -300,6 +317,14 @@
             var userID = sessionStorage.userID; 
             var pLName = "'playList1'"//sessionStorage.pLName;
       
+
+            $('#next').hide();
+            $('#next2').hide();
+            $('#legendbin').show();
+            $('#challengerbin').show();
+                        $('#legendkeep').show();
+            $('#challengerkeep').show();
+
          $.ajax({ 
                url: '/next',
                type: 'POST',
@@ -431,6 +456,7 @@
 
   
             var vidID = sessionStorage.vidID2 ;
+            var vidID2 = sessionStorage.vidID ;
             var userID = sessionStorage.userID; 
             var pLName = "'playList1'"//sessionStorage.pLName;
 
@@ -444,7 +470,7 @@
                type: 'POST',
                cache: false, 
 
-               data: { uID: userID, vID:vidID, type:'challengerbin',pLName:pLName  }, 
+               data: { uID: userID, vID:vidID, vID2:vidID2, type:'challengerbin',pLName:pLName  }, 
                success: function(data){
   
                  
@@ -488,6 +514,7 @@
      $('#legendbin').click(function(){  
 
          var vidID = sessionStorage.vidID ;
+         var vidID2 = sessionStorage.vidID2 ;
          var userID = sessionStorage.userID;
          var pLName = "'playList1'"//sessionStorage.pLName;
 
@@ -501,7 +528,7 @@
                type: 'POST',
                cache: false, 
  
-               data: { uID: userID, vID:vidID, type:'legendbin' ,pLName:pLName }, 
+               data: { uID: userID, vID:vidID, vID2:vidID2, type:'legendbin' ,pLName:pLName }, 
                success: function(data){
                  
                }
@@ -801,7 +828,7 @@ if(sessionStorage.firstOpen == 'opened'){
 
 
         <button class="feedbackBut" type="button" name="feedbackBut"
-          id="feedbackBut";">Feedback</button>
+          id="feedbackBut";>Feedback</button>
 
 
         <div id="register" class="k-content">
@@ -887,14 +914,28 @@ if(sessionStorage.firstOpen == 'opened'){
 
 
 
-                      <div class="demo-section3">
+                      <div class="demo-section3" >
                         
+<script type="text/javascript">
+var twtTitle  = "check this out @";
+var twtUrl    = location.href;
+var maxLength = 140 - (twtUrl.length + 1);
+if (twtTitle.length > maxLength) {
+twtTitle = twtTitle.substr(0, (maxLength - 3))+'...';
+}
 
-                        <img src="images/twitter.png" alt="hamster" width="30%"
-                          height="50px" style="display: visible; margin-left: 50px;">
+var twitterText = "Loving " + sessionStorage.songName + " by " + sessionStorage.bandName + " @ www.slamstr.com"
+
+
+var twtLink = 'http://twitter.com/home?status='+encodeURIComponent(twitterText);
+document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitter.png"  width ="30%" height= "50px" alt="hamster" style="margin-left:50px"/'+'><'+'/a>');
+</script>
 
                           <img src="images/FB-f-Logo__blue_1024.png" alt="hamster" width="30%"
-                          height="50px" style="display: visible; margin-left: 5px;">
+                          height="50px" style="display: visible; margin-left: 5px;" onclick="alert('coming soon')">
+
+
+                      
 
                       </div>
                     </div>
@@ -960,11 +1001,23 @@ if(sessionStorage.firstOpen == 'opened'){
                       <div class="demo-section3">
                         
 
-                        <img src="images/twitter.png" alt="hamster" width="30%"
-                          height="50px" style="display: visible; margin-left: 50px;">
+                        <script type="text/javascript">
+var twtTitle  = "check this out @";
+var twtUrl    = location.href;
+var maxLength = 140 - (twtUrl.length + 1);
+if (twtTitle.length > maxLength) {
+twtTitle = twtTitle.substr(0, (maxLength - 3))+'...';
+}
+
+var twitterText = "Loving " + sessionStorage.songName2 + " by " + sessionStorage.bandName2 + " @ www.slamstr.com"
+
+
+var twtLink = 'http://twitter.com/home?status='+encodeURIComponent(twitterText);
+document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitter.png"  width ="30%" height= "50px" alt="hamster" style="margin-left:50px"/'+'><'+'/a>');
+</script>
 
                           <img src="images/FB-f-Logo__blue_1024.png" alt="hamster" width="30%"
-                          height="50px" style="display: visible; margin-left: 5px;">
+                          height="50px" style="display: visible; margin-left: 5px;" onclick="alert('coming soon')">
 
                       </div>
                     </div>
@@ -1056,7 +1109,7 @@ if(sessionStorage.firstOpen == 'opened'){
                               
                               
                             formHTML2 = '<center><a href="signup.html" onclick=\"return notRegistered(); return false;\">Not registered?</a>' +
-                              '<button id=\"loginButton\" style=\"display: float\">Login</button></center> ';
+                              '<button id=\"loginButton\" name=\"loginButton\"style=\"display: float\">Login</button></center> ';
               
                               
                             }
@@ -1093,8 +1146,8 @@ if(sessionStorage.firstOpen == 'opened'){
                         votes per hour, and anything else I can think of.
                         </div> -->
 
-<div id="options">
-                         <h3>Your Music</h3>
+            <div id="options">
+            <h3>Your Music</h3>
             <select id="playlistSelect">
                 <option>playlist 1</option>
                 <option>playlist 2</option>
@@ -1128,6 +1181,18 @@ if(sessionStorage.firstOpen == 'opened'){
 
 
 
+<script>
+
+
+
+
+
+//twit = '<a href="https://twitter.com/share" class="twitter-share-button" data-url="www.slamstr.com" data-text=' + twitterText +  'data-size="large" data-hashtags="slamstr">Tweet</a>'
+
+
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
 
           <script type="text/javascript">
 
@@ -1139,9 +1204,7 @@ if(sessionStorage.firstOpen == 'opened'){
                var tes = 1;
                
                         function onOpen(e) {
-                            kendoConsole.log("Opened: " + $(e.item).children(".k-link").text());
-                        
-                            
+                            kendoConsole.log("Opened: " + $(e.item).children(".k-link").text());           
                         }
 
                         function onClose(e) {
@@ -1168,60 +1231,60 @@ if(sessionStorage.firstOpen == 'opened'){
                             }else if($(e.item).children(".k-link").text()=='battle'){
                               window.location.assign("/");
                             }else if($(e.item).children(".k-link").text()=='All'){
-                      sessionStorage.filter='all';
-                      filterSelect = true;
+                                sessionStorage.filter='all';
+                                filterSelect = true;
                             }else if($(e.item).children(".k-link").text()=='Alternative & Indie'){
-                      sessionStorage.filter='indie';
-                      filterSelect = true;
-                  }else if($(e.item).children(".k-link").text()=='Blues'){
-                      sessionStorage.filter='blues';
-                      filterSelect = true;
-                  }else if($(e.item).children(".k-link").text()=='Classical'){
-                    sessionStorage.filter='classical';
-                      filterSelect = true;
-                  }else if($(e.item).children(".k-link").text()=='Country'){
-                    sessionStorage.filter='country';
-                    filterSelect = true;
-                  }else if($(e.item).children(".k-link").text()=='Dance & Electronic'){
-                    sessionStorage.filter='electronic';
-                    filterSelect = true;
-                  }else if($(e.item).children(".k-link").text()=='Easy Listening'){
-                    sessionStorage.filter='easy';
-                    filterSelect = true;
-                  }else if($(e.item).children(".k-link").text()=='Folk & Songwriter'){
-                    sessionStorage.filter='folk';
-                    filterSelect = true;
-                  }else if($(e.item).children(".k-link").text()=='Hard Rock & Metal'){
-                    sessionStorage.filter='metal';
-                    filterSelect = true;
-                  }else if($(e.item).children(".k-link").text()=='Jazz'){
-                    sessionStorage.filter='jazz';
-                    filterSelect = true;
-                  }else if($(e.item).children(".k-link").text()=='Miscellaneous'){
-                    sessionStorage.filter='misc';
-                    filterSelect = true;
-                  }else if($(e.item).children(".k-link").text()=='Pop'){
-                    sessionStorage.filter='pop';
-                    filterSelect = true;
-                  }else if($(e.item).children(".k-link").text()=='R&B & Soul'){
-                    sessionStorage.filter='r&b';
-                    filterSelect = true;
-                  }else if($(e.item).children(".k-link").text()=='Rap & Hip-Hop'){
-                    sessionStorage.filter='hiphop';
-                    filterSelect = true;
-                  }else if($(e.item).children(".k-link").text()=='Reggae'){
-                    sessionStorage.filter='reggae';
-                    filterSelect = true;
-                  }else if($(e.item).children(".k-link").text()=='Rock'){
-                    sessionStorage.filter='rock';
-                    filterSelect = true;
-                  }else if($(e.item).children(".k-link").text()=='Soundtracks & Musicals'){
-                    sessionStorage.filter='musical';
-                    filterSelect = true;
-                  }else if($(e.item).children(".k-link").text()=='World Music'){
-                    sessionStorage.filter='world';
-                    filterSelect = true;
-                  }
+                                sessionStorage.filter='indie';
+                                filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='Blues'){
+                                sessionStorage.filter='blues';
+                                filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='Classical'){
+                              sessionStorage.filter='classical';
+                                filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='Country'){
+                              sessionStorage.filter='country';
+                              filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='Dance & Electronic'){
+                              sessionStorage.filter='electronic';
+                              filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='Easy Listening'){
+                              sessionStorage.filter='easy';
+                              filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='Folk & Songwriter'){
+                              sessionStorage.filter='folk';
+                              filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='Hard Rock & Metal'){
+                              sessionStorage.filter='metal';
+                              filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='Jazz'){
+                              sessionStorage.filter='jazz';
+                              filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='Miscellaneous'){
+                              sessionStorage.filter='misc';
+                              filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='Pop'){
+                              sessionStorage.filter='pop';
+                              filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='R&B & Soul'){
+                              sessionStorage.filter='r&b';
+                              filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='Rap & Hip-Hop'){
+                              sessionStorage.filter='hiphop';
+                              filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='Reggae'){
+                              sessionStorage.filter='reggae';
+                              filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='Rock'){
+                              sessionStorage.filter='rock';
+                              filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='Soundtracks & Musicals'){
+                              sessionStorage.filter='musical';
+                              filterSelect = true;
+                            }else if($(e.item).children(".k-link").text()=='World Music'){
+                              sessionStorage.filter='world';
+                              filterSelect = true;
+                            }
 
                   if(filterSelect){
                       var vidID = sessionStorage.vidID2 ;
@@ -1374,9 +1437,6 @@ if(sessionStorage.firstOpen == 'opened'){
 
         <div class="demo-section2">
 
-
-
-
           <div align="center" id="options2">
 
             <br> &nbsp &nbsp <img src="/images/HamsterRock.jpg"
@@ -1384,7 +1444,7 @@ if(sessionStorage.firstOpen == 'opened'){
             &copy slamstr 2013-2014 &nbsp &nbsp | &nbsp &nbsp <a
               href="/about.html" class="k-button2">about</a> &nbsp &nbsp |
             &nbsp &nbsp <a href="/contact.html" class="k-button2">contact</a>
-            &nbsp &nbsp | &nbsp &nbsp <a href="/privacy.html"
+            &nbsp &nbsp | &nbsp &nbsp <a href="/slamstrPrivacyPolicy.pdf"
               class="k-button2">privacy</a> &nbsp &nbsp | &nbsp &nbsp <a
               href="/tandc.html" class="k-button2">terms and conditions</a>
             &nbsp &nbsp | &nbsp <img src="/images/HamsterRock.jpg"
