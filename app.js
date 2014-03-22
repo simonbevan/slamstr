@@ -1507,9 +1507,11 @@ app.post('/uploadToAwaiting', function(req, res) {
 		var cityIP = body["city"]; 
 		var country= "'" +countryIP+"'" ;
 		var city =  "'" +cityIP+"'" ;
-		var uuid = req.body.uuid  ;
+		var uuid = "'" + req.body.uuid +"'" ;
+		
 		var type =  req.body.type  ;
-		var id =   req.body.userID ;
+
+		//console.log(type)
 
 		if(type == "mp4"){
 			type =   "'" +type+"'"  ;
@@ -1517,7 +1519,7 @@ app.post('/uploadToAwaiting', function(req, res) {
 			var tmp_path = req.files.files.path;
 			var target_path = './public/video/' + uuid;
 
-			
+			var id =   "'" +req.body.id+"'" ;
 			d = new Date();
 			timeStamp = d.yyyymmdd();
 			created = "'" + timeStamp +"'" ;
@@ -1528,7 +1530,7 @@ app.post('/uploadToAwaiting', function(req, res) {
 			genre  = "'" +req.body.genre +"'" ;
 			link =  "'slamstr.com '" ;
 
-			insertString = uuid + "," + "'none'"+ ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
+			insertString = "'"+uuid+"'" + "," + "'none'"+ ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
 			//console.log(insertString)
 
 
@@ -1549,13 +1551,7 @@ app.post('/uploadToAwaiting', function(req, res) {
 			sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
 
 			//console.log(sqlStr2)
-					var DBHost =  process.env.DBHost;
-		var DBUser =  process.env.DBUser;
-		var DBPassword =  process.env.DBPassword;
-		var DB =  process.env.DB;
-
-
-		var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
+			var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 			var client = new pg.Client(params);
 			client.connect(function(err) {
 				if(err) {
@@ -1602,6 +1598,7 @@ app.post('/uploadToAwaiting', function(req, res) {
 			type =   "'" +type+"'"  ;
 
 
+			var id =   "'" +req.body.id+"'" ;
 			d = new Date();
 			timeStamp = d.yyyymmdd();
 			created = "'" +timeStamp+"'" ;
@@ -1611,20 +1608,15 @@ app.post('/uploadToAwaiting', function(req, res) {
 			genre  = "'" +req.body.genre +"'" ;
 			link =  "'slamstr.com '" ;
 
-			insertString = uuid + "," + "'none'"+ ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
-			
+			insertString = "'"+uuid+"'" + "," + "'none'"+ ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
+			//console.log(insertString)
 
 
 			sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
-			
+			//console.log(sqlStr1)	
+
 			//console.log(sqlStr2)
-			var DBHost =  process.env.DBHost;
-		var DBUser =  process.env.DBUser;
-		var DBPassword =  process.env.DBPassword;
-		var DB =  process.env.DB;
-
-
-		var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
+			var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 			var client = new pg.Client(params);
 			client.connect(function(err) {
 				if(err) {
@@ -1646,6 +1638,8 @@ app.post('/uploadToAwaiting', function(req, res) {
 			type =   "'" +type+"'"  ;
 
 
+
+			var id =   "'" +req.body.id+"'" ;
 			d = new Date();
 			timeStamp = d.yyyymmdd();
 			created = "'" +timeStamp+"'" ;
@@ -1656,7 +1650,7 @@ app.post('/uploadToAwaiting', function(req, res) {
 			ytLink  = "'" +req.body.link +"'" ;
 			link =  "'slamstr.com '" ;
 
-			insertString = uuid + "," + ytLink + ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
+			insertString = "'"+uuid+"'" + "," + ytLink + ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
 			//console.log(insertString)
 
 			sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
@@ -1710,7 +1704,7 @@ app.get('/getAllTracks', function (req, res) {
 	var linkA = new Array();
 	var output = []
 
-
+	console.log('here')
 
 	var DBHost =  process.env.DBHost;
 	var DBUser =  process.env.DBUser;
@@ -1720,7 +1714,7 @@ app.get('/getAllTracks', function (req, res) {
 
 	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 
-	var sqlStr1 = "SELECT VIDID,ARTIST,TITLE FROM CONTENT"
+	var sqlStr1 = "SELECT VIDID,ARTIST,TITLE,FILELINK,GENRE FROM CONTENT"
 		var client = new pg.Client(params);
 	client.connect(function(err) {
 		if(err) {
@@ -1732,17 +1726,11 @@ app.get('/getAllTracks', function (req, res) {
 			}
 			//console.log(sqlStr1);
 
-			vidID = [];
-			votes = [];
-			//row.forEach(function(rows4){
 			for (var i=0;i<result.rows.length;i++){
-				vidID.push("'"+result.rows[i].vidid+"'");
-				votes.push("'"+result.rows[i].vote+"'");
 
+				output.push({'vidid':result.rows[i].vidid,'artist':result.rows[i].artist,'fileLink':result.rows[i].filelink,'genre':result.rows[i].genre,'title':result.rows[i].title});
 
-				output.push({'artist':result2.rows[0].artist,'fileLink':result2.rows[0].filelink,'genre':result2.rows[0].genre,'title':result2.rows[0].title,'votes':result2.rows[0].vote});
-
-				if(artistsA.length==50){
+				if(output.length==result.rows.length){
 					client.end();
 					res.json(output);
 				}
