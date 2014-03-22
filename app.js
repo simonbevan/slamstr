@@ -1547,6 +1547,10 @@ app.post('/uploadToAwaiting', function(req, res) {
 //			if (err) throw err;
 
 
+		var DBHost =  process.env.DBHost;
+		var DBUser =  process.env.DBUser;
+		var DBPassword =  process.env.DBPassword;
+		var DB =  process.env.DB;
 
 			sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
 
@@ -1791,23 +1795,23 @@ app.post('/getUploads', function (req, res) {
 
 
 AWS.config.update({
-	//accessKeyId:: process.env.AWS_ACCESS_KEY_ID,
-	//secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-	//accessKeyId: accessKeyId,
-	//secretAccessKey: secretAccessKey
+	accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+	secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 });
 
 var s3 = new AWS.S3();
 
+
 app.post('/uploadTest', function(req, res){
 
 
-	//console.log(req.files.files.codeID)
-	var path = req.files.files.path;
+	//console.log(req.files.files2)
+	var path = req.files.files2.path;
+
 	fs.readFile(path, function(err, file_buffer){
 		var params = {
 				Bucket: 'slamstr',
-				Key: req.files.files.path,
+				Key: 'test',
 				Body: file_buffer
 		};
 
