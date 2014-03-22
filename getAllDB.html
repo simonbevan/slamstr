@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>slamstr</title>
+
+<link href="examples/content/shared/styles/examples-offline.css"
+	rel="stylesheet">
+<link href="styles/kendo.common.min.css" rel="stylesheet">
+
+<script src="js/kendo.all.min.js" type="text/javascript"></script>
+<link href="bbb.css" rel="stylesheet">
+<link href="slamstr.css" rel="stylesheet">
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/kendo.web.min.js" type="text/javascript"></script>
+<script src="examples/content/shared/js/console.js"
+	type="text/javascript"></script>
+<script src="bbb.js" type="text/javascript"></script>
+
+
+<script src="examples/content/shared/js/people.js"></script>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+      google.load('visualization', '1', {packages: ['corechart']}); </script>
+
+<script src="http://jwpsrv.com/library/NehFHIphEeOg5SIACi0I_Q.js" type="text/javascript"></script>
+
+<script>
+ $(document).ready(function() {
+
+	 
+
+	 
+sessionStorage.chartfilter='all';
+
+
+
+ $('#delete').click(function(){  
+
+         var vidID = sessionStorage.vidID ;
+         var userID = sessionStorage.userID;
+         var pLName = "'playList1'"//sessionStorage.pLName;
+		alert('its on my list')
+ 
+       	
+//         $.ajax({ 
+//               url: '/deleteFromDB',
+//               type: 'POST',
+//               cache: false, 
+// 
+//               data: { vID:vidID }, 
+//               success: function(data){
+//                 
+//               }
+//               , error: function(jqXHR, textStatus, err){
+//                   alert('text status '+textStatus+', err '+err)
+//               }
+//            })
+    }); 
+     
+     $('#legendkeep').click(function(){  
+
+         var vidID = sessionStorage.vidID ;
+         var userID = sessionStorage.userID;
+         var pLName = "'playList1'"//sessionStorage.pLName;
+
+        
+         
+         $.ajax({ 
+               url: '/like',
+               type: 'POST',
+               cache: false, 
+ 
+               data: { uID: userID, vID:vidID, type:'legendkeep' ,pLName:pLName }, 
+               success: function(data){
+                 
+               }
+               , error: function(jqXHR, textStatus, err){
+                   alert('text status '+textStatus+', err '+err)
+               }
+            })
+         });
+
+
+});
+
+
+
+							     function playSong(myFile,bandName,songName,artistLink,vidid,myImage) { 
+
+
+sessionStorage.vidID = vidid;
+sessionStorage.bandName = bandName;
+sessionStorage.songName = songName;
+sessionStorage.artistLink = 'www.slamster.com';
+
+
+
+output = '<center><h3>'+sessionStorage.bandName+' '+sessionStorage.songName+'</h3>'+
+													'<p>Visit at: '+sessionStorage.artistLink+'</p> '+
+													'</center> ' 
+											
+													$("#info1").html(output);
+
+
+
+		    jwplayer('ytplayerchart').load([{
+		      file: myFile,
+		      //image: myImage
+		    }]);
+		    jwplayer().play();
+		  };
+
+
+ </script>
+
+
+
+</head>
+<body>
+
+
+	<script>
+
+         $.ajax({
+		    type: "GET",
+		    dataType: "json",
+		    
+		    url: "/getTop"				    
+		}).done(function(data){
+			
+			
+			data = data[0];
+			sessionStorage.vidID = data['vidID']
+			sessionStorage.fileLink = data['fileLink']
+			sessionStorage.songName = data['title']
+			sessionStorage.bandName = data['artist']
+
+
+	jwplayer('ytplayerchart').setup({
+												file: sessionStorage.fileLink,
+												width: '100%',
+												aspectratio: '8:6',
+												fallback: 'false',
+												primary: 'flash'
+											});
+
+	output = '<center><h3>'+sessionStorage.bandName+' '+sessionStorage.songName+'</h3>'+
+													'<p>Visit at: '+sessionStorage.artistLink+'</p> '+
+													'</center> ' 
+											
+													$("#info1").html(output);
+
+		});
+
+	</script>
+
+	<div id="body" class="k-content">
+
+		<div id="mainsection" class="demo-section">
+
+
+
+			<div align="right">
+				<centre> <img src="images/banner.jpg" alt="hamster"
+					width="100%" height="150px"> </centre>
+			</div>
+
+			<div>
+
+				<ul id="menu">
+
+					<li>Filter
+						<ul>
+							<li>Genre
+
+								<ul>
+
+									<li>All</li>			
+									<li>Alternative & Indie</li>
+									<li>Blues</li>
+									<li>Classical</li>
+									<li>Country</li>
+									<li>Dance & Electronic</li>
+									<li>Easy Listening</li>
+									<li>Folk & Songwriter</li>
+									<li>Hard Rock & Metal</li>
+									<li>Jazz</li>
+									<li>Miscellaneous</li>
+									<li>Pop</li>
+									<li>R&B & Soul</li>
+									<li>Rap & Hip-Hop</li>
+									<li>Reggae</li>
+									<li>Rock</li>
+									<li>Soundtracks & Musicals</li>
+									<li>World Music</li>
+								</ul>
+							</li>
+
+
+
+
+						</ul>
+
+					</li>
+
+					<li>upload</li>
+					<li>battle</li>
+
+					<li>myslamstr
+						<ul>
+							<li>playLists</li>
+							<li>account</li>
+						</ul>
+
+					</li>
+
+					<li>about</li>
+					<li>contact</li>
+
+
+
+
+				</ul>
+			</div>
+
+		
+            
+            
+            
+
+
+				<script>
+      
+		    
+
+            
+                $(document).ready(function() {
+                	
+
+
+           	        $.ajax({
+		    type: "GET",
+		    dataType: "json",
+		    cache: false,
+		
+		    url: "/getAllTracks"				    
+		}).done(function(data){
+			
+
+			data1 = data;
+			//var data = createRandomData(5);
+					
+					         $("#grid").kendoGrid({
+                        dataSource: {
+                            data: data1,
+                            schema: {
+                                model: {
+                                    fields: {
+                                        title: { type: "string" },
+                                    }
+                                }
+                            },
+                            pageSize: 20,
+                            
+                        },
+                        
+                        sortable: true,
+                        scrollable: false,
+                        filterable: {
+                            extra: false,
+                            operators: {
+                            	string: {
+                                	eq: "Choose genre"
+                                }
+                            }
+                        },
+                        pageable: {
+                            refresh: true,
+                            pageSizes: true,
+                            buttonCount: 5
+                        },
+                        
+                        columns: [ {
+                                field: "artist",
+                                width: 90,
+                                title: "Band Name",
+                                filterable: false
+                            } , {
+                                field: "title",
+                                width: 90,
+                                title: "Track Name",
+                                filterable: false
+                            } , {
+                                width: 100,
+                                field: "genre",
+                                title: "Genre",
+                                filterable: false
+                            }, {
+                            	hidden: true,
+                                width: 50,
+                                field: "vidid",
+                                title: "vidid",
+                                filterable: false
+                            },
+                            {
+                                width: 50,
+                                field: "fileLink",
+                                title: "Play",
+                                filterable: false,
+                                // template: "<button onclick=\"playSong('${ title }')\">${ title }</button> " 
+
+                                template: "<button class=\"k-icon k-i-arrow-e\" onclick=\"playSong('${ fileLink}','${artist}','${title}','www.slamstr.com','${vidid}')\">play</button> " 
+
+
+                                //"<button  onclick=\"playSong();\" />", 
+                                //style='background-image:url(test.png)' 
+                            }
+                            
+                            
+                            
+                        ]
+                    });
+           
+
+
+						
+
+
+                });
+
+
+
+				
+
+
+     })
+
+
+
+
+
+  			</script>    
+
+
+				<div id="splitter" class=k-content>
+
+					<br>
+
+
+
+					<div id="vertical">
+
+						<div id="bottom-pane">
+							<div id="horizontal" style="height: 100%; width: 100%;">
+								<div id="left-pane">
+									<div class="pane-content">
+
+
+
+<br>
+<div id="grid"></div>
+<br>
+
+
+
+									</div>
+								</div>
+
+								<div id="right-pane">
+
+									<div id="vertical2">
+										<div id="top-pane2">
+											<div id="rightPanel" class="pane-content">
+													<br>
+
+<div style="width:100%">
+										
+
+
+
+</div>
+										
+
+										
+
+									<div style="margin-left:5px;margin-right:5px">
+									<div id="ytplayerchart" style="display: visible"></div>
+									</div>
+<br>
+
+										<div id="info1"></div>
+
+											<script type="text/javascript">
+											
+								   
+											//sessionStorage.bandName = "test";
+											//sessionStorage.songName = "test";
+											//sessionStorage.artistLink = "test";
+		 									
+											
+											output = '<center><h3>'+sessionStorage.bandName+' '+sessionStorage.songName+'</h3>'+
+													'<p>Visit at: '+sessionStorage.artistLink+'</p> '+
+													'</center> ' 
+											
+													
+													$("#info1").html(output);
+													
+												
+													
+											</script>
+
+									
+														
+													
+
+													<button class="bin" type="button" name="delete"
+														id="delete" style="display: visible; margin-left: 1cm;">delete</button>
+
+
+
+													
+		
+
+											</div>
+										</div>
+
+
+
+									<!-- 	<div id="bottom-pane2">
+
+
+
+											<div class="pane-content" id="vidInfo">
+
+												<center>	<h3 >Where the Bands Live</h3> </center>
+
+														<div align="right">
+															<center><a href="/maps.html"> <img src="images/worldmap.png" alt="hamster"
+																width="100%" height="70px" ></a> </center>
+														</div>
+																				
+														Click for a full scrren interactive map				  
+											
+												</div>
+											</div> -->
+
+
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+
+
+
+				<script type="text/javascript">
+
+						 $(document).ready(function() {
+							 
+							
+
+
+							 
+							 var tes = 1;
+							 
+				                function onOpen(e) {
+				                    kendoConsole.log("Opened: " + $(e.item).children(".k-link").text());
+				                
+				                    
+				                }
+
+				                function onClose(e) {
+				                    kendoConsole.log("Closed: " + $(e.item).children(".k-link").text());
+				                }
+
+				                function onSelect(e) {
+				                    kendoConsole.log("Selected: " + $(e.item).children(".k-link").text());
+				                    
+				                    filterSelect = false;
+				                    if($(e.item).children(".k-link").text()=='charts'){
+				                    	window.location.assign("/charts.html");
+				                    }else if($(e.item).children(".k-link").text()=='playLists'){
+				                    	window.location.assign("/playlist.html");
+				                    }else if($(e.item).children(".k-link").text()=='account'){
+				                    	window.location.assign("/account.html");
+				                    }else if($(e.item).children(".k-link").text()=='about'){
+				                    	window.location.assign("/about.html");
+				                    }else if($(e.item).children(".k-link").text()=='contact'){
+				                    	window.location.assign("/contact.html");
+				                    }else if($(e.item).children(".k-link").text()=='upload'){
+				                    	window.location.assign("/upload.html");
+				                    }else if($(e.item).children(".k-link").text()=='battle'){
+				                    	window.location.assign("/");
+				                    }else if($(e.item).children(".k-link").text()=='All'){
+										sessionStorage.chartfilter='all';
+										filterSelect = true;
+			                    }else if($(e.item).children(".k-link").text()=='Alternative & Indie'){
+										sessionStorage.chartfilter='indie';
+										filterSelect = true;
+								}else if($(e.item).children(".k-link").text()=='Blues'){
+										sessionStorage.chartfilter='blues';
+										filterSelect = true;
+								}else if($(e.item).children(".k-link").text()=='Classical'){
+									sessionStorage.chartfilter='classical';
+										filterSelect = true;
+								}else if($(e.item).children(".k-link").text()=='Country'){
+									sessionStorage.chartfilter='country';
+									filterSelect = true;
+								}else if($(e.item).children(".k-link").text()=='Dance & Electronic'){
+									sessionStorage.chartfilter='electronic';
+									filterSelect = true;
+								}else if($(e.item).children(".k-link").text()=='Easy Listening'){
+									sessionStorage.chartfilter='easy';
+									filterSelect = true;
+								}else if($(e.item).children(".k-link").text()=='Folk & Songwriter'){
+									sessionStorage.chartfilter='folk';
+									filterSelect = true;
+								}else if($(e.item).children(".k-link").text()=='Hard Rock & Metal'){
+									sessionStorage.chartfilter='metal';
+									filterSelect = true;
+								}else if($(e.item).children(".k-link").text()=='Jazz'){
+									sessionStorage.chartfilter='jazz';
+									filterSelect = true;
+								}else if($(e.item).children(".k-link").text()=='Miscellaneous'){
+									sessionStorage.chartfilter='misc';
+									filterSelect = true;
+								}else if($(e.item).children(".k-link").text()=='Pop'){
+									sessionStorage.chartfilter='pop';
+									filterSelect = true;
+								}else if($(e.item).children(".k-link").text()=='R&B & Soul'){
+									sessionStorage.chartfilter='r&b';
+									filterSelect = true;
+								}else if($(e.item).children(".k-link").text()=='Rap & Hip-Hop'){
+									sessionStorage.chartfilter='hiphop';
+									filterSelect = true;
+								}else if($(e.item).children(".k-link").text()=='Reggae'){
+									sessionStorage.chartfilter='reggae';
+									filterSelect = true;
+								}else if($(e.item).children(".k-link").text()=='Rock'){
+									sessionStorage.chartfilter='rock';
+									filterSelect = true;
+								}else if($(e.item).children(".k-link").text()=='Soundtracks & Musicals'){
+									sessionStorage.chartfilter='musical';
+									filterSelect = true;
+								}else if($(e.item).children(".k-link").text()=='World Music'){
+									sessionStorage.chartfilter='world';
+									filterSelect = true;
+								}
+
+
+									if(filterSelect){
+									   
+
+										$(document).ready(function() {
+                	
+										        $.ajax({
+												    type: "POST",
+												    dataType: "json",
+												    cache: false,
+												    data: { genre:sessionStorage.chartfilter  },
+												    url: "/createTable"				    
+												}).done(function(data){
+													
+													data1 = data;
+														
+
+										                    $("#grid").kendoGrid({
+										                        dataSource: {
+										                            data: data1,
+										                            schema: {
+										                                model: {
+										                                    fields: {
+										                                        City: { type: "string" },
+										                                    }
+										                                }
+										                            },
+										                            pageSize: 20
+										                        },
+										                        
+										                        sortable: true,
+										                        scrollable: false,
+										                        filterable: {
+										                            extra: false,
+										                            operators: {
+										                            	string: {
+										                                	eq: "Choose genre"
+										                                }
+										                            }
+										                        },
+										                        
+										                        columns: [ {
+										                                field: "artist",
+										                                width: 90,
+										                                title: "Band Name",
+										                                filterable: false
+										                            } , {
+										                                field: "title",
+										                                width: 90,
+										                                title: "Track Name",
+										                                filterable: false
+										                            } , {
+										                                width: 100,
+										                                field: "genre",
+										                                filterable: {
+										                                    ui: cityFilter
+										                                }
+										                            }  , {
+										                                width: 50,
+										                                field: "votes",
+										                                title: "Vote",
+										                                filterable: false
+										                            },  
+							                	                              {
+										                                width: 50,
+										                                field: "link",
+										                                title: "link",
+										                                // template: "<button onclick=\"playSong('${ title }')\">${ title }</button> " 
+
+
+										                                template: "<button onclick=\"playSong('${ link }')\">play</button> " 
+										                                //"<button  onclick=\"playSong();\" />", 
+										                                //style='background-image:url(test.png)' 
+										                            }
+										                        ]
+										                    });
+										                });
+
+
+												});
+									       
+										}
+
+				                    
+				                    
+				                }
+
+				                function onActivate(e) {
+				                    kendoConsole.log("Activated: " + $(e.item).children(".k-link").text());
+				                    
+				                }
+
+				                function onDeactivate(e) {
+				                    kendoConsole.log("Deactivated: " + $(e.item).children(".k-link").text());
+				                }
+
+				                $("#menu").kendoMenu({
+				                    select: onSelect,
+				                    open: onOpen,
+				                    close: onClose,
+				                    activate: onActivate,
+				                    deactivate: onDeactivate,
+				                    
+				                });
+				            });
+						
+						
+							$(document).ready(function() {
+				
+								
+								
+								 
+								
+							
+								
+								
+								
+								$("#vertical").kendoSplitter({
+									orientation : "vertical",
+									panes : [ {
+										collapsible : false,
+										size : "7%"
+									},{
+										collapsible : false,
+										size : "93%"
+									},
+
+									]
+								});
+
+								$("#horizontal2").kendoSplitter({
+									panes : [ {
+										collapsible : false,
+										resizable: false,
+										size : "70%"
+									}, 
+
+									]
+								});
+								
+								$("#horizontal").kendoSplitter({
+									panes : [ {
+										collapsible : false,
+										resizable: false,
+										size : "60%"
+									}, {
+										collapsible : false,
+										resizable: false,
+									},
+
+									]
+								});
+								
+		
+								
+
+								$("#vertical2").kendoSplitter({
+									orientation : "vertical",
+									panes : [ {
+										collapsible : false,
+										resizable: false,
+										size : "70%"
+									},
+									{
+										collapsible : false,
+										size : "30%"
+									},{
+										collapsible : false
+									},
+
+									]
+								});
+
+							});
+						</script>
+
+
+
+
+
+
+
+			</div>
+
+<br>
+			<div class="demo-section2" id = "options2">
+
+				<div align="center">
+
+					<br> &nbsp &nbsp <img src="/images/HamsterRock.jpg"
+						alt="hamster" width="20px" height="15px"> &nbsp | &nbsp
+					&copy slamstr 2013-2014 &nbsp &nbsp | &nbsp &nbsp <a
+						href="/about.html" class="k-button2">about</a> &nbsp &nbsp | &nbsp
+					&nbsp <a href="/contact.html" class="k-button2">contact</a> &nbsp
+					&nbsp | &nbsp &nbsp <a href="/privacy.html" class="k-button2">privacy</a>
+
+					&nbsp &nbsp | &nbsp &nbsp <a href="/tandc.html" class="k-button2">terms
+						and conditions</a> &nbsp &nbsp | &nbsp <img
+						src="/images/HamsterRock.jpg" alt="hamster" width="20px"
+						height="15px">
+
+
+
+				</div>
+				<br>
+			</div>
+
+
+			<div></div>
+
+
+
+
+
+
+			<div>
+
+
+				<br>
+
+
+
+				<style scoped type="text/css">
+				
+				
+				
+</style>
+			</div>
+</body>
+</html>
