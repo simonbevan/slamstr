@@ -243,7 +243,8 @@
   
      $('#next').click(function(){  
 
-  
+            alert(sessionStorage.songName2)
+
             var vidID = sessionStorage.vidID2 ;
             var userID = sessionStorage.userID; 
             var pLName = "'playList1'"//sessionStorage.pLName;
@@ -254,7 +255,7 @@
             $('#next2').hide();
             $('#legendbin').show();
             $('#challengerbin').show();
-                        $('#legendkeep').show();
+            $('#legendkeep').show();
             $('#challengerkeep').show();
 
 
@@ -270,6 +271,7 @@
             data1 = data['out1'];
              data2 = data['out2'];
       
+
             
             sessionStorage.fileLink = data1['fileLink'];
             sessionStorage.vidID = data1['vID'];
@@ -312,8 +314,10 @@
 
      $('#next2').click(function(){  
 
-  
-            var vidID = sessionStorage.vidID2 ;
+            
+
+
+            var vidID = sessionStorage.vidID ;
             var userID = sessionStorage.userID; 
             var pLName = "'playList1'"//sessionStorage.pLName;
       
@@ -322,7 +326,7 @@
             $('#next2').hide();
             $('#legendbin').show();
             $('#challengerbin').show();
-                        $('#legendkeep').show();
+            $('#legendkeep').show();
             $('#challengerkeep').show();
 
          $.ajax({ 
@@ -330,34 +334,37 @@
                type: 'POST',
                cache: false, 
 
-               data: { uID: userID, vID:vidID, type:'challengerbin',pLName:pLName ,genre:sessionStorage.filter  }, 
+               data: { uID: userID, vID:vidID, type:'legendbin',pLName:pLName ,genre:sessionStorage.filter  }, 
                success: function(data){
   
                  
             data1 = data['out1'];
             data2 = data['out2'];
       
-              //alert(data1)
+           
             
-              sessionStorage.fileLink = data1['fileLink'];
-            sessionStorage.vidID = data1['vID'];
-            sessionStorage.bandName = data1['bandName'];
-            sessionStorage.songName = data1['songName'];
+            sessionStorage.fileLink = data2['fileLink'];
+            sessionStorage.vidID = data2['vID'];
+            sessionStorage.bandName = data2['bandName'];
+            sessionStorage.songName = data2['songName'];
             //sessionStorage.country = data1['country'];
-            sessionStorage.artistLink = data1['artistLink'];
-            sessionStorage.votes = data1['votes'];
+            sessionStorage.artistLink = data2['artistLink'];
+            sessionStorage.votes = data2['votes'];
         
-              sessionStorage.fileLink2 = data2['fileLink'];
-            sessionStorage.vidID2 = data2['vID'];
-            sessionStorage.bandName2 = data2['bandName'];
-            sessionStorage.songName2 = data2['songName'];
+            sessionStorage.fileLink2 = data1['fileLink'];
+            sessionStorage.vidID2 = data1['vID'];
+            sessionStorage.bandName2 = data1['bandName'];
+            sessionStorage.songName2 = data1['songName'];
             //sessionStorage.country = data1['country'];
-            sessionStorage.artistLink2 = data2['artistLink'];
-            sessionStorage.votes2 = data2['votes'];
+            sessionStorage.artistLink2 = data1['artistLink'];
+            sessionStorage.votes2 = data1['votes'];
             
+
             loadVideo1(sessionStorage.fileLink)
             loadVideo2(sessionStorage.fileLink2)
             
+
+
             sessionStorage.ytvidID = sessionStorage.fileLink
           sessionStorage.ytvidID2 = sessionStorage.fileLink2;
             

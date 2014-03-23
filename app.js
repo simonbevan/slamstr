@@ -1507,7 +1507,7 @@ app.post('/uploadToAwaiting', function(req, res) {
 		var cityIP = body["city"]; 
 		var country= "'" +countryIP+"'" ;
 		var city =  "'" +cityIP+"'" ;
-		var uuid = "'" + req.body.uuid +"'" ;
+		var uuid = req.body.uuid  ;
 		
 		var type =  req.body.type  ;
 
@@ -1523,10 +1523,8 @@ app.post('/uploadToAwaiting', function(req, res) {
 		if(type == "mp4"){
 			type =   "'" +type+"'"  ;
 
-			var tmp_path = req.files.files.path;
-			var target_path = './public/video/' + uuid;
-
-			var id =   "'" +req.body.id+"'" ;
+			
+			var id =   req.body.userID;
 			d = new Date();
 			timeStamp = d.yyyymmdd();
 			created = "'" + timeStamp +"'" ;
@@ -1537,23 +1535,7 @@ app.post('/uploadToAwaiting', function(req, res) {
 			genre  = "'" +req.body.genre +"'" ;
 			link =  "'slamstr.com '" ;
 
-			insertString = "'"+uuid+"'" + "," + "'none'"+ ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
-			//console.log(insertString)
-
-
-//			fs.rename(tmp_path, target_path, function(err) {
-//			if (err) throw err;
-//			// delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-//			fs.unlink(tmp_path, function() {
-//			if (err) throw err;
-
-//			fs.rename(tmp_path2, target_path2, function(err) {
-//			if (err) throw err;
-//			// delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-//			fs.unlink(tmp_path2, function() {
-//			if (err) throw err;
-
-
+			insertString = uuid + "," + "'none'"+ ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
 
 
 			sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
@@ -1594,7 +1576,7 @@ app.post('/uploadToAwaiting', function(req, res) {
 //			"</body>"+
 //			"</html>";
 
-			res.send(output);
+			//res.send(output);
 
 //			});
 //			});
@@ -1606,17 +1588,17 @@ app.post('/uploadToAwaiting', function(req, res) {
 			type =   "'" +type+"'"  ;
 
 
-			var id =   "'" +req.body.id+"'" ;
+			var id =  req.body.userID ;
 			d = new Date();
 			timeStamp = d.yyyymmdd();
 			created = "'" +timeStamp+"'" ;
 			artist = "'" +req.body.artist+"'" ;
 			title = "'" +req.body.title+"'" ;
 
-			genre  = "'" +req.body.genre +"'" ;
+			genre  = "'" +req.body.genre2 +"'" ;
 			link =  "'slamstr.com '" ;
 
-			insertString = "'"+uuid+"'" + "," + "'none'"+ ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
+			insertString = uuid + "," + "'none'" +","+ id +"," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
 			//console.log(insertString)
 
 
@@ -1643,31 +1625,47 @@ app.post('/uploadToAwaiting', function(req, res) {
 
 
 		}else if(type == "yt"){
+
+
+			output = "<!DOCTYPE html>"+
+			"<html>"+
+			"<head>"+
+			"<title>slamstr</title>"+
+			"<script src=\"js/jquery.min.js\" type=\"text/javascript\"></script>"+
+			"</head>"+
+			"<body>"+
+
+			"<script type=\"text/javascript\">"+
+			"$(document).ready(function() {"+
+
+			"	 window.location.replace(\"/upload.html\");"+
+
+			"});"+
+			" </script>"
+			"<h3>Redirecting</h3>"+
+			"</body>"+
+			"</html>";
+
+			//res.send(output);
+
 			type =   "'" +type+"'"  ;
-
-
-
-			var id =   "'" +req.body.id+"'" ;
+			var id =   req.body.userID ;
 			d = new Date();
 			timeStamp = d.yyyymmdd();
 			created = "'" +timeStamp+"'" ;
 			artist = "'" +req.body.artist+"'" ;
 			title = "'" +req.body.title+"'" ;
 
-			genre  = "'" +req.body.genre +"'" ;
+			genre  = "'" +req.body.genre3 +"'" ;
 			ytLink  = "'" +req.body.link +"'" ;
 			link =  "'slamstr.com '" ;
 
-			insertString = "'"+uuid+"'" + "," + ytLink + ","+ id + "," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
-			//console.log(insertString)
+			insertString = "'" +uuid + "'," + ytLink + ",'"+ id + "'," +type +","  + genre +"," + title + "," + artist + "," +created+ ","  + city + ","+ country + ","   + link;
 
 			sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
 
-
-
-
-
 			var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
+			//console.log(sqlStr1)
 
 			var client = new pg.Client(params);
 			client.connect(function(err) {
@@ -1676,7 +1674,9 @@ app.post('/uploadToAwaiting', function(req, res) {
 				}
 				client.query(sqlStr1, function(err, result) {
 					if(err) {
-						return //console.error('error running query', err);
+						// /return //console.error('error running query', err);
+						client.end();
+						res.send(output);
 					}
 					client.end();
 					res.send(output);
@@ -1804,14 +1804,16 @@ var s3 = new AWS.S3();
 
 app.post('/uploadTest', function(req, res){
 
-
-	//console.log(req.files.files2)
-	var path = req.files.files2.path;
-
+	var path = ""
+	if(req.body["type"]=="mp3"){
+		path = req.files.files2.path;
+	}else if(req.body["type"]=="mp4"){
+		path = req.files.files3.path;
+	}
 	fs.readFile(path, function(err, file_buffer){
 		var params = {
 				Bucket: 'slamstr',
-				Key: 'test',
+				Key: req.body["uuid"],
 				Body: file_buffer
 		};
 

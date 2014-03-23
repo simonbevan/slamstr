@@ -31,7 +31,7 @@ function guid() {
 	return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
 	s4() + '-' + s4() + s4() + s4();
 }
-sessionStorage.uuid = "'"+guid() +"'";
+sessionStorage.uuid = guid();
 
 
 </script>
@@ -182,7 +182,7 @@ sessionStorage.signuptype="yt";
 																		<label for="genre2" class="required">genre:</label>
 																		<select id="genre2" multiple="multiple" name="genre2"
 																			required validationMessage="Please Select Your Genre"
-																			data-bind="value: Genre2" style="width: 181px">
+																			data-bind="value: genre2" style="width: 181px">
 
 																			<option>Alternative & Indie</option>
 																			<option>Blues</option>
@@ -224,7 +224,7 @@ sessionStorage.signuptype="yt";
 																</div>
 																<div style="display: inline-block; margin-left: -40px;" id="filesDiv2">
 																	<input type="file" name="files2" id="files2" required
-																		multiple accept='music/*'>
+																		multiple accept='audio/*'>
 																</div>
 
 																
@@ -359,7 +359,7 @@ sessionStorage.signuptype="yt";
 																	</div>
 																	<div style="display: inline-block; margin-left: -40px;style="visibility: visible" id="filesDiv3" >
 																	<input type="file" name="files3" id="files3" required
-																		multiple accept='video/*'>
+																		multiple accept='video/mp4,video/*'>
 																</div> 
 
 
@@ -396,7 +396,8 @@ sessionStorage.signuptype="yt";
 																		<input type="hidden" name="type" value="yt">
 
 																		<script type="text/javascript">
-																document.write("<input type=\"hidden\" name=\"id\" value="+sessionStorage.userID +">");
+																document.write("<input type=\"hidden\" name=\"userID\" value="+sessionStorage.userID +">");
+																document.write("<input type=\"hidden\" name=\"uuid\" value="+sessionStorage.uuid +">");
 															</script>
 
 																		<label for="link" class="required">link:</label>
@@ -418,11 +419,14 @@ sessionStorage.signuptype="yt";
 																			pattern="[A-Za-z0-9]+" required
 																			validationMessage="Sorry only letters and numbers" />
 
+
+
+
 																		<br>
 															
 
 																		<label for="genre3" class="required">genre:</label>
-																		<select id="genre3" multiple="multiple" name="genre2"
+																		<select id="genre3" multiple="multiple" name="genre3"
 																			required validationMessage="Please Select Your Genre"
 																			data-bind="value: Genre3" style="width: 181px">
 
@@ -778,10 +782,12 @@ sessionStorage.signuptype="yt";
                         async: {
                             saveUrl: "/uploadTest",
                             removeUrl: "remove",
-                            autoUpload: false
+                            autoUpload: false,
+
                         },
                         upload: onUpload,
                         select: onSelect,
+
                       
                        
                      
@@ -821,7 +827,8 @@ userID = sessionStorage.userID;
 
    function onUpload(e) {
 	   
-					e.files[0]['name'] = sessionStorage.uuid;
+
+        			e.data = { uuid:sessionStorage.uuid,type:sessionStorage.signuptype };
 					userID = sessionStorage.userID;
 					var artist = "";
 					var title = "";
@@ -831,8 +838,9 @@ userID = sessionStorage.userID;
 					 if(sessionStorage.signuptype=="mp3" ){	
 						var artist = $("#registerMP3 input[name='artist']").val();
 						var title = $("#registerMP3 input[name='title']").val();
-						var genre = $("#registerMP3 input[name='genre']").val();
+						var genre = $("#registerMP3 input[id='genre2']").val();
 						var type = "mp3";
+
 					 }else if(sessionStorage.signuptype=="mp4"){
 						var artist = $("#registerMP4 input[name='artist']").val();
 						var title = $("#registerMP4 input[name='title']").val();
@@ -845,19 +853,20 @@ userID = sessionStorage.userID;
 						var type = "yt";
 					 }
 				
-					 var uuid = guid();
+					var uuidT = "'" + sessionStorage.uuid + "'" 
+
 					 $.ajax({
          			    type: "POST",
          			    dataType: "json",
          	            cache: false, 
          			    url: "/uploadToAwaiting"	,
-         			    data: { type:type, userID: userID, artist:artist, title:title, genre:genre,uuid:sessionStorage.uuid }, 			    
+         			    data: { type:type, userID: userID, artist:artist, title:title, genre:genre,uuid:uuidT }, 			    
          			}).done(function(data){
          			
          								
          			});
 
-	   sessionStorage.uuid = "'"+guid() +"'";
+	   sessionStorage.uuid = guid();
     }
   
   function onSelect(e) {
