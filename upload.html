@@ -821,6 +821,7 @@ userID = sessionStorage.userID;
 
    function onUpload(e) {
 	   
+					e.files[0]['name'] = sessionStorage.uuid;
 					userID = sessionStorage.userID;
 					var artist = "";
 					var title = "";
@@ -861,7 +862,8 @@ userID = sessionStorage.userID;
   
   function onSelect(e) {
 	  
-	  e.files[0]['name'] = sessionStorage.uuid;
+	  
+
 	  
 	  if(e.files[0]['size']>50000000){
 		  alert('file too big. Please limit to 50mb')

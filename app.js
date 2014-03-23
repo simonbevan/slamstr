@@ -1511,6 +1511,13 @@ app.post('/uploadToAwaiting', function(req, res) {
 		
 		var type =  req.body.type  ;
 
+
+			//console.log(sqlStr2)
+			var DBHost =  process.env.DBHost;
+			var DBUser =  process.env.DBUser;
+			var DBPassword =  process.env.DBPassword;
+			var DB =  process.env.DB;
+
 		//console.log(type)
 
 		if(type == "mp4"){
@@ -1547,10 +1554,7 @@ app.post('/uploadToAwaiting', function(req, res) {
 //			if (err) throw err;
 
 
-		var DBHost =  process.env.DBHost;
-		var DBUser =  process.env.DBUser;
-		var DBPassword =  process.env.DBPassword;
-		var DB =  process.env.DB;
+
 
 			sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
 
@@ -1660,11 +1664,7 @@ app.post('/uploadToAwaiting', function(req, res) {
 			sqlStr1 = "INSERT INTO AWAITINGAPPROVAL (VIDID,FILELINK,USERNAME,FILETYPE,GENRE,TITLE,ARTIST,CREATED,CITY,COUNTRY,LINK) VALUES ("+insertString+")" 
 
 
-			//console.log(sqlStr2)
-			var DBHost =  process.env.DBHost;
-			var DBUser =  process.env.DBUser;
-			var DBPassword =  process.env.DBPassword;
-			var DB =  process.env.DB;
+
 
 
 			var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
