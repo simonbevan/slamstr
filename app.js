@@ -580,13 +580,13 @@ app.post('/next', function(req, res) {
 			}
 
 
-
+			
 			client.query(sqlStr2, function(err, result2) {
 				if(err) {
 					//return console.error('error running query', err);
 				}
 
-				//console.log(sqlStr2 )
+			
 				vidID2 = result2.rows[0].vidid;
 				votes2 = result2.rows[0].vote;
 				views2 = result2.rows[0].views;
@@ -625,8 +625,12 @@ app.post('/next', function(req, res) {
 						votes2 = result4.rows[0].vote;
 						views2 = result4.rows[0].views;
 
+
+
 						sqlStr5 = "SELECT FILELINK,TITLE,ARTIST,LINK,USERNAME FROM CONTENT WHERE VIDID ='" + vidID2 +"'";	
 
+						//console.log(sqlStr5)
+						
 						client.query(sqlStr5, function(err, result5) {
 							if(err) {
 								//return console.error('error running query', err);
@@ -693,16 +697,13 @@ app.post('/like', function(req, res) {
 
 			if(type=="legendbin") {	//vote	
 
-
-
 				sqlStr1 = "SELECT * FROM VOTES WHERE VIDID= "+vidID+" AND USERNAME= "+userID
+				
 
 				client.query(sqlStr1, function(err, result) {
 					if(err) {
 						return console.error('error running query', err);
 					}
-
-					//console.log(result.rows);
 
 					if(result.rows.length>0){
 						//console.log('error');
@@ -779,13 +780,14 @@ app.post('/like', function(req, res) {
 
 
 				sqlStr1 = "SELECT * FROM VOTES WHERE VIDID= "+vidID+" AND USERNAME= "+userID
-				//console.log(sqlStr1)
+				
 
 				client.query(sqlStr1, function(err, result) {
 					if(err) {
 						return console.error('error running query', err);
 					}
-					//console.log(result.rows);
+					
+					
 
 					if(result.rows.length>0){
 						//console.log('error');
@@ -797,7 +799,8 @@ app.post('/like', function(req, res) {
 						sqlStr1 = "INSERT INTO VOTES (ID,VIDID,USERNAME,VOTE,DATE) VALUES ("+uuid+","+vidID+","+userID+",1,"+timestamp+" )" 
 						sqlStr2 = "UPDATE BATTLE set VOTE = VOTE+1 where VIDID="+vidID
 
-						sqlStr1 = "INSERT INTO VOTES (ID,VIDID,USERNAME,VOTE,DATE) VALUES ("+uuid2+","+vidID2+","+userID+",0,"+timestamp+" )" 
+						sqlStr3 = "INSERT INTO VOTES (ID,VIDID,USERNAME,VOTE,DATE) VALUES ("+uuid2+","+vidID2+","+userID+",0,"+timestamp+" )" 
+
 
 						client.query(sqlStr1, function(err, result) {
 							if(err) {
@@ -931,7 +934,6 @@ app.post('/login', function (req, res) {
 								//return console.error('error running query', err);
 							}
 
-							//console.log(sqlStr2 )
 							vidID2 = result2.rows[0].vidid;
 							votes2 = result2.rows[0].vote;
 							views2 = result2.rows[0].views;
@@ -1133,8 +1135,6 @@ app.post('/register', function (req, res) {
 
 		}
 
-		//console.log(insertString)
-
 		var DBHost =  process.env.DBHost;
 		var DBUser =  process.env.DBUser;
 		var DBPassword =  process.env.DBPassword;
@@ -1226,14 +1226,17 @@ app.post('/createTable', function (req, res) {
 	var DBPassword =  process.env.DBPassword;
 	var DB =  process.env.DB;
 
+	var chartLength = 20
 
 	var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
 
 	if(genre=="'all'"){
 		var sqlStr1 = "SELECT VIDID,VOTE FROM BATTLE ORDER BY VOTE DESC LIMIT 20"
 	}else{
-		var sqlStr1 = "SELECT VIDID,VOTE FROM BATTLE WHERE GENRE="+genre+" ORDER BY VOTE DESC LIMIT 20"
+		var sqlStr1 = "SELECT VIDID,VOTE FROM BATTLE WHERE GENRE="+genre+" ORDER BY VOTE DESC LIMIT "+chartLength;
 	}
+
+
 
 	var client = new pg.Client(params);
 	client.connect(function(err) {
@@ -1249,14 +1252,14 @@ app.post('/createTable', function (req, res) {
 			vidID = [];
 			votes = [];
 			//row.forEach(function(rows4){
-			for (var i=0;i<result.rows.length;i++){
+			for (var i=0;i<chartLength;i++){
 				vidID.push("'"+result.rows[i].vidid+"'");
 				votes.push("'"+result.rows[i].vote+"'");
 			};
 
 			//vidID.length)console.log(vidID.length)
 
-			for (var i=0;i<vidID.length;i++){
+			for (var i=0;i<chartLength;i++){
 
 				sqlStr = "SELECT CONTENT.VIDID,CONTENT.ARTIST,CONTENT.FILELINK,CONTENT.GENRE,CONTENT.TITLE,CONTENT.LINK,BATTLE.VOTE "+
 				"from CONTENT JOIN BATTLE ON BATTLE.VIDID = CONTENT.VIDID "+
@@ -1273,7 +1276,7 @@ app.post('/createTable', function (req, res) {
 					//console.log(output);
 					output.push({'vidid':result2.rows[0].vidid,'artist':result2.rows[0].artist,'fileLink':result2.rows[0].filelink,'genre':result2.rows[0].genre,'title':result2.rows[0].title,'votes':result2.rows[0].vote});
 
-					if(artistsA.length==vidID.length){
+					if(artistsA.length==chartLength){
 						//console.log({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA})
 						//res.json({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA});
 						client.end();
