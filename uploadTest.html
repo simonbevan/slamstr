@@ -75,7 +75,9 @@ $("#tweet").html(twit);
 
   function onUpload(e) {
         var test = $("#registerMP3 input[name='artist']").val();
-        alert(test)
+
+        alert(e.files[0]['size'])
+
     }
 
                 function addExtensionClass(extension) {
