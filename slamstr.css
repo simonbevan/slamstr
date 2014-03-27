@@ -197,6 +197,27 @@ button.bin,submit:visited {
   width: 80%;
 }
 
+button.dontclick,submit:visited {
+  background: #222 repeat-x;
+  top:-15px;
+  left:-5px;
+  display: inline-block;
+  padding: 5px 5px 5px;
+  color: #fff;
+  text-decoration: none;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 8px;
+  -moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0);
+  border: 0px solid rgba(0, 0, 0, 0);
+  position: relative;
+  cursor: pointer;
+  background-color: #4099FF;
+  font-size: 10pt;
+  width: 100px;
+}
+
 .k-button2,submit:visited {
   background: #222 repeat-x;
   display: inline-block;
