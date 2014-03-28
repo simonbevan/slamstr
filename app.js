@@ -1361,6 +1361,92 @@ app.get('/getTop', function (req, res) {
 
 
 
+app.post('/playplaylist', function (req, res) {
+
+
+
+	var userID = req.body.uID;
+	var plname = req.body.plname;
+
+
+
+	var artistsA = new Array();
+	//console.log(userID);
+
+	output = []
+
+	if(userID=="noid"){
+
+		res.json({'message':'noid'});
+
+	}else{
+
+		var DBHost =  process.env.DBHost;
+		var DBUser =  process.env.DBUser;
+		var DBPassword =  process.env.DBPassword;
+		var DB =  process.env.DB;
+
+
+
+		var params = {host: DBHost,user: DBUser,password: DBPassword,database: DB,ssl: true };
+		var sqlStr1 = "SELECT VIDID,PLAYS,DATE from PLAYLIST WHERE USERNAME="+userID+" AND PLAYLISTNAME='"+plname+"'"
+		//console.log(sqlStr1);
+		var client = new pg.Client(params);
+		client.connect(function(err) {
+			if(err) {
+				return console.error('could not connect to postgres', err);
+			}
+			client.query(sqlStr1, function(err, result) {
+				if(err) {
+					return //console.error('error running query', err);
+				}
+				
+
+				vidID = [];
+				votes = [];
+				//row.forEach(function(rows4){
+				for (var i=0;i<result.rows.length;i++){
+					vidID.push("'"+result.rows[i].vidid+"'");
+				};
+
+
+				for (var i=0;i<vidID.length;i++){
+
+					sqlStr = "SELECT CONTENT.VIDID,CONTENT.ARTIST,CONTENT.FILELINK,CONTENT.GENRE,CONTENT.TITLE,CONTENT.LINK,PLAYLIST.PLAYS,PLAYLIST.DATE "+
+					"from CONTENT JOIN PLAYLIST ON PLAYLIST.VIDID = CONTENT.VIDID "+
+					"WHERE CONTENT.VIDID="+vidID[i] 
+					"AND PLAYLIST.USERNAME="+userID;
+
+
+					client.query(sqlStr, function(err, result2) {
+						if(err) {
+							return console.error('error running query', err);
+						}
+
+						artistsA.push(result2.rows[0].artist);
+
+						output.push({'vidid':result2.rows[0].vidid,'playlist':plname,'artist':result2.rows[0].artist,'fileLink':result2.rows[0].filelink,'genre':result2.rows[0].genre,'title':result2.rows[0].title,'plays':result2.rows[0].plays,'dates':result2.rows[0].dates});
+						//output.push({'artist':rows2.ARTIST,'fileLink':rows2.FILELINK,'genre':rows2.GENRE,'title':rows2.TITLE,'plays':rows2.PLAYS,'dates':rows2.DATES});
+
+						if(artistsA.length==vidID.length){
+							//console.log({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA})
+							//res.json({'artist':artistsA,'fileLink':fileLinkA,'genre':genreA,'title':titleA,'link':linkA});
+							client.end();
+							res.json(output);
+						}
+
+					});
+				}
+			});
+		});
+
+
+
+	}
+	//res.json({'msg':artistsA});
+
+});
+
 
 app.post('/getPlaylist', function (req, res) {
 

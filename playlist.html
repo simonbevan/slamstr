@@ -24,16 +24,49 @@
 	type="text/javascript"></script>
 
 
+
+
 <script type="text/javascript">
-function copyText()
-{
-alert("sdfsd")
+
+
+function playlist(playlistIn) { 
+
+
+
+
+
+		var userID = localStorage.userID;
+
+		output = '<center><h3>Playing </h3>'+
+															'<p>'+playlistIn+'</p> '+
+															'</center> ' 
+													
+															$("#info1").html(output);
+
+
+
+									$.ajax({
+			                			    type: "POST",
+			                			    //dataType: "json",
+			                	               cache: false, 
+			                			    url: "/playplaylist"	,
+			                			    data: { uID: userID,plname:playlistIn }, 			    
+			                			}).done(function(data){
+
+
+															myFile = data[0]['fileLink']
+															//alert(myFile)
+
+												    jwplayer('ytplayerpl').load([{
+												      file: myFile,
+												      //image: myImage
+												    }]);
+												    jwplayer().play();
+	 
+
+										});
+
 }
-</script>
-
-<script type="text/javascript">
-
-
 
 function playSong(myFile,bandName,songName,artistLink,vidid,myImage) { 
 
@@ -59,10 +92,44 @@ function playSong(myFile,bandName,songName,artistLink,vidid,myImage) {
 	    jwplayer().play();
 	  };
 
+
+
+
 </script>
+
+
+
+<script type="text/javascript">
+ $(document).ready(function() {
+	  $('#pl1').click(function(){
+	  		playlist("playList1")
+	  });
+
+	  $('#pl2').click(function(){
+	  		playlist("playList2")
+	  });
+
+	  $('#pl3').click(function(){
+	  		playlist("playList3")
+	  });
+
+	  $('#pl4').click(function(){
+	  		playlist("playList4")
+	  });
+
+	  $('#pl5').click(function(){
+	  		playlist("playList5")
+	  });
+	});
+
+</script>
+
 
 </head>
 <body>
+
+
+
 
 
 	<script>
@@ -136,7 +203,26 @@ function playSong(myFile,bandName,songName,artistLink,vidid,myImage) {
 				</ul>
 			</div>
 
+<div class="demo-section2">
+<h3 style=" margin-left: 1cm;">Click to Play Your Playlist</h3>
+			<button class="bin" type="button" name="pl1" id="pl1"
+                          					style="margin-left: 1cm;width:100px">playlist1</button>
+                          					
+			<button class="bin" type="button" name="pl2" id="pl2"
+	                  					style="margin-left: 1px;width:100px">playlist2</button>
+	
+		<button class="bin" type="button" name="pl3" id="pl3"
+                  					style=" margin-left: 1px;width:100px"">playlist3</button>
 
+		<button class="bin" type="button" name="pl4" id="pl4"
+                  					style=" margin-left: 1px;width:100px"">playlist4</button>
+
+	<button class="bin" type="button" name="pl5" id="pl5"
+                 					style=" margin-left: 1px;width:100px">playlist5</button>
+<br><br>
+</div>
+
+<div class="demo-section2">
 
 			<script type="text/javascript">
 				$(document)
@@ -151,6 +237,15 @@ function playSong(myFile,bandName,songName,artistLink,vidid,myImage) {
 				 							    playlist : "playlist1",
 				 							}, {
 				 							    playlist : "playlist2",
+				 							
+				 							    }, {
+				 							    playlist : "playlist3",
+				 							
+				 							    }, {
+				 							    playlist : "playlist4",
+				 							
+				 							    }, {
+				 							    playlist : "playlist5",
 				 							
 				 							    }];	
 			                             
@@ -480,6 +575,7 @@ document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitte
 					</div>
 
 				</div>
+			</div>
 
 
 
