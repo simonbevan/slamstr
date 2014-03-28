@@ -581,77 +581,94 @@ document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitte
 
 										$(document).ready(function() {
                 	
-										        $.ajax({
-												    type: "POST",
-												    dataType: "json",
-												    cache: false,
-												    data: { genre:sessionStorage.chartfilter  },
-												    url: "/createTable"				    
-												}).done(function(data){
-													
-													data1 = data;
-														
+										               	        $.ajax({
+		    type: "POST",
+		    dataType: "json",
+		    cache: false,
+		    data: { genre:sessionStorage.chartfilter  },
+		    url: "/createTable"				    
+		}).done(function(data){
+			
+			data1 = data;
+		
 
-										                    $("#grid").kendoGrid({
-										                        dataSource: {
-										                            data: data1,
-										                            schema: {
-										                                model: {
-										                                    fields: {
-										                                        City: { type: "string" },
-										                                    }
-										                                }
-										                            },
-										                            pageSize: 20
-										                        },
-										                        
-										                        sortable: true,
-										                        scrollable: false,
-										                        filterable: {
-										                            extra: false,
-										                            operators: {
-										                            	string: {
-										                                	eq: "Choose genre"
-										                                }
-										                            }
-										                        },
-										                        
-										                        columns: [ {
-										                                field: "artist",
-										                                width: 90,
-										                                title: "Band Name",
-										                                filterable: false
-										                            } , {
-										                                field: "title",
-										                                width: 90,
-										                                title: "Track Name",
-										                                filterable: false
-										                            } , {
-										                                width: 100,
-										                                field: "genre",
-										                                filterable: {
-										                                    ui: cityFilter
-										                                }
-										                            }  , {
-										                                width: 50,
-										                                field: "votes",
-										                                title: "Vote",
-										                                filterable: false
-										                            },  
-							                	                              {
-										                                width: 50,
-										                                field: "link",
-										                                title: "link",
-										                                // template: "<button onclick=\"playSong('${ title }')\">${ title }</button> " 
+			//var data = createRandomData(5);
+					//alert(data1[0]['vidid'])
+					
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            data: data1,
+                            schema: {
+                                model: {
+                                    fields: {
+                                        City: { type: "string" },
+                                    }
+                                }
+                            },
+                            pageSize: 20
+                        },
+                        
+                        sortable: true,
+                        scrollable: false,
+                        filterable: {
+                            extra: false,
+                            operators: {
+                            	string: {
+                                	eq: "Choose genre"
+                                }
+                            }
+                        },
+                        
+                        columns: [ {
+                                field: "artist",
+                                width: 90,
+                                title: "Band Name",
+                                filterable: false
+                            } , {
+                                field: "title",
+                                width: 90,
+                                title: "Track Name",
+                                filterable: false
+                            } , {
+                                width: 100,
+                                field: "genre",
+                                title: "Genre",
+                                filterable: false
+                            }  , {
+                                width: 50,
+                                field: "votes",
+                                title: "Vote",
+                                filterable: false
+                            },{
+                            	hidden: true,
+                                width: 50,
+                                field: "vidid",
+                                title: "vidid",
+                                filterable: false
+                            },
+                            {
+                                width: 50,
+                                field: "fileLink",
+                                title: "Play",
+                                filterable: false,
+                                // template: "<button onclick=\"playSong('${ title }')\">${ title }</button> " 
+
+                                template: "<button class=\"k-icon k-i-arrow-e\" onclick=\"playSong('${ fileLink}','${artist}','${title}','www.slamstr.com','${vidid}')\">play</button> " 
 
 
-										                                template: "<button onclick=\"playSong('${ link }')\">play</button> " 
-										                                //"<button  onclick=\"playSong();\" />", 
-										                                //style='background-image:url(test.png)' 
-										                            }
-										                        ]
-										                    });
-										                });
+                                //"<button  onclick=\"playSong();\" />", 
+                                //style='background-image:url(test.png)' 
+                            }
+                            
+                            
+                            
+                        ]
+                    });
+
+						
+
+
+                });
 
 
 												});
