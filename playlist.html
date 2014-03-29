@@ -37,11 +37,12 @@ function playlist(playlistIn) {
 
 		var userID = localStorage.userID;
 
-		output = '<center><h3>Playing </h3>'+
-															'<p>'+playlistIn+'</p> '+
-															'</center> ' 
-													
-															$("#info1").html(output);
+					output = '<center><h3>Playing </h3>'+
+					'<p>'+playlistIn+'</p> '+
+					'</center> ' 
+			
+					$("#info1").html(output);
+
 
 
 
@@ -53,15 +54,23 @@ function playlist(playlistIn) {
 			                			    data: { uID: userID,plname:playlistIn }, 			    
 			                			}).done(function(data){
 
+												var myFile = new Array(); 
+			                					for(var i = 0; i < data.length; i++){
+															myFile.push({file:data[i]['fileLink']});
+													}
+															//alert(myFile[0]['file'])
 
-															myFile = data[0]['fileLink']
-															//alert(myFile)
 
-												    jwplayer('ytplayerpl').load([{
-												      file: myFile,
-												      //image: myImage
-												    }]);
-												    jwplayer().play();
+													jwplayer("ytplayerpl").setup({
+    													playlist: myFile,
+
+												width: '100%',
+												aspectratio: '8:6',
+												fallback: 'false',
+												primary: 'flash'
+													});
+
+												
 	 
 
 										});
@@ -87,6 +96,10 @@ function playSong(myFile,bandName,songName,artistLink,vidid,myImage) {
 
 	    jwplayer('ytplayerpl').load([{
 	      file: myFile,
+	      width: '100%',
+		aspectratio: '8:6',
+		fallback: 'false',
+		primary: 'flash'
 	      //image: myImage
 	    }]);
 	    jwplayer().play();
@@ -527,7 +540,7 @@ document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitte
 										</center>
 										<br>
 
-										<div style="margin-left:5px;margin-right:5px">
+										<div style="margin-left:-5px;margin-right:5px">
 									<div id="ytplayerpl" style="display: visible"></div>
 									</div>
 										<br>

@@ -107,6 +107,10 @@ function playSong(myFile,bandName,songName,artistLink,vidid,myImage) {
 
 	    jwplayer('ytplayerchart').load([{
 	      file: myFile,
+	      width: '100%',
+		aspectratio: '8:6',
+		fallback: 'false',
+		primary: 'flash'
 	      //image: myImage
 	    }]);
 	    jwplayer().play();
