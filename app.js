@@ -1902,8 +1902,9 @@ app.post('/uploadTest', function(req, res){
 	fs.readFile(path, function(err, file_buffer){
 		var params = {
 				Bucket: 'slamstr',
-				Key: req.body["uuid"],
+				Key: req.body["uuid"]+req.body["type"],
 				Body: file_buffer
+				
 		};
 
 		s3.putObject(params, function (perr, pres) {
