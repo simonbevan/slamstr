@@ -56,7 +56,10 @@ function playlist(playlistIn) {
 
 												var myFile = new Array(); 
 			                					for(var i = 0; i < data.length; i++){
+
+			                						if(data[i]['filetype']=='yt'){
 															myFile.push({file:data[i]['fileLink']});
+														}
 													}
 															//alert(myFile[0]['file'])
 
@@ -77,14 +80,14 @@ function playlist(playlistIn) {
 
 }
 
-function playSong(myFile,bandName,songName,artistLink,vidid,myImage) { 
+function playSong(myFile,bandName,songName,artistLink,vidid,myImage,fileType) { 
 
 
 		sessionStorage.vidID = vidid;
 		sessionStorage.bandName = bandName;
 		sessionStorage.songName = songName;
 		sessionStorage.artistLink = 'www.slamster.com';
-
+		
 
 		output = '<center><h3>'+sessionStorage.bandName+' '+sessionStorage.songName+'</h3>'+
 															'<p>Visit at: '+sessionStorage.artistLink+'</p> '+
@@ -94,15 +97,45 @@ function playSong(myFile,bandName,songName,artistLink,vidid,myImage) {
 
 
 
-	    jwplayer('ytplayerpl').load([{
-	      file: myFile,
-	      width: '100%',
-		aspectratio: '8:6',
-		fallback: 'false',
-		primary: 'flash'
-	      //image: myImage
-	    }]);
-	    jwplayer().play();
+       if(fileType=='yt'){
+
+                jwplayer('ytplayerpl').setup({
+                  file:myFile,
+           
+                  width: '100%',
+                  aspectratio: '8:6',
+                  fallback: 'false',
+                  primary: 'flash'
+                });
+              
+
+        }else if(fileType=='mp3'){
+
+                jwplayer('ytplayerpl').setup({
+                  sources: [{
+                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+myFile,
+                        }],
+                  image: 'images/banner.jpg',
+                  width: '100%',
+                  aspectratio: '8:6',
+                  fallback: 'false',
+                  primary: 'flash'
+                });
+        }else{
+                jwplayer('ytplayerfile').setup({
+                  sources: [{
+                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+myFile,
+                        }],
+
+                  width: '100%',
+                  aspectratio: '8:6',
+                  fallback: 'false',
+                  primary: 'flash'
+                });
+
+        };
+
+
 	  };
 
 
@@ -447,13 +480,19 @@ function playSong(myFile,bandName,songName,artistLink,vidid,myImage) {
                                 field: "vidid",
                                 title: "vidid",
                                 filterable: false
-                            },  
+                            },  {
+                            	hidden: true,
+                                width: 50,
+                                field: "filetype",
+                                title: "filetype",
+                                filterable: false
+                            },
 							                	                              {
 															                       width: 50,
 															                       field: "fileLink",
 															                       title: "Play",
 															                            
-							                             template: "<button class=\"k-icon k-i-arrow-e\" onclick=\"playSong('${ fileLink}','${artist}','${title}','www.slamstr.com','${vidid}')\">play</button> " 
+							                             template: "<button class=\"k-icon k-i-arrow-e\" onclick=\"playSong('${ fileLink}','${artist}','${title}','www.slamstr.com','${vidid}','','${filetype}')\">play</button> " 
 								//template: "<button onclick={alert(\"HERE\")}>Click me</button>"
                                 
 															                                //"<button  onclick=\"playSong();\" />", 

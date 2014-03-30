@@ -35,60 +35,65 @@
 sessionStorage.chartfilter='all';
 
 
+ $('#add').click(function(){  
 
- $('#legendbin').click(function(){  
+     var vidID = sessionStorage.vidID;
+     var pLName = "'playList1'"//sessionStorage.pLName;
+	//alert('its on my list')
+ 
+        $.ajax({ 
+              url: '/moveFromAwaiting',
+              type: 'POST',
+              cache: false, 
+
+              data: { vID:vidID }, 
+              success: function(data){
+                
+				location.reload(true);
+
+              }
+              , error: function(jqXHR, textStatus, err){
+                  //alert('text status '+textStatus+', err '+err)
+              }
+           })
+
+
+    }); 
+
+
+ $('#delete').click(function(){  
 
          var vidID = sessionStorage.vidID ;
          var userID = sessionStorage.userID;
          var pLName = "'playList1'"//sessionStorage.pLName;
+		
+		      $.ajax({ 
+              url: '/deleteFromAwaiting',
+              type: 'POST',
+              cache: false, 
 
+              data: { vID:vidID }, 
+              success: function(data){
+                
+					location.reload(true);
+
+              }
+              , error: function(jqXHR, textStatus, err){
+                  //alert('text status '+textStatus+', err '+err)
+              }
+           })
  
-       
-         $.ajax({ 
-               url: '/like',
-               type: 'POST',
-               cache: false, 
- 
-               data: { uID: userID, vID:vidID, type:'legendbin' ,pLName:pLName }, 
-               success: function(data){
-                 
-               }
-               , error: function(jqXHR, textStatus, err){
-                   alert('text status '+textStatus+', err '+err)
-               }
-            })
+
     }); 
      
-     $('#legendkeep').click(function(){  
 
-         var vidID = sessionStorage.vidID ;
-         var userID = sessionStorage.userID;
-         var pLName = "'playList1'"//sessionStorage.pLName;
-
-        
-         
-         $.ajax({ 
-               url: '/like',
-               type: 'POST',
-               cache: false, 
- 
-               data: { uID: userID, vID:vidID, type:'legendkeep' ,pLName:pLName }, 
-               success: function(data){
-                 
-               }
-               , error: function(jqXHR, textStatus, err){
-                   alert('text status '+textStatus+', err '+err)
-               }
-            })
-         });
 
 
 });
 
 
 
-function playSong(myFile,bandName,songName,artistLink,vidid,myImage,fileType) { 
-
+function playSong(myFile,bandName,songName,artistLink,vidid,myImage,filetype) { 
 
 		sessionStorage.vidID = vidid;
 		sessionStorage.bandName = bandName;
@@ -104,44 +109,29 @@ function playSong(myFile,bandName,songName,artistLink,vidid,myImage,fileType) {
 															$("#info1").html(output);
 
 
-        if(fileType=='yt'){
 
-                jwplayer('ytplayerchart').load([{
-                  file: myFile,
-                  //image: myImage
-                }]);
-              
+		if(filetype=='yt'){
+			jwplayer('ytplayerchart').setup({
+                      file: myFile,
+                      width: '100%',
+                      aspectratio: '8:6',
+                      fallback: 'false',
+                      primary: 'flash'
+             });
 
-        }else if(fileType=='mp3'){
+		}else{
+				jwplayer('ytplayerchart').setup({
+					sources: [{
+		                file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+vidid+"."+filetype,
+		            }],
+					width: '100%',
+					aspectratio: '8:6',
+					fallback: 'false',
+					primary: 'flash'
+				});
+		};
 
-                jwplayer('ytplayerchart').setup({
-                  sources: [{
-                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+myFile,
-                        }],
-                  image: 'images/banner.jpg',
-                  width: '100%',
-                  aspectratio: '8:6',
-                  fallback: 'false',
-                  primary: 'flash'
-                });
-        }else{
-                jwplayer('ytplayerchart').setup({
-                  sources: [{
-                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+myFile,
-                        }],
-
-                  width: '100%',
-                  aspectratio: '8:6',
-                  fallback: 'false',
-                  primary: 'flash'
-                });
-
-        };
-
-
-
-
-	  };
+};
 
 
  </script>
@@ -154,70 +144,7 @@ function playSong(myFile,bandName,songName,artistLink,vidid,myImage,fileType) {
 
 	<script>
 
-         $.ajax({
-		    type: "GET",
-		    dataType: "json",
-		    
-		    url: "/getTop"				    
-		}).done(function(data){
-			
-			
-			data = data[0];
-			sessionStorage.vidID = data['vidID']
-			sessionStorage.fileLink = data['fileLink']
-			sessionStorage.songName = data['title']
-			sessionStorage.bandName = data['artist']
-			fileType = data['filetype'];
-			myFile = sessionStorage.fileLink;
-
-
-
-	      if(fileType=='yt'){
-
-
-                jwplayer('ytplayerchart').setup({
-                  file: myFile,
-                  width: '100%',
-                  aspectratio: '8:6',
-                  fallback: 'false',
-                  primary: 'flash'
-                  //image: myImage
-                });
-                
-
-        }else if(fileType=='mp3'){
-
-                jwplayer('ytplayerchart').setup({
-                  sources: [{
-                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+myFile,
-                        }],
-                  image: 'images/banner.jpg',
-                  width: '100%',
-                  aspectratio: '8:6',
-                  fallback: 'false',
-                  primary: 'flash'
-                });
-        }else{
-                jwplayer('ytplayerchart').setup({
-                  sources: [{
-                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+myFile,
-                        }],
-
-                  width: '100%',
-                  aspectratio: '8:6',
-                  fallback: 'false',
-                  primary: 'flash'
-                });
-
-        };
-
-	output = '<center><h3>'+sessionStorage.bandName+' '+sessionStorage.songName+'</h3>'+
-													'<p>Visit at: '+sessionStorage.artistLink+'</p> '+
-													'</center> ' 
-											
-													$("#info1").html(output);
-
-		});
+  
 
 	</script>
 
@@ -304,30 +231,30 @@ function playSong(myFile,bandName,songName,artistLink,vidid,myImage,fileType) {
                 $(document).ready(function() {
                 	
 
-                	        $.ajax({
-		    type: "POST",
+
+           	        $.ajax({
+		    type: "GET",
 		    dataType: "json",
 		    cache: false,
-		    data: { genre:sessionStorage.chartfilter  },
-		    url: "/createTable"				    
+		    url: "/getAwaitingApproval"				    
 		}).done(function(data){
 			
+			//alert(data)
 			data1 = data;
-		
 			//var data = createRandomData(5);
-					//alert(data1[0]['vidid'])
 					
-                    $("#grid").kendoGrid({
+					         $("#grid").kendoGrid({
                         dataSource: {
                             data: data1,
                             schema: {
                                 model: {
                                     fields: {
-                                        City: { type: "string" },
+                                        title: { type: "string" },
                                     }
                                 }
                             },
-                            pageSize: 20
+                            pageSize: 20,
+                            
                         },
                         
                         sortable: true,
@@ -339,6 +266,11 @@ function playSong(myFile,bandName,songName,artistLink,vidid,myImage,fileType) {
                                 	eq: "Choose genre"
                                 }
                             }
+                        },
+                        pageable: {
+                            refresh: true,
+                            pageSizes: true,
+                            buttonCount: 5
                         },
                         
                         columns: [ {
@@ -356,18 +288,14 @@ function playSong(myFile,bandName,songName,artistLink,vidid,myImage,fileType) {
                                 field: "genre",
                                 title: "Genre",
                                 filterable: false
-                            }  , {
-                                width: 50,
-                                field: "votes",
-                                title: "Vote",
-                                filterable: false
-                            },{
+                            }, {
                             	hidden: true,
                                 width: 50,
                                 field: "vidid",
                                 title: "vidid",
                                 filterable: false
-                            },{
+                            },
+                            {
                             	hidden: true,
                                 width: 50,
                                 field: "filetype",
@@ -392,6 +320,8 @@ function playSong(myFile,bandName,songName,artistLink,vidid,myImage,fileType) {
                             
                         ]
                     });
+           
+
 
 						
 
@@ -400,7 +330,10 @@ function playSong(myFile,bandName,songName,artistLink,vidid,myImage,fileType) {
 
 
 
-				});
+				
+
+
+     })
 
 
 
@@ -441,46 +374,9 @@ function playSong(myFile,bandName,songName,artistLink,vidid,myImage,fileType) {
 													<br>
 
 <div style="width:100%">
-											<div class="demo-section3">
-												
-
-												<button class="bin" type="button" name="legendbin"
-													id="legendbin" style="display: visible; margin-left: 1cm;">vote</button>
+										
 
 
-												<br>
-
-
-												<button class="keep" type="button" name="legendkeep"
-													id="legendkeep" style="display: visible; margin-left: 1cm;">add
-													to playlist</button>
-
-											</div>
-
-
-
-											<div class="demo-section3" style="margin-bottom:20px;">
-												
-
-												<script type="text/javascript">
-var twtTitle  = "check this out @";
-var twtUrl    = location.href;
-var maxLength = 140 - (twtUrl.length + 1);
-if (twtTitle.length > maxLength) {
-twtTitle = twtTitle.substr(0, (maxLength - 3))+'...';
-}
-
-var twitterText = "Loving " + sessionStorage.songName + " by " + sessionStorage.bandName + " @ www.slamstr.com - #slamstrapp"
-
-
-var twtLink = 'http://twitter.com/home?status='+encodeURIComponent(twitterText);
-document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitter.png"  width ="30%" height= "50px" alt="hamster" style="margin-left:50px"/'+'><'+'/a>');
-</script>
-
-													<img src="images/FB-f-Logo__blue_1024.png" alt="facebook" width="30%"
-													height="50px" style="display: visible; margin-left: 5px;" onclick="alert('coming soon')">
-
-											</div>
 
 </div>
 										
@@ -509,10 +405,21 @@ document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitte
 													
 													$("#info1").html(output);
 													
+												
+													
 											</script>
 
 									
-		
+														
+												<button class="bin" type="button" name="add"
+														id="add" style="display: visible; margin-left: 1cm;">add</button>													
+
+													<button class="bin" type="button" name="delete"
+														id="delete" style="display: visible; margin-left: 1cm;">delete</button>
+
+
+
+													
 		
 
 											</div>
@@ -645,100 +552,83 @@ document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitte
 									filterSelect = true;
 								}
 
-
+									filterSelect = false;
 									if(filterSelect){
 									   
 
 										$(document).ready(function() {
                 	
-										               	        $.ajax({
-		    type: "POST",
-		    dataType: "json",
-		    cache: false,
-		    data: { genre:sessionStorage.chartfilter  },
-		    url: "/createTable"				    
-		}).done(function(data){
-			
-			data1 = data;
-		
+										        $.ajax({
+												    type: "POST",
+												    dataType: "json",
+												    cache: false,
+												    data: { genre:sessionStorage.chartfilter  },
+												    url: "/createTable"				    
+												}).done(function(data){
+													
+													data1 = data;
+														
 
-			//var data = createRandomData(5);
-					//alert(data1[0]['vidid'])
-					
-                    $("#grid").kendoGrid({
-                        dataSource: {
-                            data: data1,
-                            schema: {
-                                model: {
-                                    fields: {
-                                        City: { type: "string" },
-                                    }
-                                }
-                            },
-                            pageSize: 20
-                        },
-                        
-                        sortable: true,
-                        scrollable: false,
-                        filterable: {
-                            extra: false,
-                            operators: {
-                            	string: {
-                                	eq: "Choose genre"
-                                }
-                            }
-                        },
-                        
-                        columns: [ {
-                                field: "artist",
-                                width: 90,
-                                title: "Band Name",
-                                filterable: false
-                            } , {
-                                field: "title",
-                                width: 90,
-                                title: "Track Name",
-                                filterable: false
-                            } , {
-                                width: 100,
-                                field: "genre",
-                                title: "Genre",
-                                filterable: false
-                            }  , {
-                                width: 50,
-                                field: "votes",
-                                title: "Vote",
-                                filterable: false
-                            },{
-                            	hidden: true,
-                                width: 50,
-                                field: "vidid",
-                                title: "vidid",
-                                filterable: false
-                            },
-                            {
-                                width: 50,
-                                field: "fileLink",
-                                title: "Play",
-                                filterable: false,
-                                // template: "<button onclick=\"playSong('${ title }')\">${ title }</button> " 
-
-                                template: "<button class=\"k-icon k-i-arrow-e\" onclick=\"playSong('${ fileLink}','${artist}','${title}','www.slamstr.com','${vidid}')\">play</button> " 
+										                    $("#grid").kendoGrid({
+										                        dataSource: {
+										                            data: data1,
+										                            schema: {
+										                                model: {
+										                                    fields: {
+										                                        City: { type: "string" },
+										                                    }
+										                                }
+										                            },
+										                            pageSize: 20
+										                        },
+										                        
+										                        sortable: true,
+										                        scrollable: false,
+										                        filterable: {
+										                            extra: false,
+										                            operators: {
+										                            	string: {
+										                                	eq: "Choose genre"
+										                                }
+										                            }
+										                        },
+										                        
+										                        columns: [ {
+										                                field: "artist",
+										                                width: 90,
+										                                title: "Band Name",
+										                                filterable: false
+										                            } , {
+										                                field: "title",
+										                                width: 90,
+										                                title: "Track Name",
+										                                filterable: false
+										                            } , {
+										                                width: 100,
+										                                field: "genre",
+										                                filterable: {
+										                                    ui: cityFilter
+										                                }
+										                            }  , {
+										                                width: 50,
+										                                field: "votes",
+										                                title: "Vote",
+										                                filterable: false
+										                            },  
+							                	                              {
+										                                width: 50,
+										                                field: "link",
+										                                title: "link",
+										                                // template: "<button onclick=\"playSong('${ title }')\">${ title }</button> " 
 
 
-                                //"<button  onclick=\"playSong();\" />", 
-                                //style='background-image:url(test.png)' 
-                            }
-                            
-                            
-                            
-                        ]
-                    });
-
-						
-
-
-                });
+										                                template: "<button onclick=\"playSong('${ link }')\">play</button> " 
+										                                //"<button  onclick=\"playSong();\" />", 
+										                                //style='background-image:url(test.png)' 
+										                            }
+										                        ]
+										                    });
+										                });
 
 
 												});
@@ -856,9 +746,9 @@ document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitte
 					&copy slamstr 2013-2014 &nbsp &nbsp | &nbsp &nbsp <a
 						href="/about.html" class="k-button2">about</a> &nbsp &nbsp | &nbsp
 					&nbsp <a href="/contact.html" class="k-button2">contact</a> &nbsp
-					&nbsp | &nbsp &nbsp <a href="/slamstrPrivacyPolicy.pdf" class="k-button2">privacy</a>
+					&nbsp | &nbsp &nbsp <a href="/privacy.html" class="k-button2">privacy</a>
 
-					&nbsp &nbsp | &nbsp &nbsp <a href="/slamstrTandC.pdf" class="k-button2">terms
+					&nbsp &nbsp | &nbsp &nbsp <a href="/tandc.html" class="k-button2">terms
 						and conditions</a> &nbsp &nbsp | &nbsp <img
 						src="/images/HamsterRock.jpg" alt="hamster" width="20px"
 						height="15px">
@@ -892,4 +782,3 @@ document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitte
 			</div>
 </body>
 </html>
-

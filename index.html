@@ -124,21 +124,83 @@
     // });  
    
 
-      function loadVideo1(myFile,myImage) { 
-        jwplayer('ytplayer').load([{
-          file: myFile,
-          //image: myImage
-        }]);
-        jwplayer().play();
+      function loadVideo1(myFile,myImage,fileType) { 
+
+
+        if(fileType=='yt'){
+
+                jwplayer('ytplayer').load([{
+                  file: myFile,
+                  //image: myImage
+                }]);
+                jwplayer().play();
+
+        }else if(fileType=='mp3'){
+
+                jwplayer('ytplayer').setup({
+                  sources: [{
+                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+myFile,
+                        }],
+                  image: 'images/banner.jpg',
+                  width: '100%',
+                  aspectratio: '8:6',
+                  fallback: 'false',
+                  primary: 'flash'
+                });
+        }else{
+                jwplayer('ytplayer').setup({
+                  sources: [{
+                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+myFile,
+                        }],
+
+                  width: '100%',
+                  aspectratio: '8:6',
+                  fallback: 'false',
+                  primary: 'flash'
+                });
+
+        };
+
+
       };
       
-      function loadVideo2(myFile,myImage) { 
-          jwplayer('ytplayer2').load([{
-            file: myFile,
-            //image: myImage
-          }]);
-          jwplayer().play();
+      function loadVideo2(myFile,myImage,fileType) { 
+      
+        if(fileType=='yt'){
+
+                jwplayer('ytplayer2').load([{
+                  file: myFile,
+                  //image: myImage
+                }]);
+                jwplayer().play();
+
+        }else if(fileType=='mp3'){
+
+                jwplayer('ytplayer2').setup({
+                  sources: [{
+                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+myFile,
+                        }],
+                  image: 'images/banner.jpg',
+                  width: '100%',
+                  aspectratio: '8:6',
+                  fallback: 'false',
+                  primary: 'flash'
+                });
+        }else{
+                jwplayer('ytplayer2').setup({
+                  sources: [{
+                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+myFile,
+                        }],
+
+                  width: '100%',
+                  aspectratio: '8:6',
+                  fallback: 'false',
+                  primary: 'flash'
+                });
+
         };
+      
+      };
 
    
     var tag = document.createElement('script');
@@ -178,7 +240,8 @@
         //sessionStorage.country = data1['country'];
         sessionStorage.artistLink = data1['artistLink'];
         sessionStorage.votes = data1['votes'];
-        
+        sessionStorage.fileType = data1['filetype'];
+
           sessionStorage.fileLink2 = data2['fileLink'];
         sessionStorage.vidID2 = data2['vID'];
         sessionStorage.bandName2 = data2['bandName'];
@@ -186,6 +249,7 @@
         //sessionStorage.country = data1['country'];
         sessionStorage.artistLink2 = data2['artistLink'];
         sessionStorage.votes2 = data2['votes'];
+        sessionStorage.fileType2 = data2['filetype'];
         
         
         sessionStorage.userName = data3['userName'];
@@ -280,6 +344,7 @@
             //sessionStorage.country = data1['country'];
             sessionStorage.artistLink = data1['artistLink'];
             sessionStorage.votes = data1['votes'];
+            sessionStorage.fileType = data1['filetype'];
         
             sessionStorage.fileLink2 = data2['fileLink'];
             sessionStorage.vidID2 = data2['vID'];
@@ -288,9 +353,10 @@
             //sessionStorage.country = data1['country'];
             sessionStorage.artistLink2 = data2['artistLink'];
             sessionStorage.votes2 = data2['votes'];
+            sessionStorage.fileType2 = data2['filetype'];
             
-            loadVideo1(sessionStorage.fileLink)
-            loadVideo2(sessionStorage.fileLink2)
+            loadVideo1(sessionStorage.fileLink,'',sessionStorage.fileType)
+            loadVideo2(sessionStorage.fileLink2,'',sessionStorage.fileType2)
             
             
           sessionStorage.ytvidID = sessionStorage.fileLink
@@ -350,6 +416,7 @@
             //sessionStorage.country = data1['country'];
             sessionStorage.artistLink = data2['artistLink'];
             sessionStorage.votes = data2['votes'];
+            sessionStorage.fileType = data2['filetype'];
         
             sessionStorage.fileLink2 = data1['fileLink'];
             sessionStorage.vidID2 = data1['vID'];
@@ -358,10 +425,11 @@
             //sessionStorage.country = data1['country'];
             sessionStorage.artistLink2 = data1['artistLink'];
             sessionStorage.votes2 = data1['votes'];
+            sessionStorage.fileType2 = data1['filetype'];
             
 
-            loadVideo1(sessionStorage.fileLink)
-            loadVideo2(sessionStorage.fileLink2)
+            loadVideo1(sessionStorage.fileLink,'',sessionStorage.fileType)
+            loadVideo2(sessionStorage.fileLink2,'',sessionStorage.fileType2)
             
 
 
@@ -725,8 +793,8 @@ if(sessionStorage.firstOpen == 'opened'){
         url: "/initialOpen"           
     }).done(function(data){
       
-      data1 = data['out2'];
-      data2 = data['out1'];
+      data1 = data['out1'];
+      data2 = data['out2'];
       
       sessionStorage.fileLink = data1['fileLink'];
       sessionStorage.vidID = data1['id'];
@@ -736,6 +804,7 @@ if(sessionStorage.firstOpen == 'opened'){
       //sessionStorage.country = data['country'];
       sessionStorage.artistLink = data1['artistLink'];
       sessionStorage.votes = data1['votes'];
+      sessionStorage.fileType = data1['filetype'];
   
       sessionStorage.fileLink2 = data2['fileLink'];
       sessionStorage.vidID2 = data2['id'];
@@ -745,6 +814,7 @@ if(sessionStorage.firstOpen == 'opened'){
       //sessionStorage.country = data['country'];
       sessionStorage.artistLink2 = data2['artistLink'];
       sessionStorage.votes2 = data2['votes'];
+      sessionStorage.fileType2 = data2['filetype'];
       
       sessionStorage.filter = 'all';
       sessionStorage.chartfilter='all';
@@ -1039,23 +1109,88 @@ document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitte
                     <div id="ytplayer2" style="display: visible;"></div>
 
                     <script type="text/javascript">
-                      jwplayer('ytplayer').setup({
+                      
+
+
+        if(sessionStorage.fileType=='yt'){
+
+                jwplayer('ytplayer').setup({
                       file: sessionStorage.ytvidID,
                       width: '100%',
                       aspectratio: '8:6',
                       fallback: 'false',
                       primary: 'flash'
                       });
+
+        }else if(sessionStorage.fileType=='mp3'){
+
+                jwplayer('ytplayer').setup({
+                  sources: [{
+                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+sessionStorage.ytvidID,
+                        }],
+                  image: 'images/banner.jpg',
+                  width: '100%',
+                  aspectratio: '8:6',
+                  fallback: 'false',
+                  primary: 'flash'
+                });
+        }else{
+                jwplayer('ytplayer').setup({
+                  sources: [{
+                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+sessionStorage.ytvidID,
+                        }],
+
+                  width: '100%',
+                  aspectratio: '8:6',
+                  fallback: 'false',
+                  primary: 'flash'
+                });
+
+        };
+
+
                     </script>
 
                     <script type="text/javascript">
-                      jwplayer('ytplayer2').setup({
+                      
+
+        if(sessionStorage.fileType2=='yt'){
+
+                jwplayer('ytplayer2').setup({
                       file: sessionStorage.ytvidID2,
                       width: '100%',
                       aspectratio: '8:6',
                       fallback: 'false',
                       primary: 'flash'
                       });
+
+        }else if(sessionStorage.fileType2=='mp3'){
+
+                jwplayer('ytplayer2').setup({
+                  sources: [{
+                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+sessionStorage.ytvidID2,
+                        }],
+                  image: 'images/banner.jpg',
+                  width: '100%',
+                  aspectratio: '8:6',
+                  fallback: 'false',
+                  primary: 'flash'
+                });
+        }else{
+                jwplayer('ytplayer2').setup({
+                  sources: [{
+                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+sessionStorage.ytvidID2,
+                        }],
+
+                  width: '100%',
+                  aspectratio: '8:6',
+                  fallback: 'false',
+                  primary: 'flash'
+                });
+
+        };
+
+
                     </script>
 
                     <div id="info2"></div>
