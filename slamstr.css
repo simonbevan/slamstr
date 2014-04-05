@@ -65,7 +65,7 @@
   font-size: 2em;
   text-transform: lowercase;
   padding: 0px 0px;
-  background-color: white; //
+  background-color: white;
   border: none;
   background: -webkit-linear-gradient(white, white, white);
   /* For Safari */
@@ -84,9 +84,9 @@
 }
 
 #menu li {
-  font-size: smaller; //
+  font-size: smaller;
   text-transform: uppercase;
-  padding: 0px 0px; //
+  padding: 0px 0px; 
   border: none;
   background-color: white;
   color: #4099FF;
@@ -133,7 +133,6 @@ button.upButton,submit:visited {
   cursor: pointer;
   background-color: #4099FF;
   font-size: 10pt;
-  //width: 80%;
 }
 
 
