@@ -6,28 +6,19 @@
 <link href="examples/content/shared/styles/examples-offline.css"
   rel="stylesheet">
 <link href="styles/kendo.common.min.css" rel="stylesheet">
-
-<script src="js/kendo.all.min.js" type="text/javascript"></script>
 <link href="bbb.css" rel="stylesheet">
 <link href="slamstr.css" rel="stylesheet">
+
 
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="js/kendo.web.min.js" type="text/javascript"></script>
 <script src="examples/content/shared/js/console.js"
   type="text/javascript"></script>
-<script src="bbb.js" type="text/javascript"></script>
 
-<script src="examples/content/shared/js/people.js"
-  type="text/javascript"></script>
 
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-      google.load('visualization', '1', {packages: ['corechart']});
-    </script>
-
 <script src="http://jwpsrv.com/library/NehFHIphEeOg5SIACi0I_Q.js"
   type="text/javascript"></script>
-
 <script src="d3.js" type="text/javascript"></script>
 <script src="d3.layout.cloud.js" type="text/javascript"></script>
 
@@ -44,8 +35,6 @@
 
 <script type="text/javascript">
  $(document).ready(function() {
-
-
 
     var fill = d3.scale.category20();
     var words = [{"text":"coming soon", "url":"#","size":10},
@@ -121,16 +110,6 @@
           });
     }
 
-   
-   
-   //     $.ajax({
-    //     type: "GET",
-    //     dataType: "json",
-    //     url: "/createDB"           
-    // }).done(function(data){
-    //  alert(data['msg']);
-    //     // $("#bandName").text(data);
-    // });  
    
 
       function loadVideo1(myFile,myImage,fileType) { 
@@ -469,71 +448,6 @@
       location.reload(true);
       }); 
 
-   
-/*     $('#textButton').click(function(){  
-
-       
-       if (  $(this).html() == 'Challenger'){
-       $("#textButton").html('Legend');
-        
-         
-        output = '<center><h3>'+sessionStorage.bandName2+'</h3>'+
-        '<h3> '+sessionStorage.songName2+'</h3>'+
-        '<p>Country: need to change db</p> '+
-        '<p>Visit at: '+sessionStorage.artistLink2+'</p> '+
-        '<p>Votes: '+sessionStorage.votes2+'</p></center> '+
-        '<br><br>'+
-        '<p>Maybe some nice visulisation</p> '+
-        '<p>to fill the rest of the pane?</p> '+
-        '<p>or advert?</p> ';
-      
-      
-        document.getElementById("vidInfo").innerHTML = output;
-        $("#ytplayer").toggle();
-        $("#ytplayer2").toggle();
-        
-        
-        
-       }else{
-         $("#textButton").html('Challenger'); 
-         
-          
-          
-          output = '<center><h3>'+sessionStorage.bandName+'</h3>'+
-          '<h3> '+sessionStorage.songName+'</h3>'+
-          '<p>Country: need to change db</p> '+
-          '<p>Visit at: '+sessionStorage.artistLink+'</p> '+
-          '<p>Votes: '+sessionStorage.votes+'</p></center> '+
-          '<br><br>'+
-          '<p>Maybe some nice visulisation</p> '+
-          '<p>to fill the rest of the pane?</p> '+
-          '<p>or advert?</p> ';
-          
-          $("#ytplayer").toggle();
-          $("#ytplayer2").toggle();
-          
-          document.getElementById("vidInfo").innerHTML = output;
-
-         
-       }
-       
-       
-         $.ajax({ 
-               url: '/ajax',
-               type: 'POST',
-               cache: false, 
-               data: { field1: 'test', field2: 'test2' }, 
-               success: function(data){
-                  //alert('Success!');
-                  //alert(data['id']);
-               }
-               , error: function(jqXHR, textStatus, err){
-                   alert('text status '+textStatus+', err '+err)
-               }
-            })
-        }); */
-
- 
      
      
      $('#challengerbin').click(function(){  
@@ -650,21 +564,7 @@
             })
          });
      
-   
-/*   $( "#textButton2" ).click(function() {
-     
-     if (  $(this).html() == 'Challenger'){
-       $("#textButton").html('Legend');
-       }else{
-         $("#textButton").html('Challenger'); 
-         
-       }
-     }); */
-
   
-  
-   
-   
    
 });
  </script>
@@ -672,84 +572,6 @@
 
 
 
-<script type="text/javascript">
-
-$(document).ready(function() {
-  
-/*  $(function () {
-  
-  
-  
-        google.setOnLoadCallback(drawChart);
-          function drawChart() {
-          
-          
-          //d1.setMinutes(new Date().getMinutes()); 
-          //document.write(d1.toTimeString("hh:mm"));
-          //document.write(d1.getHours()+":"+d1.getMinutes());
-          var d1 = Date();
-          Date.prototype.addMinutes= function(h){
-              this.setSeconds(this.getSeconds()+h);
-              //myDate = $.datepicker.formatDate('hh-mm-ss', this.getTime());
-         
-              myDate = this.getMinutes() + ':' + this.getSeconds()
-              return myDate ;
-          }
-          //alert(new Date().addMinutes(4));
-          //alert(d1.setMinutes(d1.getMinutes()+1))
-             var data = google.visualization.arrayToDataTable([
-                                                ['Year', 'Sales', 'Expenses'],
-                                                [new Date().addMinutes(1),  Math.floor(Math.random()*11 + 1),      Math.floor(Math.random()*11)],
-                                                [new Date().addMinutes(2),  Math.floor(Math.random()*11 + 11),      Math.floor(Math.random()*21)],
-                                                [new Date().addMinutes(3),  Math.floor(Math.random()*11 + 21),       Math.floor(Math.random()*31)],
-                                                [new Date().addMinutes(4),  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*41)],
-                                                [new Date().addMinutes(5),  Math.floor(Math.random()*11 + 1),      Math.floor(Math.random()*51)],
-                                                [new Date().addMinutes(6),  Math.floor(Math.random()*11 + 11),      Math.floor(Math.random()*61)],
-                                                [new Date().addMinutes(7),  Math.floor(Math.random()*11 + 21),       Math.floor(Math.random()*71)],
-                                                [new Date().addMinutes(8),  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*81)],
-                                                [new Date().addMinutes(9),  Math.floor(Math.random()*11 + 1),      Math.floor(Math.random()*91)],
-                                                [new Date().addMinutes(9.5),  Math.floor(Math.random()*11 + 11),      Math.floor(Math.random()*111)],
-                                                [new Date().addMinutes(10),  Math.floor(Math.random()*11 + 21),       Math.floor(Math.random()*121)],
-                                                [new Date().addMinutes(11),  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*131)],
-                                                [new Date().addMinutes(11.5),  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*141)]
-                                              ]); 
-                                              
-                                  
-                                              
-                                              
-                                              
-          
-          
-        
-        //for (var i = 0; i < 100; i++){
-        //    d1.push([i, Math.floor(Math.random()*111),Math.floor(Math.random()*111)]);
-      //}
-        //alert(d1)
-        //var data = google.visualization.arrayToDataTable(d1);
-
-          var options = {
-            title: 'Votes',
-            hAxis: {title: 'Time',  titleTextStyle: {color: '#333'}},
-            vAxis: {minValue: 0}
-          };
-
-          var chart = new google.visualization.AreaChart(document.getElementById('mygraph'));
-          chart.draw(data, options);
-        
-          
-          setTimeout(drawChart, 2000);
-          } 
-      
-      //$.plot($("#mygraph"), [ d1 ],options);
-      //$("#mygraph").html('band1 ' + d1[1][1] + '  band2 ' + d1[2][1]);
-      
-      
-      
-      //yourFunction();
-    
-  });  
-}); */
-</script>
 
 
 
@@ -1339,12 +1161,8 @@ document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitte
 
 <script>
 
-
-
-
-
 //twit = '<a href="https://twitter.com/share" class="twitter-share-button" data-url="www.slamstr.com" data-text=' + twitterText +  'data-size="large" data-hashtags="slamstr">Tweet</a>'
-
+</script>
 
 
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
@@ -1626,12 +1444,7 @@ document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitte
     </div>
   </div>
   
-  
-  
-<style scoped type="text/css">
 
-
-</style>
   
 </body>
 
