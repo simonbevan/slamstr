@@ -1004,25 +1004,7 @@ app.post('/login', function (req, res) {
 app.post('/register', function (req, res) {
 
 
-	output = "<!DOCTYPE html>"+
-	"<html>"+
-	"<head>"+
-	"<title>slamstr</title>"+
-	"<script src=\"js/jquery.min.js\" type=\"text/javascript\"></script>"+
-	"</head>"+
-	"<body>"+
 
-
-	"<script type=\"text/javascript\">"+
-	"$(document).ready(function() {"+
-
-	"	 window.location.replace(\"/\");"+
-
-	"});"+
-	" </script>"
-	"<h3>Redirecting</h3>"+
-	"</body>"+
-	"</html>";
 
 //	var db = new sqlite3.Database('bbbDB');
 
@@ -1149,6 +1131,16 @@ app.post('/register', function (req, res) {
 		sqlStr = "SELECT EMAIL from PROFILE WHERE EMAIL="+email
 		//console.log(sqlStr);
 
+	output = "<!DOCTYPE html>"+
+	"<html>"+
+	"<head>"+
+	"<title>slamstr</title>"+
+	"<script src=\"js/jquery.min.js\" type=\"text/javascript\"></script>"+
+	"</head>"+
+	"<body>";
+
+
+	
 
 
 		client.connect(function(err) {
@@ -1162,7 +1154,20 @@ app.post('/register', function (req, res) {
 				//console.log(result.rows);
 
 				if(result.rows.length>0){
-					//console.log('error');
+					
+output = output+
+"<script type=\"text/javascript\">"+
+	"$(document).ready(function() {"+
+
+		+"alert(\"email already exists\")"
+	"	 window.location.replace(\"/\");"+
+
+	"});"+
+	" </script>"+
+	"<h3>Redirecting</h3>"+
+	"</body>"+
+	"</html>";
+
 					res.send( output );
 					client.end();
 
@@ -1182,6 +1187,27 @@ app.post('/register', function (req, res) {
 						//  return console.error('error running query', err);
 						//}
 						//console.log(result.rows);
+
+
+output = output+
+"<script type=\"text/javascript\">"+
+	"$(document).ready(function() {"+
+
+
+		"window.location.replace(\"/\");"+
+
+	"});"+
+	" </script>"+
+	"<h3>Redirecting</h3>"+
+"<script>"+
+        "sessionStorage.userName = "+firstname+";"+
+        "sessionStorage.userID = "+email+";"+
+        "sessionStorage.loggedIn = 1;"+ 
+        "sessionStorage.pLName = playlist1;"+
+	" </script>"+
+	"</body>"+
+	"</html>";
+
 
 						client.end();
 						res.send( output );
