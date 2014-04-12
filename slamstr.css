@@ -4,6 +4,11 @@
   margin: 0 auto;
 }
 
+
+#headerdiv {
+ margin-top:-8px;
+}
+
 .demo-section {
   background-color: white;
   border: none;
