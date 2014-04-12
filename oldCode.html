@@ -1,0 +1,93 @@
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+  
+/*  $(function () {
+  
+  
+  
+        google.setOnLoadCallback(drawChart);
+          function drawChart() {
+          
+          
+          //d1.setMinutes(new Date().getMinutes()); 
+          //document.write(d1.toTimeString("hh:mm"));
+          //document.write(d1.getHours()+":"+d1.getMinutes());
+          var d1 = Date();
+          Date.prototype.addMinutes= function(h){
+              this.setSeconds(this.getSeconds()+h);
+              //myDate = $.datepicker.formatDate('hh-mm-ss', this.getTime());
+         
+              myDate = this.getMinutes() + ':' + this.getSeconds()
+              return myDate ;
+          }
+          //alert(new Date().addMinutes(4));
+          //alert(d1.setMinutes(d1.getMinutes()+1))
+             var data = google.visualization.arrayToDataTable([
+                                                ['Year', 'Sales', 'Expenses'],
+                                                [new Date().addMinutes(1),  Math.floor(Math.random()*11 + 1),      Math.floor(Math.random()*11)],
+                                                [new Date().addMinutes(2),  Math.floor(Math.random()*11 + 11),      Math.floor(Math.random()*21)],
+                                                [new Date().addMinutes(3),  Math.floor(Math.random()*11 + 21),       Math.floor(Math.random()*31)],
+                                                [new Date().addMinutes(4),  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*41)],
+                                                [new Date().addMinutes(5),  Math.floor(Math.random()*11 + 1),      Math.floor(Math.random()*51)],
+                                                [new Date().addMinutes(6),  Math.floor(Math.random()*11 + 11),      Math.floor(Math.random()*61)],
+                                                [new Date().addMinutes(7),  Math.floor(Math.random()*11 + 21),       Math.floor(Math.random()*71)],
+                                                [new Date().addMinutes(8),  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*81)],
+                                                [new Date().addMinutes(9),  Math.floor(Math.random()*11 + 1),      Math.floor(Math.random()*91)],
+                                                [new Date().addMinutes(9.5),  Math.floor(Math.random()*11 + 11),      Math.floor(Math.random()*111)],
+                                                [new Date().addMinutes(10),  Math.floor(Math.random()*11 + 21),       Math.floor(Math.random()*121)],
+                                                [new Date().addMinutes(11),  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*131)],
+                                                [new Date().addMinutes(11.5),  Math.floor(Math.random()*11 + 31),      Math.floor(Math.random()*141)]
+                                              ]); 
+                                              
+                                  
+                                              
+                                              
+                                              
+          
+          
+        
+        //for (var i = 0; i < 100; i++){
+        //    d1.push([i, Math.floor(Math.random()*111),Math.floor(Math.random()*111)]);
+      //}
+        //alert(d1)
+        //var data = google.visualization.arrayToDataTable(d1);
+
+          var options = {
+            title: 'Votes',
+            hAxis: {title: 'Time',  titleTextStyle: {color: '#333'}},
+            vAxis: {minValue: 0}
+          };
+
+          var chart = new google.visualization.AreaChart(document.getElementById('mygraph'));
+          chart.draw(data, options);
+        
+          
+          setTimeout(drawChart, 2000);
+          } 
+      
+      //$.plot($("#mygraph"), [ d1 ],options);
+      //$("#mygraph").html('band1 ' + d1[1][1] + '  band2 ' + d1[2][1]);
+      
+      
+      
+      //yourFunction();
+    
+  });  
+}); */
+
+</script>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49550501-1', 'young-meadow-5233.herokuapp.com');
+  ga('send', 'pageview');
+
+</script>
