@@ -207,9 +207,9 @@
     var player2;
     
     //sessionStorage.firstOpen = '';
-   $('#loginButton').click(function(){
+   //$('#loginButton').click(function(){
         //e.PreventDefault();
-     
+     function loginFun(){
    dataIn = $("#loginForm").serialize();
    
          $.ajax({ 
@@ -270,7 +270,7 @@
              //location.reload(true); 
          //return false;   
      
-         });
+         };
    
 
    function updateName(){
@@ -294,7 +294,8 @@
   
   $("#password").keyup(function(event){
     if(event.keyCode == 13){
-        $("#loginButton").click();
+       // $("#loginButton").click();
+       loginFun();
     }
   });
   
