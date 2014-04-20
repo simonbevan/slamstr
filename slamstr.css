@@ -67,7 +67,7 @@
 }
 
 #menu {
-  font-size: 2em;
+  font-size: 22pt;
   text-transform: lowercase;
   padding: 0px 0px;
   background-color: white;
@@ -82,14 +82,14 @@
 }
 
 #menu h2 {
-  font-size: 1em;
+  font-size: 15pt;
   text-transform: lowercase;
   padding: 0px 0px;
   background-color: white;
 }
 
 #menu li {
-  font-size: smaller;
+  font-size: 0.7em;
   text-transform: uppercase;
   padding: 0px 0px; 
   border: none;
