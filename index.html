@@ -159,6 +159,9 @@
       
       function loadVideo2(myFile,myImage,fileType) { 
       
+
+if(sessionStorage.comp == 1){
+
         if(fileType=='yt'){
 
                 jwplayer('ytplayer2').load([{
@@ -192,6 +195,9 @@
                 });
 
         };
+      }else{
+          document.getElementById("ytplayer2").innerHTML = "<center><h3 style=\"font-size:20pt\">Sorry No Challengers</h3><h3 style=\"font-size:18pt\">Think You've Got What It Takes?</h3><h3 style=\"font-size:16pt\">Upload Your Own Tracks Or Recommend a Friend</h3></center>";  
+      }
       
       };
 
@@ -206,9 +212,6 @@
     var player;
     var player2;
     
-    //sessionStorage.firstOpen = '';
-   //$('#loginButton').click(function(){
-        //e.PreventDefault();
      function loginFun(){
    dataIn = $("#loginForm").serialize();
    
@@ -220,55 +223,52 @@
                data: dataIn, 
                success: function(data){
   
-                 //alert($("#loginForm").serialize())
-                 
-          data1 = data['out1'];
-        data2 = data['out2'];
-        data3 = data['out3'];
-  
-          sessionStorage.fileLink = data1['fileLink'];
-        sessionStorage.vidID = data1['vID'];
-        sessionStorage.bandName = data1['bandName'];
-        sessionStorage.songName = data1['songName'];
-        //sessionStorage.country = data1['country'];
-        sessionStorage.artistLink = data1['artistLink'];
-        sessionStorage.votes = data1['votes'];
-        sessionStorage.fileType = data1['filetype'];
+              //alert($("#loginForm").serialize())
+                       
+              data1 = data['out1'];
+              data2 = data['out2'];
+              data3 = data['out3'];
+        
+              if(data2.length==0){
+                  sessionStorage.comp = 0;
+              }else{
+                  sessionStorage.comp = 1;
+              }
 
-          sessionStorage.fileLink2 = data2['fileLink'];
-        sessionStorage.vidID2 = data2['vID'];
-        sessionStorage.bandName2 = data2['bandName'];
-        sessionStorage.songName2 = data2['songName'];
-        //sessionStorage.country = data1['country'];
-        sessionStorage.artistLink2 = data2['artistLink'];
-        sessionStorage.votes2 = data2['votes'];
-        sessionStorage.fileType2 = data2['filetype'];
-        
-        
-        sessionStorage.userName = data3['userName'];
-        sessionStorage.userID = data3['userID'];
-        sessionStorage.loggedIn = data3['loggedIn']; 
-        sessionStorage.pLName = data3['pLName']; 
+              sessionStorage.fileLink = data1['fileLink'];
+              sessionStorage.vidID = data1['vID'];
+              sessionStorage.bandName = data1['bandName'];
+              sessionStorage.songName = data1['songName'];
+              //sessionStorage.country = data1['country'];
+              sessionStorage.artistLink = data1['artistLink'];
+              sessionStorage.votes = data1['votes'];
+              sessionStorage.fileType = data1['filetype'];
 
-        //alert(data3['userName']);
-        
-        location.reload(true);
+              sessionStorage.fileLink2 = data2['fileLink'];
+              sessionStorage.vidID2 = data2['vID'];
+              sessionStorage.bandName2 = data2['bandName'];
+              sessionStorage.songName2 = data2['songName'];
+              //sessionStorage.country = data1['country'];
+              sessionStorage.artistLink2 = data2['artistLink'];
+              sessionStorage.votes2 = data2['votes'];
+              sessionStorage.fileType2 = data2['filetype'];
+              
+              
+              sessionStorage.userName = data3['userName'];
+              sessionStorage.userID = data3['userID'];
+              sessionStorage.loggedIn = data3['loggedIn']; 
+              sessionStorage.pLName = data3['pLName']; 
+
+              //alert(data3['userName']);
+              
+              location.reload(true);
         
           
                }
                , error: function(jqXHR, textStatus, err){
                    alert('invalid user name or password')
                }
-            });
-
-         //setInterval(function(){
-        //   location.reload(true);
-         //  },500);
-         
-            
-          
-             //location.reload(true); 
-         //return false;   
+            });  
      
          };
    
@@ -282,10 +282,14 @@
 
           document.getElementById("info1").innerHTML = output;  
 
+                        if(sessionStorage.comp == 1){
+
           output2 = '<center><h3>'+sessionStorage.bandName2+' '+sessionStorage.songName2+'</h3>'+
                 '<p>Visit at: '+sessionStorage.artistLink2 +'</p> '+
                 '<p>Votes: '+sessionStorage.votes2 +'</p></center> '
-
+}else{
+  output2="";
+}
 
 
           document.getElementById("info2").innerHTML = output2; 
@@ -308,14 +312,18 @@
             var pLName = "'playList1'"//sessionStorage.pLName;
       
 
+      
 
+        $('#next2').hide();
+ $('#legendbin').show();
+    $('#legendkeep').show();
+
+if(sessionStorage.comp==1){   
+            
             $('#next').hide();
-            $('#next2').hide();
-            $('#legendbin').show();
             $('#challengerbin').show();
-            $('#legendkeep').show();
             $('#challengerkeep').show();
-
+}
 
          $.ajax({ 
                url: '/next',
@@ -327,8 +335,13 @@
   
                  
             data1 = data['out1'];
-             data2 = data['out2'];
+            data2 = data['out2'];
       
+            if(data2.length==0){
+                sessionStorage.comp = 0;
+            }else{
+                sessionStorage.comp = 1;
+            }
 
             
             sessionStorage.fileLink = data1['fileLink'];
@@ -381,13 +394,16 @@
             var userID = sessionStorage.userID; 
             var pLName = "'playList1'"//sessionStorage.pLName;
       
+$('#next2').hide();
+ $('#legendbin').show();
+    $('#legendkeep').show();
 
+if(sessionStorage.comp==1){   
+            
             $('#next').hide();
-            $('#next2').hide();
-            $('#legendbin').show();
             $('#challengerbin').show();
-            $('#legendkeep').show();
             $('#challengerkeep').show();
+}
 
          $.ajax({ 
                url: '/next',
@@ -398,43 +414,43 @@
                success: function(data){
   
                  
-            data1 = data['out1'];
-            data2 = data['out2'];
-      
-           
-            
-            sessionStorage.fileLink = data2['fileLink'];
-            sessionStorage.vidID = data2['vID'];
-            sessionStorage.bandName = data2['bandName'];
-            sessionStorage.songName = data2['songName'];
-            //sessionStorage.country = data1['country'];
-            sessionStorage.artistLink = data2['artistLink'];
-            sessionStorage.votes = data2['votes'];
-            sessionStorage.fileType = data2['filetype'];
+              data1 = data['out1'];
+              data2 = data['out2'];
         
-            sessionStorage.fileLink2 = data1['fileLink'];
-            sessionStorage.vidID2 = data1['vID'];
-            sessionStorage.bandName2 = data1['bandName'];
-            sessionStorage.songName2 = data1['songName'];
-            //sessionStorage.country = data1['country'];
-            sessionStorage.artistLink2 = data1['artistLink'];
-            sessionStorage.votes2 = data1['votes'];
-            sessionStorage.fileType2 = data1['filetype'];
+              if(data2.length==0){
+                  sessionStorage.comp = 0;
+              }else{
+                  sessionStorage.comp = 1;
+              }
             
+              sessionStorage.fileLink = data1['fileLink'];
+              sessionStorage.vidID = data1['vID'];
+              sessionStorage.bandName = data1['bandName'];
+              sessionStorage.songName = data1['songName'];
+              //sessionStorage.country = data1['country'];
+              sessionStorage.artistLink = data1['artistLink'];
+              sessionStorage.votes = data1['votes'];
+              sessionStorage.fileType = data1['filetype'];
+          
+              sessionStorage.fileLink2 = data2['fileLink'];
+              sessionStorage.vidID2 = data2['vID'];
+              sessionStorage.bandName2 = data2['bandName'];
+              sessionStorage.songName2 = data2['songName'];
+              //sessionStorage.country = data1['country'];
+              sessionStorage.artistLink2 = data2['artistLink'];
+              sessionStorage.votes2 = data2['votes'];
+              sessionStorage.fileType2 = data2['filetype'];
+              
+              loadVideo1(sessionStorage.fileLink,'',sessionStorage.fileType)
+              loadVideo2(sessionStorage.fileLink2,'',sessionStorage.fileType2)
 
-            loadVideo1(sessionStorage.fileLink,'',sessionStorage.fileType)
-            loadVideo2(sessionStorage.fileLink2,'',sessionStorage.fileType2)
+              sessionStorage.ytvidID = sessionStorage.fileLink
+              sessionStorage.ytvidID2 = sessionStorage.fileLink2;
+              
+              updateName();
+              
+              //location.reload(true);
             
-
-
-            sessionStorage.ytvidID = sessionStorage.fileLink
-          sessionStorage.ytvidID2 = sessionStorage.fileLink2;
-            
-          updateName();
-            
-            //location.reload(true);
-            
-        //alert(sessionStorage.bandName);
                }
                , error: function(jqXHR, textStatus, err){
                    alert('text status '+textStatus+', err '+err)
@@ -464,12 +480,17 @@
             var userID = sessionStorage.userID; 
             var pLName = "'playList1'"//sessionStorage.pLName;
 
-
+  
             $('#next').toggle()
-            $('#next2').toggle()
             $('#legendbin').toggle()
+
+            if(sessionStorage.comp==1){ 
+
+              $('#next2').toggle() 
             $('#challengerbin').toggle()
       
+          }
+
          $.ajax({ 
                url: '/like',
                type: 'POST',
@@ -527,10 +548,13 @@
 
 
 
-         $('#next').toggle()
-         $('#next2').toggle()
-         $('#legendbin').toggle()
-         $('#challengerbin').toggle()
+           $('#next2').toggle()
+            $('#legendbin').toggle()
+
+            if(sessionStorage.comp==1){ 
+              $('#next').toggle() 
+              $('#challengerbin').toggle()
+            }
        
          $.ajax({ 
                url: '/like',
@@ -592,7 +616,6 @@
 
 //sessionStorage.firstOpen = '';
 
-
 if(sessionStorage.firstOpen == 'opened'){
 
 
@@ -633,6 +656,12 @@ if(sessionStorage.firstOpen == 'opened'){
       data1 = data['out1'];
       data2 = data['out2'];
       
+      if(data2.length==0){
+          sessionStorage.comp = 0;
+      }else{
+          sessionStorage.comp = 1;
+      }
+
       sessionStorage.fileLink = data1['fileLink'];
       sessionStorage.vidID = data1['id'];
       sessionStorage.userID = data1['userID'];
@@ -642,7 +671,7 @@ if(sessionStorage.firstOpen == 'opened'){
       sessionStorage.artistLink = data1['artistLink'];
       sessionStorage.votes = data1['votes'];
       sessionStorage.fileType = data1['filetype'];
-  
+
       sessionStorage.fileLink2 = data2['fileLink'];
       sessionStorage.vidID2 = data2['id'];
       sessionStorage.userID2 = data2['userID'];
@@ -739,7 +768,7 @@ if(sessionStorage.firstOpen == 'opened'){
         </ul>
       </div>
 
-      <div class="demo-section">
+      <div class="demo-section" style="margin-top:3px">
 
 
         <button class="feedbackBut" type="button" name="feedbackBut"
@@ -825,20 +854,20 @@ if(sessionStorage.firstOpen == 'opened'){
 
                       <div class="demo-section3" >
                         
-<script type="text/javascript">
-var twtTitle  = "check this out @";
-var twtUrl    = location.href;
-var maxLength = 140 - (twtUrl.length + 1);
-if (twtTitle.length > maxLength) {
-twtTitle = twtTitle.substr(0, (maxLength - 3))+'...';
-}
+                          <script type="text/javascript">
+                          var twtTitle  = "check this out @";
+                          var twtUrl    = location.href;
+                          var maxLength = 140 - (twtUrl.length + 1);
+                          if (twtTitle.length > maxLength) {
+                          twtTitle = twtTitle.substr(0, (maxLength - 3))+'...';
+                          }
 
-var twitterText = "Loving " + sessionStorage.songName + " by " + sessionStorage.bandName + " @ www.slamst.com - #slamstrapp"
+                          var twitterText = "Loving " + sessionStorage.songName + " by " + sessionStorage.bandName + " @ www.slamst.com - #slamstrapp"
 
 
-var twtLink = 'http://twitter.com/home?status='+encodeURIComponent(twitterText);
-document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitter.png"  width ="40px" height= "40px" alt="hamster" style="margin-left:50px"/'+'><'+'/a>');
-</script>
+                          var twtLink = 'http://twitter.com/home?status='+encodeURIComponent(twitterText);
+                          document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitter.png"  width ="40px" height= "40px" alt="hamster" style="margin-left:50px"/'+'><'+'/a>');
+                          </script>
 
                           <img src="images/FB-f-Logo__blue_1024.png" alt="hamster" width="40px"
                           height="40px" style="display: visible; margin-left: 5px;" onclick="alert('coming soon')">
@@ -903,6 +932,15 @@ document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitte
                           id="challengerkeep" style="display: visible; margin-left: 1cm;">add
                           to playlist</button>
 
+                          <script>
+                          if(sessionStorage.comp==0){
+                              $('#challengerbin').toggle()
+                              $('#challengerkeep').toggle()
+
+                          }
+                          </script>
+
+
                       </div>
 
 
@@ -911,28 +949,46 @@ document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitte
                         
 
                         <script type="text/javascript">
-var twtTitle  = "check this out @";
-var twtUrl    = location.href;
-var maxLength = 140 - (twtUrl.length + 1);
-if (twtTitle.length > maxLength) {
-twtTitle = twtTitle.substr(0, (maxLength - 3))+'...';
-}
+                          var twtTitle  = "check this out @";
+                          var twtUrl    = location.href;
+                          var maxLength = 140 - (twtUrl.length + 1);
+                          if (twtTitle.length > maxLength) {
+                          twtTitle = twtTitle.substr(0, (maxLength - 3))+'...';
+                          }
 
-var twitterText = "Loving " + sessionStorage.songName2 + " by " + sessionStorage.bandName2 + " @ www.slamstr.com"
+                      if(sessionStorage.comp==0){
+
+                          
+
+                      }else{
+                          var twitterText = "Loving " + sessionStorage.songName2 + " by " + sessionStorage.bandName2 + " @ www.slamstr.com"
 
 
-var twtLink = 'http://twitter.com/home?status='+encodeURIComponent(twitterText);
-document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitter.png"  width ="40px" height= "40px" alt="hamster" style="margin-left:50px"/'+'><'+'/a>');
-</script>
+                          var twtLink = 'http://twitter.com/home?status='+encodeURIComponent(twitterText);
+                          document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitter.png"  width ="40px" height= "40px" alt="hamster" style="margin-left:50px"/'+'><'+'/a>');
 
-                          <img src="images/FB-f-Logo__blue_1024.png" alt="hamster" width="40px"
+                      }
+
+                        </script>
+
+                          <img id = "fb2" src="images/FB-f-Logo__blue_1024.png" alt="hamster" width="40px"
                           height="40px" style="display: visible; margin-left: 5px;" onclick="alert('coming soon')">
+
+
+                        <script>
+                          if(sessionStorage.comp==0){
+                              $('#fb2').toggle()
+                             
+
+                          }
+                          </script>
 
                       </div>
                     </div>
 
 
                     <br>
+
                     <div id="ytplayer2" style="display: visible;"></div>
 
                     <script type="text/javascript">
@@ -979,44 +1035,52 @@ document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitte
                     </script>
 
                     <script type="text/javascript">
-                      
+           
 
-        if(sessionStorage.fileType2=='yt'){
+          if(sessionStorage.comp == 1){
+                        
+                                 
 
-                jwplayer('ytplayer2').setup({
-                      file: sessionStorage.ytvidID2,
-                      width: '100%',
-                      aspectratio: '8:6',
-                      fallback: 'false',
-                      primary: 'flash'
+              if(sessionStorage.fileType2=='yt'){
+
+                      jwplayer('ytplayer2').setup({
+                            file: sessionStorage.ytvidID2,
+                            width: '100%',
+                            aspectratio: '8:6',
+                            fallback: 'false',
+                            primary: 'flash'
+                            });
+
+              }else if(sessionStorage.fileType2=='mp3'){
+
+                      jwplayer('ytplayer2').setup({
+                        sources: [{
+                                  file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+sessionStorage.ytvidID2,
+                              }],
+                        image: 'images/banner.jpg',
+                        width: '100%',
+                        aspectratio: '8:6',
+                        fallback: 'false',
+                        primary: 'flash'
+                      });
+              }else{
+                      jwplayer('ytplayer2').setup({
+                        sources: [{
+                                  file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+sessionStorage.ytvidID2,
+                              }],
+
+                        width: '100%',
+                        aspectratio: '8:6',
+                        fallback: 'false',
+                        primary: 'flash'
                       });
 
-        }else if(sessionStorage.fileType2=='mp3'){
-
-                jwplayer('ytplayer2').setup({
-                  sources: [{
-                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+sessionStorage.ytvidID2,
-                        }],
-                  image: 'images/banner.jpg',
-                  width: '100%',
-                  aspectratio: '8:6',
-                  fallback: 'false',
-                  primary: 'flash'
-                });
+              };
         }else{
-                jwplayer('ytplayer2').setup({
-                  sources: [{
-                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+sessionStorage.ytvidID2,
-                        }],
 
-                  width: '100%',
-                  aspectratio: '8:6',
-                  fallback: 'false',
-                  primary: 'flash'
-                });
+        document.getElementById("ytplayer2").innerHTML = "<center><h3 style=\"font-size:20pt\">Sorry No Challengers</h3><h3 style=\"font-size:18pt\">Think You've Got What It Takes?</h3><h3 style=\"font-size:16pt\">Upload Your Own Tracks Or Recommend a Friend</h3></center>"; 
 
-        };
-
+        }
 
                     </script>
 
@@ -1024,9 +1088,17 @@ document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitte
 
                     <script type="text/javascript">
                       
+
+                        if(sessionStorage.comp == 1){
+                    
                       output2 = '<center><h3>'+sessionStorage.bandName2+' '+sessionStorage.songName2+'</h3>'+
                       '<p>Visit at: '+sessionStorage.artistLink2 +'</p> '+
                       '<p>Votes: '+sessionStorage.votes2 +'</p></center> '
+
+                      }else{
+                        ouput2 = ""
+                      }
+
 
                       document.getElementById("info2").innerHTML = output2; 
                       
@@ -1121,7 +1193,9 @@ document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitte
                         </div> -->
 
             <div id="options">
+            <center>
             <h3>Your Music</h3>
+           
             <select id="playlistSelect">
                 <option>playlist 1</option>
                 <option>playlist 2</option>
@@ -1129,15 +1203,18 @@ document.write('<a href="'+twtLink+'" target="_blank"'+'><img src="images/twitte
                 <option>playlist 4</option>
                 <option>playlist 5</option>
             </select>
+          </center>
         </div>
 
 
 
 <div id="options2">
+  <center>  
                         <h3>Trending</h3>
-                            
+                          
                           <div id="wordcloud"></div>
-                        
+                        </center>
+
                          </div>
                          
                       </div>

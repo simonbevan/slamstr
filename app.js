@@ -130,20 +130,26 @@ app.get('/initialOpen', function(req, res) {
 						return console.error('error running query', err);
 					}
 
-					var vidID = row3.rows[0].vidid;
-					votes = row3.rows[0].vote;
-					sqlString = "SELECT FILELINK,TITLE,ARTIST,LINK,USERNAME,FILETYPE FROM CONTENT WHERE VIDID ='" + vidID + "'";
+					
+					try{
+						var vidID = row3.rows[0].vidid;
+						votes = row3.rows[0].vote;
+						sqlString = "SELECT FILELINK,TITLE,ARTIST,LINK,USERNAME,FILETYPE FROM CONTENT WHERE VIDID ='" + vidID + "'";
 
-					client.query(sqlString, function(err, row4) {
-						if(err) {
-							return console.error('error running query', err);
-						}
-						output2 = {'id':vidID,'userID':'noid','fileLink':row4.rows[0].filelink,'songName':row4.rows[0].title,'bandName':row4.rows[0].artist,'artistLink':row4.rows[0].link,'votes':votes,'filetype':row4.rows[0].filetype};
-						//console.log(output2);
+						client.query(sqlString, function(err, row4) {
+							if(err) {
+								return console.error('error running query', err);
+							}
+							output2 = {'id':vidID,'userID':'noid','fileLink':row4.rows[0].filelink,'songName':row4.rows[0].title,'bandName':row4.rows[0].artist,'artistLink':row4.rows[0].link,'votes':votes,'filetype':row4.rows[0].filetype};
+							//console.log(output2);
+							client.end();
+							res.json({'out1':output1,'out2':output2})
+
+						});
+					}catch(error){
 						client.end();
-						res.json({'out1':output1,'out2':output2})
-
-					});
+						res.json({'out1':output1,'out2':[]})
+					}
 				});
 
 
@@ -532,6 +538,7 @@ app.post('/next', function(req, res) {
 							return console.error('error running query', err);
 						}
 
+						try{
 						var vidID = row3.rows[0].vidid;
 						votes = row3.rows[0].vote;
 						sqlString = "SELECT FILELINK,TITLE,ARTIST,LINK,USERNAME,FILETYPE FROM CONTENT WHERE VIDID ='" + vidID + "'";
@@ -547,6 +554,13 @@ app.post('/next', function(req, res) {
 							res.json({'out1':output1,'out2':output2})
 
 						});
+					}catch(error){
+						client.end();
+						res.json({'out1':output1,'out2':[]})
+					}
+
+
+
 					});
 
 
@@ -621,6 +635,9 @@ app.post('/next', function(req, res) {
 							//return console.error('error running query', err);
 						}
 
+
+						try{
+
 						vidID2 = result4.rows[0].vidid;
 						votes2 = result4.rows[0].vote;
 						views2 = result4.rows[0].views;
@@ -641,6 +658,12 @@ app.post('/next', function(req, res) {
 							res.json({'out1':output1,'out2':output2});
 
 						});
+
+						}catch(error){
+							client.end();
+							res.json({'out1':output1,'out2':[]})
+						}
+
 					});
 				});
 
@@ -959,22 +982,29 @@ app.post('/login', function (req, res) {
 										//return console.error('error running query', err);
 									}
 
-									vidID2 = result4.rows[0].vidid;
-									votes2 = result4.rows[0].vote;
-									views2 = result4.rows[0].views;
+									try{
 
-									sqlStr5 = "SELECT FILELINK,TITLE,ARTIST,LINK,USERNAME,FILETYPE FROM CONTENT WHERE VIDID ='" + vidID2 +"'";	
+										vidID2 = result4.rows[0].vidid;
+										votes2 = result4.rows[0].vote;
+										views2 = result4.rows[0].views;
 
-									client.query(sqlStr5, function(err, result5) {
-										if(err) {
-											//return console.error('error running query', err);
-										}
+										sqlStr5 = "SELECT FILELINK,TITLE,ARTIST,LINK,USERNAME,FILETYPE FROM CONTENT WHERE VIDID ='" + vidID2 +"'";	
 
+										client.query(sqlStr5, function(err, result5) {
+											if(err) {
+												//return console.error('error running query', err);
+											}
+
+											client.end();
+											output2 = {'vID':vidID2,'fileLink':result5.rows[0].filelink,'songName':result5.rows[0].title,'bandName':result5.rows[0].artist,'artistLink':result5.rows[0].link,'votes':votes2,'filetype':result5.rows[0].filetype};
+											res.json({'out1':output1,'out2':output2,'out3':output3});
+
+										});
+
+									}catch(error){
 										client.end();
-										output2 = {'vID':vidID2,'fileLink':result5.rows[0].filelink,'songName':result5.rows[0].title,'bandName':result5.rows[0].artist,'artistLink':result5.rows[0].link,'votes':votes2,'filetype':result5.rows[0].filetype};
-										res.json({'out1':output1,'out2':output2,'out3':output3});
-
-									});
+										res.json({'out1':output1,'out2':[],'out3':output3})
+									}
 								});
 							});
 
