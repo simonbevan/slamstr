@@ -1052,8 +1052,6 @@ app.post('/register', function (req, res) {
 		var cityIP = body["city"]; 
 
 
-
-
 		if(req.body.type=="fan"){
 
 
@@ -1185,18 +1183,18 @@ app.post('/register', function (req, res) {
 
 				if(result.rows.length>0){
 					
-output = output+
-"<script type=\"text/javascript\">"+
-	"$(document).ready(function() {"+
+			output = output+
+			"<script type=\"text/javascript\">"+
+				"$(document).ready(function() {"+
 
-		+"alert(\"email already exists\")"
-	"	 window.location.replace(\"/\");"+
+					+"alert(\"email already exists\")"
+				"	 window.location.replace(\"/\");"+
 
-	"});"+
-	" </script>"+
-	"<h3>Redirecting</h3>"+
-	"</body>"+
-	"</html>";
+				"});"+
+				" </script>"+
+				"<h3>Redirecting</h3>"+
+				"</body>"+
+				"</html>";
 
 					res.send( output );
 					client.end();
@@ -1233,10 +1231,11 @@ output = output+
         "sessionStorage.userName = "+firstname+";"+
         "sessionStorage.userID = "+email+";"+
         "sessionStorage.loggedIn = 1;"+ 
-        "sessionStorage.pLName = playlist1;"+
+        "sessionStorage.pLName = 'playlist1';"+
 	" </script>"+
 	"</body>"+
 	"</html>";
+
 
 
 						client.end();
