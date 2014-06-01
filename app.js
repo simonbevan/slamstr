@@ -594,7 +594,6 @@ app.post('/next', function(req, res) {
 			}
 
 
-			
 			client.query(sqlStr2, function(err, result2) {
 				if(err) {
 					//return console.error('error running query', err);
@@ -1216,7 +1215,6 @@ app.post('/register', function (req, res) {
 						//}
 						//console.log(result.rows);
 
-
 output = output+
 "<script type=\"text/javascript\">"+
 	"$(document).ready(function() {"+
@@ -1235,7 +1233,6 @@ output = output+
 	" </script>"+
 	"</body>"+
 	"</html>";
-
 
 
 						client.end();

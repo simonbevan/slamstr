@@ -39,7 +39,14 @@
 <script type="text/javascript">
  $(document).ready(function() {
 
+if(sessionStorage.userID!="noid"){
 
+    if((sessionStorage.userID).indexOf("'")==-1){
+      sessionStorage.userID = "'"+sessionStorage.userID+"'"
+      alert(sessionStorage.userID)
+    }
+
+}
 
     var fill = d3.scale.category20();
     var words = [{"text":"coming soon", "url":"#","size":10},
@@ -615,6 +622,9 @@ if(sessionStorage.comp==1){
   <script type="text/javascript">
 
 //sessionStorage.firstOpen = '';
+
+
+
 
 if(sessionStorage.firstOpen == 'opened'){
 
