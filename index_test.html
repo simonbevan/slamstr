@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>slamstr</title>
+
+<link href="examples/content/shared/styles/examples-offline.css"
+  rel="stylesheet">
+<link href="styles/kendo.common.min.css" rel="stylesheet">
+<link href="bbb.css" rel="stylesheet">
+<link href="slamstr.css" rel="stylesheet">
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49550501-1', 'young-meadow-5233.herokuapp.com');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+
+</script>
+
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/kendo.web.min.js" type="text/javascript"></script>
+<script src="examples/content/shared/js/console.js"
+  type="text/javascript"></script>
+
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="http://jwpsrv.com/library/NehFHIphEeOg5SIACi0I_Q.js"
+  type="text/javascript"></script>
+<script src="d3.js" type="text/javascript"></script>
+<script src="d3.layout.cloud.js" type="text/javascript"></script>
+
+
+
+<script type="text/javascript">
+ $(document).ready(function() {
+
+if(sessionStorage.userID!="noid"){
+
+    if((sessionStorage.userID).indexOf("'")==-1){
+      sessionStorage.userID = "'"+sessionStorage.userID+"'"
+    }
+
+}
+
+    var fill = d3.scale.category20();
+    var words = [{"text":"coming soon", "url":"#","size":10},
+                 {"text":"coming soon", "url":"#","size":2},
+                 {"text":"coming soon", "url":"#","size":3},
+                 {"text":"coming soon", "url":"#","size":10},
+                 {"text":"coming soon", "url":"#","size":3},
+                 {"text":"coming soon", "url":"#","size":5},
+                 {"text":"coming soon", "url":"#","size":2},
+                 {"text":"coming soon", "url":"#","size":1},
+                 {"text":"coming soon", "url":"#","size":8},
+                 {"text":"coming soon", "url":"#","size":1},
+                 {"text":"coming soon", "url":"#","size":10},
+                 {"text":"coming soon", "url":"#","size":2},
+                 {"text":"coming soon", "url":"#","size":3},
+                 {"text":"coming soon", "url":"#","size":10},
+                 {"text":"coming soon", "url":"#","size":3},
+                 {"text":"coming soon", "url":"#","size":5},
+                 {"text":"coming soon", "url":"#","size":2},
+                 {"text":"coming soon", "url":"#","size":1},
+                 {"text":"coming soon", "url":"#","size":8},
+                 {"text":"coming soon", "url":"#","size":1},
+                 {"text":"coming soon", "url":"#","size":10},
+                 {"text":"coming soon", "url":"#","size":2},
+                 {"text":"coming soon", "url":"#","size":3},
+                 {"text":"coming soon", "url":"#","size":10},
+                 {"text":"coming soon", "url":"#","size":3},
+                 {"text":"coming soon", "url":"#","size":5},
+                 {"text":"coming soon", "url":"#","size":2},
+                 {"text":"coming soon", "url":"#","size":1},
+                 {"text":"coming soon", "url":"#","size":8},
+                 {"text":"coming soon", "url":"#","size":1}
+                
+                
+                ]
+    var width = 160;
+    var height = 180;
+    for (var i = 0; i < words.length; i++) {
+     words[i].size = 8+ words[i]["size"];
+    }
+
+    d3.layout.cloud()
+      .size([width, height])
+      .words(words)
+      .padding(3)
+      .rotate(function() { return ~~(Math.random() * 5) * 30 - 60; })
+      .font("Ariel")
+      .fontSize(function(d) { return d.size;})
+      .on("end", draw)
+      .start();
+
+    function draw(words) {
+        d3.select("#wordcloud")
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .append("g")
+          .attr("transform", "translate("+ width/2 +","+ height/2 +")")
+          .selectAll("text")
+          .data(words)
+          .enter()
+          .append("text")
+          .style("font-size", function(d) { return d.size + "px"; })
+          .style("font-family", "Ariel")
+          .style("fill", "#3B5998")
+          .attr("text-anchor", "middle")
+          .attr("transform", function(d) {
+              return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")"; 
+          })
+          .text(function(d) { return d.text; })
+          .on("click", function (d, i){
+              window.open(d.url, "_blank");
+          });
+    }
+
+   
+
+      function loadVideo1(myFile,myImage,fileType) { 
+
+
+        if(fileType=='yt'){
+
+                jwplayer('ytplayer').load([{
+                  file: myFile,
+                  //image: myImage
+                }]);
+                jwplayer().play();
+
+        }else if(fileType=='mp3'){
+
+                jwplayer('ytplayer').setup({
+                  sources: [{
+                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+myFile,
+                        }],
+                  image: 'images/banner.jpg',
+                  width: '100%',
+                  aspectratio: '8:6',
+                  fallback: 'false',
+                  primary: 'flash'
+                });
+        }else{
+                jwplayer('ytplayer').setup({
+                  sources: [{
+                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+myFile,
+                        }],
+
+                  width: '100%',
+                  aspectratio: '8:6',
+                  fallback: 'false',
+                  primary: 'flash'
+                });
+
+        };
+
+
+      };
+      
+      function loadVideo2(myFile,myImage,fileType) { 
+      
+
+if(sessionStorage.comp == 1){
+
+        if(fileType=='yt'){
+
+                jwplayer('ytplayer2').load([{
+                  file: myFile,
+                  //image: myImage
+                }]);
+                jwplayer().play();
+
+        }else if(fileType=='mp3'){
+
+                jwplayer('ytplayer2').setup({
+                  sources: [{
+                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+myFile,
+                        }],
+                  image: 'images/banner.jpg',
+                  width: '100%',
+                  aspectratio: '8:6',
+                  fallback: 'false',
+                  primary: 'flash'
+                });
+        }else{
+                jwplayer('ytplayer2').setup({
+                  sources: [{
+                            file: "rtmp://s1cnbmx4chc5i5.cloudfront.net/cfx/st/"+myFile,
+                        }],
+
+                  width: '100%',
+                  aspectratio: '8:6',
+                  fallback: 'false',
+                  primary: 'flash'
+                });
+
+        };
+      }else{
+          document.getElementById("ytplayer2").innerHTML = "<center><h3 style=\"font-size:20pt\">Sorry No Challengers</h3><h3 style=\"font-size:18pt\">Think You've Got What It Takes?</h3><h3 style=\"font-size:16pt\">Upload Your Own Tracks Or Recommend a Friend</h3></center>";  
+      }
+      
+      };
+
+   
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/player_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    
+    // Replace the 'ytplayer' element with an <iframe> and
+    // YouTube player after the API code downloads.
+    var player;
+    var player2;
+    
+     function loginFun(){
+   dataIn = $("#loginForm").serialize();
+   
+         $.ajax({ 
+               url: '/login',
+               type: 'POST',
+               //async: false,
+               cache: false, 
+               data: dataIn, 
+               success: function(data){
+  
+              //alert($("#loginForm").serialize())
+                       
+              data1 = data['out1'];
+              data2 = data['out2'];
+              data3 = data['out3'];
+        
+              if(data2.length==0){
+                  sessionStorage.comp = 0;
+              }else{
+                  sessionStorage.comp = 1;
+              }
+
+              sessionStorage.fileLink = data1['fileLink'];
+              sessionStorage.vidID = data1['vID'];
+              sessionStorage.bandName = data1['bandName'];
+              sessionStorage.songName = data1['songName'];
+              //sessionStorage.country = data1['country'];
+              sessionStorage.artistLink = data1['artistLink'];
+              sessionStorage.votes = data1['votes'];
+              sessionStorage.fileType = data1['filetype'];
+
+              sessionStorage.fileLink2 = data2['fileLink'];
+              sessionStorage.vidID2 = data2['vID'];
+              sessionStorage.bandName2 = data2['bandName'];
+              sessionStorage.songName2 = data2['songName'];
+              //sessionStorage.country = data1['country'];
+              sessionStorage.artistLink2 = data2['artistLink'];
+              sessionStorage.votes2 = data2['votes'];
+              sessionStorage.fileType2 = data2['filetype'];
+              
+              
+              sessionStorage.userName = data3['userName'];
+              sessionStorage.userID = data3['userID'];
+              sessionStorage.loggedIn = data3['loggedIn']; 
+              sessionStorage.pLName = data3['pLName']; 
+
+              //alert(data3['userName']);
+              
+              location.reload(true);
+        
+          
+               }
+               , error: function(jqXHR, textStatus, err){
+                   alert('invalid user name or password')
+               }
+            });  
+     
+         };
+   
+
+   function updateName(){
+              output = '<center><h3>'+sessionStorage.bandName+' '+sessionStorage.songName+'</h3>'+
+              '<p>Visit at: '+sessionStorage.artistLink+'</p> '+
+              '<p>Votes: '+sessionStorage.votes+'</p></center> ' 
+            
+          
+
+          document.getElementById("info1").innerHTML = output;  
+
+                        if(sessionStorage.comp == 1){
+
+          output2 = '<center><h3>'+sessionStorage.bandName2+' '+sessionStorage.songName2+'</h3>'+
+                '<p>Visit at: '+sessionStorage.artistLink2 +'</p> '+
+                '<p>Votes: '+sessionStorage.votes2 +'</p></center> '
+}else{
+  output2="";
+}
+
+
+          document.getElementById("info2").innerHTML = output2; 
+   }
+  
+  
+  $("#password").keyup(function(event){
+    if(event.keyCode == 13){
+       // $("#loginButton").click();
+       loginFun();
+    }
+  });
+  
+     $('#next').click(function(){  
+
+
+
+            var vidID = sessionStorage.vidID2 ;
+            var userID = sessionStorage.userID; 
+            var pLName = "'playList1'"//sessionStorage.pLName;
+      
+
+      
+
+        $('#next2').hide();
+ $('#legendbin').show();
+    $('#legendkeep').show();
+
+if(sessionStorage.comp==1){   
+            
+            $('#next').hide();
+            $('#challengerbin').show();
+            $('#challengerkeep').show();
+}
+
+         $.ajax({ 
+               url: '/next',
+               type: 'POST',
+               cache: false, 
+
+               data: { uID: userID, vID:vidID, type:'challengerbin',pLName:pLName,genre:sessionStorage.filter  }, 
+               success: function(data){
+  
+                 
+            data1 = data['out1'];
+            data2 = data['out2'];
+      
+            if(data2.length==0){
+                sessionStorage.comp = 0;
+            }else{
+                sessionStorage.comp = 1;
+            }
+
+            
+            sessionStorage.fileLink = data1['fileLink'];
+            sessionStorage.vidID = data1['vID'];
+            sessionStorage.bandName = data1['bandName'];
+            sessionStorage.songName = data1['songName'];
+            //sessionStorage.country = data1['country'];
+            sessionStorage.artistLink = data1['artistLink'];
+            sessionStorage.votes = data1['votes'];
+            sessionStorage.fileType = data1['filetype'];
+        
+            sessionStorage.fileLink2 = data2['fileLink'];
+            sessionStorage.vidID2 = data2['vID'];
+            sessionStorage.bandName2 = data2['bandName'];
+            sessionStorage.songName2 = data2['songName'];
+            //sessionStorage.country = data1['country'];
+            sessionStorage.artistLink2 = data2['artistLink'];
+            sessionStorage.votes2 = data2['votes'];
+            sessionStorage.fileType2 = data2['filetype'];
+            
+            loadVideo1(sessionStorage.fileLink,'',sessionStorage.fileType)
+            loadVideo2(sessionStorage.fileLink2,'',sessionStorage.fileType2)
+            
+            
+          sessionStorage.ytvidID = sessionStorage.fileLink
+          sessionStorage.ytvidID2 = sessionStorage.fileLink2;
+            
+          updateName();
+
+
+            //location.reload(true);
+            
+        //alert(sessionStorage.bandName);
+               }
+               , error: function(jqXHR, textStatus, err){
+                   alert('text status '+textStatus+', err '+err)
+               }
+            })
+         }); 
+
+
+
+
+     $('#next2').click(function(){  
+
+            
+
+
+            var vidID = sessionStorage.vidID ;
+            var userID = sessionStorage.userID; 
+            var pLName = "'playList1'"//sessionStorage.pLName;
+      
+$('#next2').hide();
+ $('#legendbin').show();
+    $('#legendkeep').show();
+
+if(sessionStorage.comp==1){   
+            
+            $('#next').hide();
+            $('#challengerbin').show();
+            $('#challengerkeep').show();
+}
+
+         $.ajax({ 
+               url: '/next',
+               type: 'POST',
+               cache: false, 
+
+               data: { uID: userID, vID:vidID, type:'legendbin',pLName:pLName ,genre:sessionStorage.filter  }, 
+               success: function(data){
+  
+                 
+              data1 = data['out1'];
+              data2 = data['out2'];
+        
+              if(data2.length==0){
+                  sessionStorage.comp = 0;
+              }else{
+                  sessionStorage.comp = 1;
+              }
+            
+              sessionStorage.fileLink = data1['fileLink'];
+              sessionStorage.vidID = data1['vID'];
+              sessionStorage.bandName = data1['bandName'];
+              sessionStorage.songName = data1['songName'];
+              //sessionStorage.country = data1['country'];
+              sessionStorage.artistLink = data1['artistLink'];
+              sessionStorage.votes = data1['votes'];
+              sessionStorage.fileType = data1['filetype'];
+          
+              sessionStorage.fileLink2 = data2['fileLink'];
+              sessionStorage.vidID2 = data2['vID'];
+              sessionStorage.bandName2 = data2['bandName'];
+              sessionStorage.songName2 = data2['songName'];
+              //sessionStorage.country = data1['country'];
+              sessionStorage.artistLink2 = data2['artistLink'];
+              sessionStorage.votes2 = data2['votes'];
+              sessionStorage.fileType2 = data2['filetype'];
+              
+              loadVideo1(sessionStorage.fileLink,'',sessionStorage.fileType)
+              loadVideo2(sessionStorage.fileLink2,'',sessionStorage.fileType2)
+
+              sessionStorage.ytvidID = sessionStorage.fileLink
+              sessionStorage.ytvidID2 = sessionStorage.fileLink2;
+              
+              updateName();
+              
+              //location.reload(true);
+            
+               }
+               , error: function(jqXHR, textStatus, err){
+                   alert('text status '+textStatus+', err '+err)
+               }
+            })
+         }); 
+
+
+
+     $('#feedbackBut').click(function(){  
+      
+    window.location.assign("/contact.html");
+      }); 
+
+          $('#logout').click(function(){  
+      sessionStorage.clear()
+      location.reload(true);
+      }); 
+
+     
+     
+     $('#challengerbin').click(function(){  
+
+  
+            var vidID = sessionStorage.vidID2 ;
+            var vidID2 = sessionStorage.vidID ;
+            var userID = sessionStorage.userID; 
+            var pLName = "'playList1'"//sessionStorage.pLName;
+
+  
+            $('#next').toggle()
+            $('#legendbin').toggle()
+
+            if(sessionStorage.comp==1){ 
+
+              $('#next2').toggle() 
+            $('#challengerbin').toggle()
+      
+          }
+
+         $.ajax({ 
+               url: '/like',
+               type: 'POST',
+               cache: false, 
+
+               data: { uID: userID, vID:vidID, vID2:vidID2, type:'challengerbin',pLName:pLName  }, 
+               success: function(data){
+  
+                 
+            data1 = data['out1'];
+             data2 = data['out2'];
+
+               }
+               , error: function(jqXHR, textStatus, err){
+                   alert('text status '+textStatus+', err '+err)
+               }
+            })
+         }); 
+   
+     
+     $('#challengerkeep').click(function(){  
+
+        
+         var vidID = sessionStorage.vidID2 ;
+         var userID = sessionStorage.userID; 
+        var pLName = "'playList1'"//sessionStorage.pLName;
+   $('#challengerkeep').toggle()
+
+         
+      $.ajax({ 
+            url: '/like',
+            type: 'POST',
+            cache: false, 
+
+            
+            
+            data: { uID: userID, vID:vidID, type:'challengerkeep',pLName:pLName  }, 
+            success: function(data){
+
+            }
+            , error: function(jqXHR, textStatus, err){
+                alert('text status '+textStatus+', err '+err)
+            }
+         })
+      }); 
+     
+     $('#legendbin').click(function(){  
+
+
+
+         var vidID = sessionStorage.vidID ;
+         var vidID2 = sessionStorage.vidID2 ;
+         var userID = sessionStorage.userID;
+         var pLName = "'playList1'"//sessionStorage.pLName;
+
+
+
+           $('#next2').toggle()
+            $('#legendbin').toggle()
+
+            if(sessionStorage.comp==1){ 
+              $('#next').toggle() 
+              $('#challengerbin').toggle()
+            }
+       
+         $.ajax({ 
+               url: '/like',
+               type: 'POST',
+               cache: false, 
+ 
+               data: { uID: userID, vID:vidID, vID2:vidID2, type:'legendbin' ,pLName:pLName }, 
+               success: function(data){
+                 
+               }
+               , error: function(jqXHR, textStatus, err){
+                   alert('text status '+textStatus+', err '+err)
+               }
+            })
+         }); 
+     
+     $('#legendkeep').click(function(){  
+
+         var vidID = sessionStorage.vidID ;
+         var userID = sessionStorage.userID;
+         var pLName = "'playList1'"//sessionStorage.pLName;
+
+         $('#legendkeep').toggle()
+         
+         $.ajax({ 
+               url: '/like',
+               type: 'POST',
+               cache: false, 
+ 
+               data: { uID: userID, vID:vidID, type:'legendkeep' ,pLName:pLName }, 
+               success: function(data){
+                 
+               }
+               , error: function(jqXHR, textStatus, err){
+                   alert('text status '+textStatus+', err '+err)
+               }
+            })
+         });
+     
+  
+   
+});
+ </script>
+
+
+
+
+
+
+
+</head>
+<body>
+
+
+
+  
+</body>
+
+
+</html>
