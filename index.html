@@ -622,7 +622,9 @@ if(sessionStorage.comp==1){
 
 //sessionStorage.firstOpen = '';
 
-
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+ window.location.replace("/mobileDirect.html")
+}
 
 
 if(sessionStorage.firstOpen == 'opened'){
