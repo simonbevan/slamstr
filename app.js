@@ -1186,12 +1186,12 @@ app.post('/register', function (req, res) {
 			"<script type=\"text/javascript\">"+
 				"$(document).ready(function() {"+
 
-					+"alert(\"email already exists\")"
-				"	 window.location.replace(\"/\");"+
+				"alert(\"email already exists\");"+
+				"window.location.replace(\"/signup.html\");"+
 
 				"});"+
 				" </script>"+
-				"<h3>Redirecting</h3>"+
+				"<h3>Redirecting2</h3>"+
 				"</body>"+
 				"</html>";
 
